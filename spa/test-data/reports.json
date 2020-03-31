@@ -1,0 +1,5260 @@
+{
+ "sales": [
+  {
+   "id": 1,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 2,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 3,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 4,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 5,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 6,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 7,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 8,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 9,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 10,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 11,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 12,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 13,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 14,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 15,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 16,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 17,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A, room 301",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 18,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person B",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 19,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A, room 301",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 20,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person B",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 21,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person B",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 22,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A, room 301",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 23,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person B",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 24,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 25,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person B",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 26,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 27,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 28,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 29,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 30,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A, room 301",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 31,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 32,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 33,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person B",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 34,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person B",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 35,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A, room 301",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 36,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 37,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 38,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A, room 301",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 39,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A, room 301",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 40,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A, room 301",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 41,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 42,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 43,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 44,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 45,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A, room 301",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 46,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 47,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A, room 301",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 48,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 49,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 50,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person B",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 51,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A, room 301",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 52,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 53,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person B",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 54,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A, room 301",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 55,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A, room 301",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 56,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A, room 301",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 57,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A, room 301",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 58,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A, room 301",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 59,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 60,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person B",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  }
+ ],
+ "creditSales": [
+  {
+   "id": 16,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 17,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A, room 301",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 18,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person B",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 19,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A, room 301",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 20,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person B",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 21,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person B",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 22,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A, room 301",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 23,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person B",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 24,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 25,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person B",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 26,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 27,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 28,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 29,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 30,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A, room 301",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  }
+ ],
+ "pendingCreditSales": [],
+ "cashSales": [
+  {
+   "id": 1,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 2,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 3,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 4,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 5,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 6,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 7,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 8,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 9,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 10,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 11,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 12,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 13,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 14,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 15,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  }
+ ],
+ "orders": [
+  {
+   "id": 1,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 3000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 2,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 5000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 3,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 3000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 4,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 5000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 5,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 20000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 6,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 20000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 7,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 20000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 8,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 3000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 9,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 5000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 10,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 20000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 11,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 3000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 12,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 3000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 13,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 20000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 14,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 3000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 15,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 20000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 16,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 20000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 17,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 5000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 18,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 5000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 19,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 5000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 20,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 5000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 21,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 22,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 23,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 24,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 25,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 5000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 26,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 5000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 27,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 5000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 28,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 29,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 30,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 31,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 5000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 32,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 5000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 33,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 34,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 5000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 35,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 36,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 20000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 37,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 20000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 38,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 39,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 40,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 5000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 41,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 5000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 42,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 20000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 43,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 20000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 44,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 45,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  }
+ ],
+ "bookings": [
+  {
+   "id": 1,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 2,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 3,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 4,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 5,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 6,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 7,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 8,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 9,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 10,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 11,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 12,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 13,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 14,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 15,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 16,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 17,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 18,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 19,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 20,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 21,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 22,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 23,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 24,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 25,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 26,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 27,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 28,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 29,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 30,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 31,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 32,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 33,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 34,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 35,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 36,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 37,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 38,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 39,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 40,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  }
+ ],
+ "rooms": [
+  {
+   "id": 1,
+   "room_no": 101,
+   "status": "reserved",
+   "price": 6000,
+   "type": "deluxe",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 2,
+   "room_no": 102,
+   "status": "reserved",
+   "price": 6000,
+   "type": "deluxe",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 3,
+   "room_no": 103,
+   "status": "reserved",
+   "price": 6000,
+   "type": "deluxe",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 4,
+   "room_no": 104,
+   "status": "reserved",
+   "price": 6000,
+   "type": "deluxe",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 5,
+   "room_no": 105,
+   "status": "reserved",
+   "price": 6000,
+   "type": "deluxe",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 6,
+   "room_no": 106,
+   "status": "reserved",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 7,
+   "room_no": 107,
+   "status": "reserved",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 8,
+   "room_no": 108,
+   "status": "reserved",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 9,
+   "room_no": 109,
+   "status": "reserved",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 10,
+   "room_no": 110,
+   "status": "reserved",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 11,
+   "room_no": 111,
+   "status": "reserved",
+   "price": 6000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 12,
+   "room_no": 112,
+   "status": "reserved",
+   "price": 6000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 13,
+   "room_no": 113,
+   "status": "reserved",
+   "price": 6000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 14,
+   "room_no": 114,
+   "status": "reserved",
+   "price": 6000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 15,
+   "room_no": 115,
+   "status": "reserved",
+   "price": 6000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 16,
+   "room_no": 116,
+   "status": "booked",
+   "price": 4000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 17,
+   "room_no": 117,
+   "status": "booked",
+   "price": 4000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 18,
+   "room_no": 118,
+   "status": "booked",
+   "price": 4000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 19,
+   "room_no": 119,
+   "status": "booked",
+   "price": 4000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 20,
+   "room_no": 120,
+   "status": "booked",
+   "price": 4000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 21,
+   "room_no": 121,
+   "status": "booked",
+   "price": 4000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 22,
+   "room_no": 122,
+   "status": "booked",
+   "price": 4000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 23,
+   "room_no": 123,
+   "status": "booked",
+   "price": 4000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 24,
+   "room_no": 124,
+   "status": "booked",
+   "price": 4000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 25,
+   "room_no": 125,
+   "status": "booked",
+   "price": 4000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 26,
+   "room_no": 126,
+   "status": "booked",
+   "price": 4000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 27,
+   "room_no": 127,
+   "status": "booked",
+   "price": 4000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 28,
+   "room_no": 128,
+   "status": "booked",
+   "price": 4000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 29,
+   "room_no": 129,
+   "status": "booked",
+   "price": 4000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 30,
+   "room_no": 130,
+   "status": "booked",
+   "price": 4000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 31,
+   "room_no": 131,
+   "status": "booked",
+   "price": 4000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 32,
+   "room_no": 132,
+   "status": "booked",
+   "price": 4000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 33,
+   "room_no": 133,
+   "status": "booked",
+   "price": 4000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 34,
+   "room_no": 134,
+   "status": "booked",
+   "price": 4000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 35,
+   "room_no": 135,
+   "status": "booked",
+   "price": 4000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 36,
+   "room_no": 136,
+   "status": "booked",
+   "price": 4000,
+   "type": "VIP",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 37,
+   "room_no": 137,
+   "status": "booked",
+   "price": 4000,
+   "type": "VIP",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 38,
+   "room_no": 138,
+   "status": "booked",
+   "price": 4000,
+   "type": "VIP",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 39,
+   "room_no": 139,
+   "status": "booked",
+   "price": 4000,
+   "type": "VIP",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 40,
+   "room_no": 140,
+   "status": "booked",
+   "price": 4000,
+   "type": "VIP",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 41,
+   "room_no": 141,
+   "status": "booked",
+   "price": 4000,
+   "type": "VIP",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 42,
+   "room_no": 142,
+   "status": "booked",
+   "price": 4000,
+   "type": "VIP",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 43,
+   "room_no": 143,
+   "status": "booked",
+   "price": 4000,
+   "type": "VIP",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 44,
+   "room_no": 144,
+   "status": "booked",
+   "price": 4000,
+   "type": "VIP",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 45,
+   "room_no": 145,
+   "status": "booked",
+   "price": 4000,
+   "type": "VIP",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 46,
+   "room_no": 146,
+   "status": "available",
+   "price": 10000,
+   "type": "VIP",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 47,
+   "room_no": 147,
+   "status": "available",
+   "price": 10000,
+   "type": "VIP",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 48,
+   "room_no": 148,
+   "status": "available",
+   "price": 10000,
+   "type": "VIP",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 49,
+   "room_no": 149,
+   "status": "available",
+   "price": 10000,
+   "type": "VIP",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 50,
+   "room_no": 150,
+   "status": "available",
+   "price": 10000,
+   "type": "VIP",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 51,
+   "room_no": 151,
+   "status": "available",
+   "price": 10000,
+   "type": "VIP",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 52,
+   "room_no": 152,
+   "status": "available",
+   "price": 10000,
+   "type": "VIP",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 53,
+   "room_no": 153,
+   "status": "available",
+   "price": 10000,
+   "type": "VIP",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 54,
+   "room_no": 154,
+   "status": "available",
+   "price": 10000,
+   "type": "VIP",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 55,
+   "room_no": 155,
+   "status": "available",
+   "price": 10000,
+   "type": "VIP",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 56,
+   "room_no": 156,
+   "status": "available",
+   "price": 6000,
+   "type": "deluxe",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 57,
+   "room_no": 157,
+   "status": "available",
+   "price": 6000,
+   "type": "deluxe",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 58,
+   "room_no": 158,
+   "status": "available",
+   "price": 6000,
+   "type": "deluxe",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 59,
+   "room_no": 159,
+   "status": "available",
+   "price": 6000,
+   "type": "deluxe",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 60,
+   "room_no": 160,
+   "status": "available",
+   "price": 6000,
+   "type": "deluxe",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 61,
+   "room_no": 161,
+   "status": "available",
+   "price": 6000,
+   "type": "deluxe",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 62,
+   "room_no": 162,
+   "status": "available",
+   "price": 6000,
+   "type": "deluxe",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 63,
+   "room_no": 163,
+   "status": "available",
+   "price": 6000,
+   "type": "deluxe",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 64,
+   "room_no": 164,
+   "status": "available",
+   "price": 6000,
+   "type": "deluxe",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 65,
+   "room_no": 165,
+   "status": "available",
+   "price": 6000,
+   "type": "deluxe",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 66,
+   "room_no": 166,
+   "status": "available",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 67,
+   "room_no": 167,
+   "status": "available",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 68,
+   "room_no": 168,
+   "status": "available",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 69,
+   "room_no": 169,
+   "status": "available",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 70,
+   "room_no": 170,
+   "status": "available",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 71,
+   "room_no": 171,
+   "status": "available",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 72,
+   "room_no": 172,
+   "status": "available",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 73,
+   "room_no": 173,
+   "status": "available",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 74,
+   "room_no": 174,
+   "status": "available",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 75,
+   "room_no": 175,
+   "status": "available",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 76,
+   "room_no": 176,
+   "status": "available",
+   "price": 6000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 77,
+   "room_no": 177,
+   "status": "available",
+   "price": 6000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 78,
+   "room_no": 178,
+   "status": "available",
+   "price": 6000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 79,
+   "room_no": 179,
+   "status": "available",
+   "price": 6000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 80,
+   "room_no": 180,
+   "status": "available",
+   "price": 6000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 81,
+   "room_no": 181,
+   "status": "available",
+   "price": 6000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 82,
+   "room_no": 182,
+   "status": "available",
+   "price": 6000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 83,
+   "room_no": 183,
+   "status": "available",
+   "price": 6000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 84,
+   "room_no": 184,
+   "status": "available",
+   "price": 6000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 85,
+   "room_no": 185,
+   "status": "available",
+   "price": 6000,
+   "type": "suite",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 86,
+   "room_no": 186,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 87,
+   "room_no": 187,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 88,
+   "room_no": 188,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 89,
+   "room_no": 189,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 90,
+   "room_no": 190,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 91,
+   "room_no": 191,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 92,
+   "room_no": 192,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 93,
+   "room_no": 193,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 94,
+   "room_no": 194,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 95,
+   "room_no": 195,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 96,
+   "room_no": 196,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 97,
+   "room_no": 197,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 98,
+   "room_no": 198,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 99,
+   "room_no": 199,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 100,
+   "room_no": 200,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 101,
+   "room_no": 201,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 102,
+   "room_no": 202,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 103,
+   "room_no": 203,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 104,
+   "room_no": 204,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 105,
+   "room_no": 205,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 106,
+   "room_no": 206,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 107,
+   "room_no": 207,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 108,
+   "room_no": 208,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 109,
+   "room_no": 209,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 110,
+   "room_no": 210,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 111,
+   "room_no": 211,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 112,
+   "room_no": 212,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 113,
+   "room_no": 213,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 114,
+   "room_no": 214,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  },
+  {
+   "id": 115,
+   "room_no": 215,
+   "status": "unavailable",
+   "price": 6000,
+   "type": "classic",
+   "reservation": null,
+   "reservations": null
+  }
+ ],
+ "booking": {
+  "roomId": 100,
+  "creationDate": "2020-03-29T22:51:04.375+01:00",
+  "costPerNight": 5000,
+  "AmountPaid": 0,
+  "Status": "pending"
+ },
+ "reservations": {
+  "reservations": [
+   {
+    "roomId": 100,
+    "creationDate": "2020-03-29T22:51:04.497+01:00",
+    "customerName": "Random Customer",
+    "startDate": "2020-04-02T22:51:04.497+01:00",
+    "endDate": "2020-04-06T22:51:04.497+01:00",
+    "numOfNights": 4,
+    "status": "pending"
+   },
+   {
+    "id": null,
+    "roomId": 100,
+    "creationDate": "2020-03-29T22:51:04.497+01:00",
+    "customerName": "Random Customer",
+    "startDate": "2020-04-04T22:51:04.497+01:00",
+    "endDate": "2020-04-10T22:51:04.497+01:00",
+    "numOfNights": 6,
+    "status": "pending"
+   },
+   {
+    "id": null,
+    "roomId": 100,
+    "creationDate": "2020-03-29T22:51:04.497+01:00",
+    "customerName": "Random Customer",
+    "startDate": "2020-04-06T22:51:04.497+01:00",
+    "endDate": "2020-04-14T22:51:04.497+01:00",
+    "numOfNights": 8,
+    "status": "pending"
+   }
+  ]
+ },
+ "reservation": {
+  "id": null,
+  "roomId": 100,
+  "creationDate": "2020-03-29T22:51:04.508+01:00",
+  "customerName": "Random Customer",
+  "startDate": "2020-03-29T22:51:04.508+01:00",
+  "endDate": "2020-03-31T22:51:04.508+01:00",
+  "numOfNights": null,
+  "status": "pending"
+ },
+ "items": [
+  {
+   "id": 1,
+   "name": "Rice",
+   "quantity": 0,
+   "unit": "Bag(s)"
+  },
+  {
+   "id": 2,
+   "name": "Fanta",
+   "quantity": 0,
+   "unit": "Dozen(s)"
+  },
+  {
+   "id": 3,
+   "name": "Malt",
+   "quantity": 0,
+   "unit": "Bag(s)"
+  },
+  {
+   "id": 4,
+   "name": "Air Freshner",
+   "quantity": 20,
+   "unit": "Stick(s)"
+  },
+  {
+   "id": 5,
+   "name": "Coca Cola",
+   "quantity": 15,
+   "unit": "Bag(s)"
+  },
+  {
+   "id": 6,
+   "name": "Coca Cola",
+   "quantity": 15,
+   "unit": "Bag(s)"
+  },
+  {
+   "id": 7,
+   "name": "Air Freshner",
+   "quantity": 0,
+   "unit": "Bottle(s)"
+  },
+  {
+   "id": 8,
+   "name": "Plantain",
+   "quantity": 20,
+   "unit": "Dozen(s)"
+  },
+  {
+   "id": 9,
+   "name": "Coca Cola",
+   "quantity": 0,
+   "unit": "Bag(s)"
+  },
+  {
+   "id": 10,
+   "name": "Malt",
+   "quantity": 10,
+   "unit": "Dozen(s)"
+  },
+  {
+   "id": 11,
+   "name": "Plantain",
+   "quantity": 1,
+   "unit": "Bottle(s)"
+  },
+  {
+   "id": 12,
+   "name": "Plantain",
+   "quantity": 5,
+   "unit": "Dozen(s)"
+  },
+  {
+   "id": 13,
+   "name": "Air Freshner",
+   "quantity": 10,
+   "unit": "Dozen(s)"
+  },
+  {
+   "id": 14,
+   "name": "Coca Cola",
+   "quantity": 0,
+   "unit": "Dozen(s)"
+  },
+  {
+   "id": 15,
+   "name": "Malt",
+   "quantity": 0,
+   "unit": "Bag(s)"
+  },
+  {
+   "id": 16,
+   "name": "Air Freshner",
+   "quantity": 0,
+   "unit": "Stick(s)"
+  },
+  {
+   "id": 17,
+   "name": "Fanta",
+   "quantity": 5,
+   "unit": "Bottle(s)"
+  },
+  {
+   "id": 18,
+   "name": "Fanta",
+   "quantity": 0,
+   "unit": "Stick(s)"
+  },
+  {
+   "id": 19,
+   "name": "Fanta",
+   "quantity": 1,
+   "unit": "Dozen(s)"
+  },
+  {
+   "id": 20,
+   "name": "Fanta",
+   "quantity": 30,
+   "unit": "Bottle(s)"
+  },
+  {
+   "id": 21,
+   "name": "Fanta",
+   "quantity": 0,
+   "unit": "Gallon(s)"
+  },
+  {
+   "id": 22,
+   "name": "Plantain",
+   "quantity": 12,
+   "unit": "Bag(s)"
+  },
+  {
+   "id": 23,
+   "name": "Fanta",
+   "quantity": 30,
+   "unit": "Gallon(s)"
+  },
+  {
+   "id": 24,
+   "name": "Plantain",
+   "quantity": 10,
+   "unit": "Stick(s)"
+  },
+  {
+   "id": 25,
+   "name": "Malt",
+   "quantity": 15,
+   "unit": "Stick(s)"
+  },
+  {
+   "id": 26,
+   "name": "Malt",
+   "quantity": 0,
+   "unit": "Bottle(s)"
+  },
+  {
+   "id": 27,
+   "name": "Rice",
+   "quantity": 5,
+   "unit": "Gallon(s)"
+  },
+  {
+   "id": 28,
+   "name": "Malt",
+   "quantity": 5,
+   "unit": "Bottle(s)"
+  },
+  {
+   "id": 29,
+   "name": "Plantain",
+   "quantity": 12,
+   "unit": "Gallon(s)"
+  },
+  {
+   "id": 30,
+   "name": "Rice",
+   "quantity": 12,
+   "unit": "Dozen(s)"
+  },
+  {
+   "id": 31,
+   "name": "Rice",
+   "quantity": 0,
+   "unit": "Dozen(s)"
+  },
+  {
+   "id": 32,
+   "name": "Rice",
+   "quantity": 20,
+   "unit": "Dozen(s)"
+  },
+  {
+   "id": 33,
+   "name": "Plantain",
+   "quantity": 15,
+   "unit": "Gallon(s)"
+  },
+  {
+   "id": 34,
+   "name": "Rice",
+   "quantity": 0,
+   "unit": "Gallon(s)"
+  },
+  {
+   "id": 35,
+   "name": "Plantain",
+   "quantity": 30,
+   "unit": "Stick(s)"
+  },
+  {
+   "id": 36,
+   "name": "Coca Cola",
+   "quantity": 5,
+   "unit": "Bag(s)"
+  },
+  {
+   "id": 37,
+   "name": "Air Freshner",
+   "quantity": 5,
+   "unit": "Bag(s)"
+  },
+  {
+   "id": 38,
+   "name": "Malt",
+   "quantity": 10,
+   "unit": "Bag(s)"
+  },
+  {
+   "id": 39,
+   "name": "Fanta",
+   "quantity": 1,
+   "unit": "Dozen(s)"
+  },
+  {
+   "id": 40,
+   "name": "Malt",
+   "quantity": 10,
+   "unit": "Bottle(s)"
+  },
+  {
+   "id": 41,
+   "name": "Air Freshner",
+   "quantity": 30,
+   "unit": "Stick(s)"
+  },
+  {
+   "id": 42,
+   "name": "Air Freshner",
+   "quantity": 30,
+   "unit": "Gallon(s)"
+  },
+  {
+   "id": 43,
+   "name": "Rice",
+   "quantity": 0,
+   "unit": "Bag(s)"
+  },
+  {
+   "id": 44,
+   "name": "Air Freshner",
+   "quantity": 1,
+   "unit": "Bottle(s)"
+  },
+  {
+   "id": 45,
+   "name": "Plantain",
+   "quantity": 5,
+   "unit": "Bottle(s)"
+  },
+  {
+   "id": 46,
+   "name": "Fanta",
+   "quantity": 10,
+   "unit": "Bottle(s)"
+  },
+  {
+   "id": 47,
+   "name": "Malt",
+   "quantity": 15,
+   "unit": "Dozen(s)"
+  },
+  {
+   "id": 48,
+   "name": "Plantain",
+   "quantity": 1,
+   "unit": "Bag(s)"
+  },
+  {
+   "id": 49,
+   "name": "Plantain",
+   "quantity": 0,
+   "unit": "Stick(s)"
+  },
+  {
+   "id": 50,
+   "name": "Plantain",
+   "quantity": 1,
+   "unit": "Bag(s)"
+  }
+ ],
+ "pendingOrders": [
+  {
+   "id": 4,
+   "items": [
+    {
+     "id": 3,
+     "department": "kitchen",
+     "unit": "plate(s)",
+     "pricePerUnit": 4000,
+     "name": "White Rice",
+     "quantity": 3
+    },
+    {
+     "id": 3,
+     "department": "kitchen",
+     "unit": "plate(s)",
+     "pricePerUnit": 4000,
+     "name": "White Rice",
+     "quantity": 3
+    },
+    {
+     "id": 3,
+     "department": "kitchen",
+     "unit": "plate(s)",
+     "pricePerUnit": 4000,
+     "name": "White Rice",
+     "quantity": 3
+    }
+   ],
+   "amountDue": 15000,
+   "status": "pending",
+   "notes": null,
+   "destination": "Room 305"
+  },
+  {
+   "id": 4,
+   "items": [
+    {
+     "id": 3,
+     "department": "kitchen",
+     "unit": "plate(s)",
+     "pricePerUnit": 4000,
+     "name": "White Rice",
+     "quantity": 3
+    },
+    {
+     "id": 3,
+     "department": "kitchen",
+     "unit": "plate(s)",
+     "pricePerUnit": 4000,
+     "name": "White Rice",
+     "quantity": 3
+    },
+    {
+     "id": 3,
+     "department": "kitchen",
+     "unit": "plate(s)",
+     "pricePerUnit": 4000,
+     "name": "White Rice",
+     "quantity": 3
+    }
+   ],
+   "amountDue": 15000,
+   "status": "pending",
+   "notes": null,
+   "destination": "Room 305"
+  },
+  {
+   "id": 4,
+   "items": [
+    {
+     "id": 3,
+     "department": "kitchen",
+     "unit": "plate(s)",
+     "pricePerUnit": 4000,
+     "name": "White Rice",
+     "quantity": 3
+    },
+    {
+     "id": 3,
+     "department": "kitchen",
+     "unit": "plate(s)",
+     "pricePerUnit": 4000,
+     "name": "White Rice",
+     "quantity": 3
+    },
+    {
+     "id": 3,
+     "department": "kitchen",
+     "unit": "plate(s)",
+     "pricePerUnit": 4000,
+     "name": "White Rice",
+     "quantity": 3
+    }
+   ],
+   "amountDue": 15000,
+   "status": "pending",
+   "notes": null,
+   "destination": "Room 305"
+  },
+  {
+   "id": 4,
+   "items": [
+    {
+     "id": 3,
+     "department": "kitchen",
+     "unit": "plate(s)",
+     "pricePerUnit": 4000,
+     "name": "White Rice",
+     "quantity": 3
+    },
+    {
+     "id": 3,
+     "department": "kitchen",
+     "unit": "plate(s)",
+     "pricePerUnit": 4000,
+     "name": "White Rice",
+     "quantity": 3
+    },
+    {
+     "id": 3,
+     "department": "kitchen",
+     "unit": "plate(s)",
+     "pricePerUnit": 4000,
+     "name": "White Rice",
+     "quantity": 3
+    }
+   ],
+   "amountDue": 15000,
+   "status": "pending",
+   "notes": null,
+   "destination": "Room 305"
+  },
+  {
+   "id": 4,
+   "items": [
+    {
+     "id": 3,
+     "department": "kitchen",
+     "unit": "plate(s)",
+     "pricePerUnit": 4000,
+     "name": "White Rice",
+     "quantity": 3
+    },
+    {
+     "id": 3,
+     "department": "kitchen",
+     "unit": "plate(s)",
+     "pricePerUnit": 4000,
+     "name": "White Rice",
+     "quantity": 3
+    },
+    {
+     "id": 3,
+     "department": "kitchen",
+     "unit": "plate(s)",
+     "pricePerUnit": 4000,
+     "name": "White Rice",
+     "quantity": 3
+    }
+   ],
+   "amountDue": 15000,
+   "status": "pending",
+   "notes": null,
+   "destination": "Room 305"
+  }
+ ],
+ "entries": [
+  {
+   "id": 1,
+   "date": "February 3rd, 2020",
+   "quantity": 20,
+   "itemQuantityBalance": 12,
+   "supplier": null,
+   "department": "reception",
+   "itemName": "Rice",
+   "itemUnit": "Bottle(s)"
+  },
+  {
+   "id": 2,
+   "date": "February 3rd, 2020",
+   "quantity": 5,
+   "itemQuantityBalance": 12,
+   "supplier": null,
+   "department": "hotel",
+   "itemName": "Malt",
+   "itemUnit": "Bag(s)"
+  },
+  {
+   "id": 3,
+   "date": "February 3rd, 2020",
+   "quantity": 5,
+   "itemQuantityBalance": 5,
+   "supplier": null,
+   "department": "hotel",
+   "itemName": "Coca Cola",
+   "itemUnit": "Stick(s)"
+  },
+  {
+   "id": 4,
+   "date": "February 3rd, 2020",
+   "quantity": 30,
+   "itemQuantityBalance": 12,
+   "supplier": null,
+   "department": "hotel",
+   "itemName": "Coca Cola",
+   "itemUnit": "Bag(s)"
+  },
+  {
+   "id": 5,
+   "date": "February 3rd, 2020",
+   "quantity": 5,
+   "itemQuantityBalance": 10,
+   "supplier": null,
+   "department": "bar",
+   "itemName": "Air Freshner",
+   "itemUnit": "Dozen(s)"
+  },
+  {
+   "id": 6,
+   "date": "February 3rd, 2020",
+   "quantity": 30,
+   "itemQuantityBalance": 12,
+   "supplier": null,
+   "department": "bar",
+   "itemName": "Plantain",
+   "itemUnit": "Gallon(s)"
+  },
+  {
+   "id": 7,
+   "date": "February 3rd, 2020",
+   "quantity": 5,
+   "itemQuantityBalance": 5,
+   "supplier": null,
+   "department": "bar",
+   "itemName": "Fanta",
+   "itemUnit": "Bottle(s)"
+  },
+  {
+   "id": 8,
+   "date": "February 3rd, 2020",
+   "quantity": 20,
+   "itemQuantityBalance": 10,
+   "supplier": null,
+   "department": "reception",
+   "itemName": "Malt",
+   "itemUnit": "Gallon(s)"
+  },
+  {
+   "id": 9,
+   "date": "February 3rd, 2020",
+   "quantity": 5,
+   "itemQuantityBalance": 20,
+   "supplier": null,
+   "department": "hotel",
+   "itemName": "Malt",
+   "itemUnit": "Bottle(s)"
+  },
+  {
+   "id": 10,
+   "date": "February 3rd, 2020",
+   "quantity": 5,
+   "itemQuantityBalance": 10,
+   "supplier": null,
+   "department": "kitchen",
+   "itemName": "Coca Cola",
+   "itemUnit": "Stick(s)"
+  },
+  {
+   "id": 11,
+   "date": "February 3rd, 2020",
+   "quantity": 10,
+   "itemQuantityBalance": 10,
+   "supplier": null,
+   "department": "bar",
+   "itemName": "Plantain",
+   "itemUnit": "Dozen(s)"
+  },
+  {
+   "id": 12,
+   "date": "February 3rd, 2020",
+   "quantity": 5,
+   "itemQuantityBalance": 10,
+   "supplier": null,
+   "department": "bar",
+   "itemName": "Fanta",
+   "itemUnit": "Stick(s)"
+  },
+  {
+   "id": 13,
+   "date": "February 3rd, 2020",
+   "quantity": 20,
+   "itemQuantityBalance": 10,
+   "supplier": null,
+   "department": "bar",
+   "itemName": "Malt",
+   "itemUnit": "Bag(s)"
+  },
+  {
+   "id": 14,
+   "date": "February 3rd, 2020",
+   "quantity": 30,
+   "itemQuantityBalance": 20,
+   "supplier": null,
+   "department": "kitchen",
+   "itemName": "Plantain",
+   "itemUnit": "Bag(s)"
+  },
+  {
+   "id": 15,
+   "date": "February 3rd, 2020",
+   "quantity": 30,
+   "itemQuantityBalance": 12,
+   "supplier": null,
+   "department": "bar",
+   "itemName": "Coca Cola",
+   "itemUnit": "Bottle(s)"
+  },
+  {
+   "id": 16,
+   "date": "February 3rd, 2020",
+   "quantity": 20,
+   "itemQuantityBalance": 20,
+   "supplier": null,
+   "department": "reception",
+   "itemName": "Plantain",
+   "itemUnit": "Dozen(s)"
+  },
+  {
+   "id": 17,
+   "date": "February 3rd, 2020",
+   "quantity": 10,
+   "itemQuantityBalance": 12,
+   "supplier": null,
+   "department": "reception",
+   "itemName": "Fanta",
+   "itemUnit": "Bag(s)"
+  },
+  {
+   "id": 18,
+   "date": "February 3rd, 2020",
+   "quantity": 30,
+   "itemQuantityBalance": 10,
+   "supplier": null,
+   "department": "reception",
+   "itemName": "Fanta",
+   "itemUnit": "Dozen(s)"
+  },
+  {
+   "id": 19,
+   "date": "February 3rd, 2020",
+   "quantity": 10,
+   "itemQuantityBalance": 5,
+   "supplier": null,
+   "department": "reception",
+   "itemName": "Coca Cola",
+   "itemUnit": "Gallon(s)"
+  },
+  {
+   "id": 20,
+   "date": "February 3rd, 2020",
+   "quantity": 10,
+   "itemQuantityBalance": 12,
+   "supplier": null,
+   "department": "hotel",
+   "itemName": "Air Freshner",
+   "itemUnit": "Stick(s)"
+  },
+  {
+   "id": 21,
+   "date": "February 3rd, 2020",
+   "quantity": 30,
+   "itemQuantityBalance": 12,
+   "supplier": null,
+   "department": "kitchen",
+   "itemName": "Rice",
+   "itemUnit": "Gallon(s)"
+  },
+  {
+   "id": 22,
+   "date": "February 3rd, 2020",
+   "quantity": 10,
+   "itemQuantityBalance": 10,
+   "supplier": null,
+   "department": "reception",
+   "itemName": "Rice",
+   "itemUnit": "Dozen(s)"
+  },
+  {
+   "id": 23,
+   "date": "February 3rd, 2020",
+   "quantity": 30,
+   "itemQuantityBalance": 10,
+   "supplier": null,
+   "department": "bar",
+   "itemName": "Malt",
+   "itemUnit": "Dozen(s)"
+  },
+  {
+   "id": 24,
+   "date": "February 3rd, 2020",
+   "quantity": 20,
+   "itemQuantityBalance": 10,
+   "supplier": null,
+   "department": "reception",
+   "itemName": "Rice",
+   "itemUnit": "Gallon(s)"
+  },
+  {
+   "id": 25,
+   "date": "February 3rd, 2020",
+   "quantity": 30,
+   "itemQuantityBalance": 5,
+   "supplier": null,
+   "department": "reception",
+   "itemName": "Fanta",
+   "itemUnit": "Stick(s)"
+  },
+  {
+   "id": 26,
+   "date": "February 3rd, 2020",
+   "quantity": 10,
+   "itemQuantityBalance": 20,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Air Freshner",
+   "itemUnit": "Stick(s)"
+  },
+  {
+   "id": 27,
+   "date": "February 3rd, 2020",
+   "quantity": 30,
+   "itemQuantityBalance": 10,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Fanta",
+   "itemUnit": "Stick(s)"
+  },
+  {
+   "id": 28,
+   "date": "February 3rd, 2020",
+   "quantity": 30,
+   "itemQuantityBalance": 12,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Rice",
+   "itemUnit": "Stick(s)"
+  },
+  {
+   "id": 29,
+   "date": "February 3rd, 2020",
+   "quantity": 20,
+   "itemQuantityBalance": 5,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Fanta",
+   "itemUnit": "Stick(s)"
+  },
+  {
+   "id": 30,
+   "date": "February 3rd, 2020",
+   "quantity": 5,
+   "itemQuantityBalance": 10,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Fanta",
+   "itemUnit": "Bag(s)"
+  },
+  {
+   "id": 31,
+   "date": "February 3rd, 2020",
+   "quantity": 20,
+   "itemQuantityBalance": 12,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Malt",
+   "itemUnit": "Bag(s)"
+  },
+  {
+   "id": 32,
+   "date": "February 3rd, 2020",
+   "quantity": 5,
+   "itemQuantityBalance": 10,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Rice",
+   "itemUnit": "Dozen(s)"
+  },
+  {
+   "id": 33,
+   "date": "February 3rd, 2020",
+   "quantity": 10,
+   "itemQuantityBalance": 10,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Coca Cola",
+   "itemUnit": "Gallon(s)"
+  },
+  {
+   "id": 34,
+   "date": "February 3rd, 2020",
+   "quantity": 20,
+   "itemQuantityBalance": 10,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Plantain",
+   "itemUnit": "Stick(s)"
+  },
+  {
+   "id": 35,
+   "date": "February 3rd, 2020",
+   "quantity": 30,
+   "itemQuantityBalance": 10,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Air Freshner",
+   "itemUnit": "Gallon(s)"
+  },
+  {
+   "id": 36,
+   "date": "February 3rd, 2020",
+   "quantity": 10,
+   "itemQuantityBalance": 20,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Malt",
+   "itemUnit": "Stick(s)"
+  },
+  {
+   "id": 37,
+   "date": "February 3rd, 2020",
+   "quantity": 20,
+   "itemQuantityBalance": 5,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Rice",
+   "itemUnit": "Gallon(s)"
+  },
+  {
+   "id": 38,
+   "date": "February 3rd, 2020",
+   "quantity": 20,
+   "itemQuantityBalance": 10,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Fanta",
+   "itemUnit": "Bottle(s)"
+  },
+  {
+   "id": 39,
+   "date": "February 3rd, 2020",
+   "quantity": 10,
+   "itemQuantityBalance": 20,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Rice",
+   "itemUnit": "Bag(s)"
+  },
+  {
+   "id": 40,
+   "date": "February 3rd, 2020",
+   "quantity": 30,
+   "itemQuantityBalance": 10,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Air Freshner",
+   "itemUnit": "Gallon(s)"
+  },
+  {
+   "id": 41,
+   "date": "February 3rd, 2020",
+   "quantity": 5,
+   "itemQuantityBalance": 5,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Fanta",
+   "itemUnit": "Bottle(s)"
+  },
+  {
+   "id": 42,
+   "date": "February 3rd, 2020",
+   "quantity": 5,
+   "itemQuantityBalance": 20,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Plantain",
+   "itemUnit": "Dozen(s)"
+  },
+  {
+   "id": 43,
+   "date": "February 3rd, 2020",
+   "quantity": 30,
+   "itemQuantityBalance": 10,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Air Freshner",
+   "itemUnit": "Bag(s)"
+  },
+  {
+   "id": 44,
+   "date": "February 3rd, 2020",
+   "quantity": 5,
+   "itemQuantityBalance": 20,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Fanta",
+   "itemUnit": "Bottle(s)"
+  },
+  {
+   "id": 45,
+   "date": "February 3rd, 2020",
+   "quantity": 30,
+   "itemQuantityBalance": 10,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Coca Cola",
+   "itemUnit": "Bag(s)"
+  },
+  {
+   "id": 46,
+   "date": "February 3rd, 2020",
+   "quantity": 20,
+   "itemQuantityBalance": 5,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Air Freshner",
+   "itemUnit": "Bottle(s)"
+  },
+  {
+   "id": 47,
+   "date": "February 3rd, 2020",
+   "quantity": 20,
+   "itemQuantityBalance": 5,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Rice",
+   "itemUnit": "Gallon(s)"
+  },
+  {
+   "id": 48,
+   "date": "February 3rd, 2020",
+   "quantity": 5,
+   "itemQuantityBalance": 20,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Rice",
+   "itemUnit": "Stick(s)"
+  },
+  {
+   "id": 49,
+   "date": "February 3rd, 2020",
+   "quantity": 10,
+   "itemQuantityBalance": 12,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Plantain",
+   "itemUnit": "Bottle(s)"
+  },
+  {
+   "id": 50,
+   "date": "February 3rd, 2020",
+   "quantity": 10,
+   "itemQuantityBalance": 12,
+   "supplier": "Random Supplier",
+   "department": null,
+   "itemName": "Rice",
+   "itemUnit": "Gallon(s)"
+  }
+ ],
+ "queries": [
+  {
+   "id": 1,
+   "expectedQuantity": 35,
+   "actualQuantity": 15,
+   "item": {
+    "id": 3,
+    "name": "Random Item"
+   },
+   "date": "March 2nd, 2020"
+  },
+  {
+   "id": 2,
+   "expectedQuantity": 30,
+   "actualQuantity": 10,
+   "item": {
+    "id": 3,
+    "name": "Random Item"
+   },
+   "date": "March 2nd, 2020"
+  },
+  {
+   "id": 3,
+   "expectedQuantity": 35,
+   "actualQuantity": 15,
+   "item": {
+    "id": 3,
+    "name": "Random Item"
+   },
+   "date": "March 2nd, 2020"
+  },
+  {
+   "id": 4,
+   "expectedQuantity": 50,
+   "actualQuantity": 20,
+   "item": {
+    "id": 3,
+    "name": "Random Item"
+   },
+   "date": "March 2nd, 2020"
+  },
+  {
+   "id": 5,
+   "expectedQuantity": 35,
+   "actualQuantity": 15,
+   "item": {
+    "id": 3,
+    "name": "Random Item"
+   },
+   "date": "March 2nd, 2020"
+  },
+  {
+   "id": 6,
+   "expectedQuantity": 35,
+   "actualQuantity": 10,
+   "item": {
+    "id": 3,
+    "name": "Random Item"
+   },
+   "date": "March 2nd, 2020"
+  },
+  {
+   "id": 7,
+   "expectedQuantity": 50,
+   "actualQuantity": 20,
+   "item": {
+    "id": 3,
+    "name": "Random Item"
+   },
+   "date": "March 2nd, 2020"
+  }
+ ],
+ "users": [
+  {
+   "id": 1,
+   "firstName": "Summer",
+   "lastName": "Reynolds",
+   "role": "administrator",
+   "departments": "hotel",
+   "username": "Adalberto",
+   "password": "CJp0pfpezYx8Y77"
+  },
+  {
+   "id": 2,
+   "firstName": "Linwood",
+   "lastName": "Walter",
+   "role": "accountant",
+   "departments": "hotel",
+   "username": "Raven",
+   "password": "2LWjeG_IW6Kvn78"
+  },
+  {
+   "id": 3,
+   "firstName": "Flavie",
+   "lastName": "Schaefer",
+   "role": "accountant",
+   "departments": "all departments",
+   "username": "Doris",
+   "password": "Cq9h8tF1euM8B_B"
+  },
+  {
+   "id": 4,
+   "firstName": "Alyson",
+   "lastName": "Eichmann",
+   "role": "receptionist",
+   "departments": "all departments",
+   "username": "Demond",
+   "password": "tFkaVD3L97k2WOP"
+  },
+  {
+   "id": 5,
+   "firstName": "Kiana",
+   "lastName": "Braun",
+   "role": "MD",
+   "departments": "all departments",
+   "username": "Josephine",
+   "password": "xyCUHWZjXcesYNu"
+  },
+  {
+   "id": 6,
+   "firstName": "Trevor",
+   "lastName": "Ernser",
+   "role": "receptionist",
+   "departments": "bar",
+   "username": "Andreane",
+   "password": "mrRdTMOdXqdeGEJ"
+  },
+  {
+   "id": 7,
+   "firstName": "Flo",
+   "lastName": "Boehm",
+   "role": "MD",
+   "departments": "all departments",
+   "username": "Leila",
+   "password": "6oaU4uYGKCMLjHz"
+  },
+  {
+   "id": 8,
+   "firstName": "Alda",
+   "lastName": "Waelchi",
+   "role": "accountant",
+   "departments": "bar",
+   "username": "Bernard",
+   "password": "__cq8Kr2vh5sQT_"
+  },
+  {
+   "id": 9,
+   "firstName": "Tyrique",
+   "lastName": "Gerhold",
+   "role": "receptionist",
+   "departments": "all departments",
+   "username": "Noe",
+   "password": "nIbVJbZ5SPL4p6u"
+  },
+  {
+   "id": 10,
+   "firstName": "Cecil",
+   "lastName": "Huel",
+   "role": "accountant",
+   "departments": "bar",
+   "username": "Erick",
+   "password": "wIn6qKSGxb74w8p"
+  },
+  {
+   "id": 11,
+   "firstName": "Sabina",
+   "lastName": "Cronin",
+   "role": "MD",
+   "departments": "hotel",
+   "username": "Leslie",
+   "password": "0P2g5rH9j7NKhKF"
+  },
+  {
+   "id": 12,
+   "firstName": "Delphia",
+   "lastName": "Turner",
+   "role": "MD",
+   "departments": "bar",
+   "username": "Burdette",
+   "password": "pdN8fH69EgTRuVR"
+  },
+  {
+   "id": 13,
+   "firstName": "Maddison",
+   "lastName": "Ruecker",
+   "role": "accountant",
+   "departments": "all departments",
+   "username": "Louie",
+   "password": "ii4DM10qOmWv6DX"
+  },
+  {
+   "id": 14,
+   "firstName": "Leanne",
+   "lastName": "Auer",
+   "role": "accountant",
+   "departments": "bar",
+   "username": "Margret",
+   "password": "uA_rXTjK3kuV_F_"
+  },
+  {
+   "id": 15,
+   "firstName": "Leola",
+   "lastName": "Pacocha",
+   "role": "receptionist",
+   "departments": "kitchen",
+   "username": "Raphael",
+   "password": "uhFAkxLxfwf6Cm0"
+  },
+  {
+   "id": 16,
+   "firstName": "Okey",
+   "lastName": "Ledner",
+   "role": "MD",
+   "departments": "hotel",
+   "username": "Vladimir",
+   "password": "2DFWokjaxA541u7"
+  },
+  {
+   "id": 17,
+   "firstName": "Megane",
+   "lastName": "Torphy",
+   "role": "accountant",
+   "departments": "all departments",
+   "username": "Salvatore",
+   "password": "MxWDLfw3wT9UMVK"
+  },
+  {
+   "id": 18,
+   "firstName": "Patricia",
+   "lastName": "Schimmel",
+   "role": "MD",
+   "departments": "all departments",
+   "username": "Kailyn",
+   "password": "iXbv9griXFIv2x7"
+  },
+  {
+   "id": 19,
+   "firstName": "Bruce",
+   "lastName": "Ondricka",
+   "role": "administrator",
+   "departments": "hotel",
+   "username": "Tracey",
+   "password": "bBDXqbvZTJpvuZQ"
+  },
+  {
+   "id": 20,
+   "firstName": "Dorian",
+   "lastName": "Windler",
+   "role": "administrator",
+   "departments": "hotel",
+   "username": "Cyrus",
+   "password": "cn2fcd6Dk47vEU5"
+  },
+  {
+   "id": 21,
+   "firstName": "Lolita",
+   "lastName": "Lemke",
+   "role": "accountant",
+   "departments": "all departments",
+   "username": "George",
+   "password": "3T5RBB5v22KEJmZ"
+  },
+  {
+   "id": 22,
+   "firstName": "Destiny",
+   "lastName": "Lindgren",
+   "role": "receptionist",
+   "departments": "hotel",
+   "username": "Herminio",
+   "password": "u8B5vFErsqEPzIR"
+  },
+  {
+   "id": 23,
+   "firstName": "Misty",
+   "lastName": "Rodriguez",
+   "role": "accountant",
+   "departments": "kitchen",
+   "username": "Ramona",
+   "password": "shH2HnhWLeNbudI"
+  },
+  {
+   "id": 24,
+   "firstName": "Randal",
+   "lastName": "McDermott",
+   "role": "administrator",
+   "departments": "bar",
+   "username": "Vicky",
+   "password": "dxuXFOwXUCXJAwU"
+  },
+  {
+   "id": 25,
+   "firstName": "Cletus",
+   "lastName": "Shanahan",
+   "role": "receptionist",
+   "departments": "bar",
+   "username": "Keenan",
+   "password": "2sLAP_UjfqYGQAP"
+  },
+  {
+   "id": 26,
+   "firstName": "Breanne",
+   "lastName": "Sanford",
+   "role": "administrator",
+   "departments": "all departments",
+   "username": "Gianni",
+   "password": "PmKEImsEt1U6SWy"
+  },
+  {
+   "id": 27,
+   "firstName": "Clarabelle",
+   "lastName": "Schoen",
+   "role": "receptionist",
+   "departments": "kitchen",
+   "username": "Pamela",
+   "password": "KCsocKvEJMqCIBA"
+  },
+  {
+   "id": 28,
+   "firstName": "Olin",
+   "lastName": "White",
+   "role": "accountant",
+   "departments": "kitchen",
+   "username": "Karley",
+   "password": "2ofeiFERUeBAtYP"
+  },
+  {
+   "id": 29,
+   "firstName": "Justice",
+   "lastName": "Bartoletti",
+   "role": "MD",
+   "departments": "all departments",
+   "username": "Lew",
+   "password": "T9Tlno6WLx5la5B"
+  },
+  {
+   "id": 30,
+   "firstName": "Anjali",
+   "lastName": "Senger",
+   "role": "receptionist",
+   "departments": "hotel",
+   "username": "Denis",
+   "password": "t7veUVE9spH6pQA"
+  },
+  {
+   "id": 31,
+   "firstName": "Heber",
+   "lastName": "Franecki",
+   "role": "accountant",
+   "departments": "kitchen",
+   "username": "Jacinto",
+   "password": "XhlqliwffYw8VQL"
+  },
+  {
+   "id": 32,
+   "firstName": "Arnold",
+   "lastName": "Lockman",
+   "role": "administrator",
+   "departments": "bar",
+   "username": "Elinore",
+   "password": "EIV3XvAYpZqqP7H"
+  },
+  {
+   "id": 33,
+   "firstName": "Abigail",
+   "lastName": "Bartell",
+   "role": "accountant",
+   "departments": "kitchen",
+   "username": "Victor",
+   "password": "rTLmt8P0egVQ5ud"
+  },
+  {
+   "id": 34,
+   "firstName": "Francis",
+   "lastName": "Wolff",
+   "role": "receptionist",
+   "departments": "all departments",
+   "username": "Jermain",
+   "password": "Zdy4A40hHqAGsYg"
+  },
+  {
+   "id": 35,
+   "firstName": "Edyth",
+   "lastName": "Wiza",
+   "role": "administrator",
+   "departments": "bar",
+   "username": "Vince",
+   "password": "53zBGJQmcqGHsdB"
+  },
+  {
+   "id": 36,
+   "firstName": "Reyna",
+   "lastName": "Will",
+   "role": "administrator",
+   "departments": "hotel",
+   "username": "Geoffrey",
+   "password": "WvcccU5cNhIqLmm"
+  },
+  {
+   "id": 37,
+   "firstName": "Lia",
+   "lastName": "Halvorson",
+   "role": "MD",
+   "departments": "hotel",
+   "username": "Terrence",
+   "password": "eSFe26zQb8bPWsf"
+  },
+  {
+   "id": 38,
+   "firstName": "Santina",
+   "lastName": "Lynch",
+   "role": "MD",
+   "departments": "all departments",
+   "username": "Brice",
+   "password": "uSyp8HrprfsKWDF"
+  },
+  {
+   "id": 39,
+   "firstName": "Syble",
+   "lastName": "Hackett",
+   "role": "administrator",
+   "departments": "hotel",
+   "username": "Chris",
+   "password": "_cwxK3aX1rHvoxz"
+  },
+  {
+   "id": 40,
+   "firstName": "Delbert",
+   "lastName": "O'Hara",
+   "role": "accountant",
+   "departments": "bar",
+   "username": "Mercedes",
+   "password": "G8kFSqBLSUNYFRU"
+  },
+  {
+   "id": 41,
+   "firstName": "Marcel",
+   "lastName": "Mosciski",
+   "role": "administrator",
+   "departments": "all departments",
+   "username": "Celine",
+   "password": "Js7YxyAbLB7SDO9"
+  },
+  {
+   "id": 42,
+   "firstName": "Amir",
+   "lastName": "Greenfelder",
+   "role": "MD",
+   "departments": "hotel",
+   "username": "Katlyn",
+   "password": "PlzvY5fpyKklrvX"
+  },
+  {
+   "id": 43,
+   "firstName": "Audie",
+   "lastName": "Vandervort",
+   "role": "MD",
+   "departments": "hotel",
+   "username": "Ezequiel",
+   "password": "_OrmpmgzXy9LBZy"
+  },
+  {
+   "id": 44,
+   "firstName": "Maddison",
+   "lastName": "Douglas",
+   "role": "receptionist",
+   "departments": "bar",
+   "username": "Marcelle",
+   "password": "O7e4WqvR9tXw53K"
+  },
+  {
+   "id": 45,
+   "firstName": "Ilene",
+   "lastName": "Kunde",
+   "role": "administrator",
+   "departments": "bar",
+   "username": "Richie",
+   "password": "AirpM2afHNnCnWl"
+  },
+  {
+   "id": 46,
+   "firstName": "Rex",
+   "lastName": "Boyle",
+   "role": "accountant",
+   "departments": "all departments",
+   "username": "Merl",
+   "password": "HaGvhgo44vlIfFV"
+  },
+  {
+   "id": 47,
+   "firstName": "Mary",
+   "lastName": "Bartell",
+   "role": "MD",
+   "departments": "all departments",
+   "username": "Geovany",
+   "password": "KDMnIR4Q5ghCeIr"
+  },
+  {
+   "id": 48,
+   "firstName": "Francisco",
+   "lastName": "Marquardt",
+   "role": "MD",
+   "departments": "all departments",
+   "username": "Danyka",
+   "password": "zTm2dAhmJkt15Dy"
+  },
+  {
+   "id": 49,
+   "firstName": "Vito",
+   "lastName": "Shields",
+   "role": "accountant",
+   "departments": "kitchen",
+   "username": "Monty",
+   "password": "AYRSiwJMeCCRG9I"
+  },
+  {
+   "id": 50,
+   "firstName": "Christine",
+   "lastName": "Rempel",
+   "role": "MD",
+   "departments": "hotel",
+   "username": "Janice",
+   "password": "SXoiLiNUytIFIyR"
+  }
+ ],
+ "roles": [
+  {
+   "id": 1,
+   "name": "MD",
+   "permissions": [
+    "pos",
+    "can-view-forms"
+   ]
+  },
+  {
+   "id": 2,
+   "name": "MD",
+   "permissions": [
+    "pos",
+    "can-view-forms"
+   ]
+  },
+  {
+   "id": 3,
+   "name": "Sales Person",
+   "permissions": [
+    "pos",
+    "can-view-forms"
+   ]
+  },
+  {
+   "id": 4,
+   "name": "MD",
+   "permissions": [
+    "pos",
+    "can-view-forms"
+   ]
+  },
+  {
+   "id": 5,
+   "name": "Administrator",
+   "permissions": [
+    "pos",
+    "can-view-forms"
+   ]
+  },
+  {
+   "id": 6,
+   "name": "MD",
+   "permissions": [
+    "pos",
+    "can-view-forms"
+   ]
+  },
+  {
+   "id": 7,
+   "name": "Sales Person",
+   "permissions": [
+    "pos",
+    "can-view-forms"
+   ]
+  },
+  {
+   "id": 8,
+   "name": "MD",
+   "permissions": [
+    "pos",
+    "can-view-forms"
+   ]
+  },
+  {
+   "id": 9,
+   "name": "MD",
+   "permissions": [
+    "pos",
+    "can-view-forms"
+   ]
+  },
+  {
+   "id": 10,
+   "name": "MD",
+   "permissions": [
+    "pos",
+    "can-view-forms"
+   ]
+  }
+ ],
+ "salesItems": [
+  {
+   "id": 1,
+   "name": "Incredible Steel Hat",
+   "unit": "Plates",
+   "pricePerUnit": 3000,
+   "department": "reception"
+  },
+  {
+   "id": 2,
+   "name": "Practical Wooden Towels",
+   "unit": "Gallons",
+   "pricePerUnit": 1500,
+   "department": "bar"
+  },
+  {
+   "id": 3,
+   "name": "Gorgeous Granite Table",
+   "unit": "Plates",
+   "pricePerUnit": 1500,
+   "department": "bar"
+  },
+  {
+   "id": 4,
+   "name": "Tasty Fresh Cheese",
+   "unit": "Tubes",
+   "pricePerUnit": 1000,
+   "department": "reception"
+  },
+  {
+   "id": 5,
+   "name": "Rustic Soft Mouse",
+   "unit": "Gallons",
+   "pricePerUnit": 1000,
+   "department": "kitchen"
+  },
+  {
+   "id": 6,
+   "name": "Rustic Fresh Hat",
+   "unit": "Plates",
+   "pricePerUnit": 500,
+   "department": "reception"
+  },
+  {
+   "id": 7,
+   "name": "Incredible Steel Towels",
+   "unit": "Plates",
+   "pricePerUnit": 1000,
+   "department": "reception"
+  },
+  {
+   "id": 8,
+   "name": "Handcrafted Steel Shirt",
+   "unit": "Tubes",
+   "pricePerUnit": 1500,
+   "department": "kitchen"
+  },
+  {
+   "id": 9,
+   "name": "Gorgeous Metal Mouse",
+   "unit": "Tubes",
+   "pricePerUnit": 5000,
+   "department": "bar"
+  },
+  {
+   "id": 10,
+   "name": "Handcrafted Steel Cheese",
+   "unit": "Plates",
+   "pricePerUnit": 5000,
+   "department": "bar"
+  },
+  {
+   "id": 11,
+   "name": "Gorgeous Cotton Tuna",
+   "unit": "Gallons",
+   "pricePerUnit": 500,
+   "department": "bar"
+  },
+  {
+   "id": 12,
+   "name": "Handcrafted Rubber Pizza",
+   "unit": "Gallons",
+   "pricePerUnit": 500,
+   "department": "bar"
+  },
+  {
+   "id": 13,
+   "name": "Small Fresh Shirt",
+   "unit": "Tubes",
+   "pricePerUnit": 5000,
+   "department": "reception"
+  },
+  {
+   "id": 14,
+   "name": "Small Frozen Car",
+   "unit": "Gallons",
+   "pricePerUnit": 1000,
+   "department": "kitchen"
+  },
+  {
+   "id": 15,
+   "name": "Tasty Concrete Cheese",
+   "unit": "Tubes",
+   "pricePerUnit": 5000,
+   "department": "reception"
+  },
+  {
+   "id": 16,
+   "name": "Rustic Granite Soap",
+   "unit": "Tubes",
+   "pricePerUnit": 1000,
+   "department": "bar"
+  },
+  {
+   "id": 17,
+   "name": "Incredible Steel Keyboard",
+   "unit": "Tubes",
+   "pricePerUnit": 1000,
+   "department": "bar"
+  },
+  {
+   "id": 18,
+   "name": "Tasty Soft Mouse",
+   "unit": "Tubes",
+   "pricePerUnit": 3000,
+   "department": "bar"
+  },
+  {
+   "id": 19,
+   "name": "Ergonomic Granite Tuna",
+   "unit": "Tubes",
+   "pricePerUnit": 1500,
+   "department": "bar"
+  },
+  {
+   "id": 20,
+   "name": "Intelligent Frozen Car",
+   "unit": "Plates",
+   "pricePerUnit": 3000,
+   "department": "bar"
+  },
+  {
+   "id": 21,
+   "name": "Tasty Steel Bacon",
+   "unit": "Tubes",
+   "pricePerUnit": 5000,
+   "department": "bar"
+  },
+  {
+   "id": 22,
+   "name": "Small Cotton Computer",
+   "unit": "Gallons",
+   "pricePerUnit": 5000,
+   "department": "bar"
+  },
+  {
+   "id": 23,
+   "name": "Unbranded Rubber Shoes",
+   "unit": "Plates",
+   "pricePerUnit": 1500,
+   "department": "reception"
+  },
+  {
+   "id": 24,
+   "name": "Ergonomic Cotton Table",
+   "unit": "Gallons",
+   "pricePerUnit": 1000,
+   "department": "bar"
+  },
+  {
+   "id": 25,
+   "name": "Refined Frozen Chips",
+   "unit": "Plates",
+   "pricePerUnit": 1000,
+   "department": "bar"
+  },
+  {
+   "id": 26,
+   "name": "Sleek Cotton Car",
+   "unit": "Plates",
+   "pricePerUnit": 500,
+   "department": "bar"
+  },
+  {
+   "id": 27,
+   "name": "Licensed Granite Sausages",
+   "unit": "Tubes",
+   "pricePerUnit": 500,
+   "department": "kitchen"
+  },
+  {
+   "id": 28,
+   "name": "Ergonomic Rubber Sausages",
+   "unit": "Tubes",
+   "pricePerUnit": 1000,
+   "department": "bar"
+  },
+  {
+   "id": 29,
+   "name": "Ergonomic Frozen Mouse",
+   "unit": "Tubes",
+   "pricePerUnit": 5000,
+   "department": "bar"
+  },
+  {
+   "id": 30,
+   "name": "Generic Soft Computer",
+   "unit": "Plates",
+   "pricePerUnit": 5000,
+   "department": "kitchen"
+  },
+  {
+   "id": 31,
+   "name": "Gorgeous Frozen Car",
+   "unit": "Gallons",
+   "pricePerUnit": 3000,
+   "department": "bar"
+  },
+  {
+   "id": 32,
+   "name": "Licensed Rubber Bike",
+   "unit": "Plates",
+   "pricePerUnit": 1000,
+   "department": "kitchen"
+  },
+  {
+   "id": 33,
+   "name": "Fantastic Frozen Computer",
+   "unit": "Gallons",
+   "pricePerUnit": 1000,
+   "department": "kitchen"
+  },
+  {
+   "id": 34,
+   "name": "Fantastic Steel Table",
+   "unit": "Plates",
+   "pricePerUnit": 1000,
+   "department": "reception"
+  },
+  {
+   "id": 35,
+   "name": "Gorgeous Soft Tuna",
+   "unit": "Gallons",
+   "pricePerUnit": 1500,
+   "department": "reception"
+  },
+  {
+   "id": 36,
+   "name": "Unbranded Soft Hat",
+   "unit": "Tubes",
+   "pricePerUnit": 3000,
+   "department": "bar"
+  },
+  {
+   "id": 37,
+   "name": "Unbranded Wooden Bacon",
+   "unit": "Plates",
+   "pricePerUnit": 1500,
+   "department": "kitchen"
+  },
+  {
+   "id": 38,
+   "name": "Unbranded Concrete Sausages",
+   "unit": "Gallons",
+   "pricePerUnit": 1500,
+   "department": "reception"
+  },
+  {
+   "id": 39,
+   "name": "Intelligent Plastic Pizza",
+   "unit": "Gallons",
+   "pricePerUnit": 3000,
+   "department": "reception"
+  },
+  {
+   "id": 40,
+   "name": "Generic Frozen Soap",
+   "unit": "Plates",
+   "pricePerUnit": 1000,
+   "department": "reception"
+  },
+  {
+   "id": 41,
+   "name": "Generic Frozen Gloves",
+   "unit": "Gallons",
+   "pricePerUnit": 3000,
+   "department": "kitchen"
+  },
+  {
+   "id": 42,
+   "name": "Generic Cotton Salad",
+   "unit": "Gallons",
+   "pricePerUnit": 500,
+   "department": "reception"
+  },
+  {
+   "id": 43,
+   "name": "Ergonomic Cotton Computer",
+   "unit": "Plates",
+   "pricePerUnit": 1000,
+   "department": "reception"
+  },
+  {
+   "id": 44,
+   "name": "Unbranded Plastic Keyboard",
+   "unit": "Tubes",
+   "pricePerUnit": 5000,
+   "department": "reception"
+  },
+  {
+   "id": 45,
+   "name": "Handmade Metal Cheese",
+   "unit": "Gallons",
+   "pricePerUnit": 500,
+   "department": "reception"
+  },
+  {
+   "id": 46,
+   "name": "Intelligent Granite Gloves",
+   "unit": "Gallons",
+   "pricePerUnit": 1000,
+   "department": "reception"
+  },
+  {
+   "id": 47,
+   "name": "Handcrafted Rubber Shoes",
+   "unit": "Plates",
+   "pricePerUnit": 1000,
+   "department": "reception"
+  },
+  {
+   "id": 48,
+   "name": "Unbranded Frozen Cheese",
+   "unit": "Tubes",
+   "pricePerUnit": 500,
+   "department": "reception"
+  },
+  {
+   "id": 49,
+   "name": "Awesome Frozen Towels",
+   "unit": "Plates",
+   "pricePerUnit": 5000,
+   "department": "kitchen"
+  },
+  {
+   "id": 50,
+   "name": "Licensed Fresh Keyboard",
+   "unit": "Tubes",
+   "pricePerUnit": 1500,
+   "department": "reception"
+  },
+  {
+   "id": 51,
+   "name": "Gorgeous Concrete Car",
+   "unit": "Plates",
+   "pricePerUnit": 3000,
+   "department": "bar"
+  },
+  {
+   "id": 52,
+   "name": "Gorgeous Rubber Shoes",
+   "unit": "Gallons",
+   "pricePerUnit": 500,
+   "department": "reception"
+  },
+  {
+   "id": 53,
+   "name": "Gorgeous Frozen Fish",
+   "unit": "Plates",
+   "pricePerUnit": 500,
+   "department": "reception"
+  },
+  {
+   "id": 54,
+   "name": "Gorgeous Soft Cheese",
+   "unit": "Plates",
+   "pricePerUnit": 500,
+   "department": "kitchen"
+  },
+  {
+   "id": 55,
+   "name": "Incredible Fresh Cheese",
+   "unit": "Gallons",
+   "pricePerUnit": 1500,
+   "department": "kitchen"
+  },
+  {
+   "id": 56,
+   "name": "Tasty Cotton Soap",
+   "unit": "Tubes",
+   "pricePerUnit": 5000,
+   "department": "reception"
+  },
+  {
+   "id": 57,
+   "name": "Small Fresh Bacon",
+   "unit": "Tubes",
+   "pricePerUnit": 1500,
+   "department": "bar"
+  },
+  {
+   "id": 58,
+   "name": "Incredible Steel Cheese",
+   "unit": "Plates",
+   "pricePerUnit": 3000,
+   "department": "kitchen"
+  },
+  {
+   "id": 59,
+   "name": "Handcrafted Frozen Chips",
+   "unit": "Plates",
+   "pricePerUnit": 500,
+   "department": "bar"
+  },
+  {
+   "id": 60,
+   "name": "Sleek Granite Computer",
+   "unit": "Tubes",
+   "pricePerUnit": 5000,
+   "department": "kitchen"
+  }
+ ],
+ "departments": [
+  {
+   "id": 1,
+   "name": "Kitchen"
+  },
+  {
+   "id": 2,
+   "name": "Garden"
+  },
+  {
+   "id": 3,
+   "name": "Garden"
+  },
+  {
+   "id": 4,
+   "name": "Garden"
+  },
+  {
+   "id": 5,
+   "name": "Garden"
+  }
+ ],
+ "roomsConfig": [
+  {
+   "id": 1,
+   "number": 109,
+   "type": 7
+  },
+  {
+   "id": 2,
+   "number": 103,
+   "type": 7
+  },
+  {
+   "id": 3,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 4,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 5,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 6,
+   "number": 105,
+   "type": 7
+  },
+  {
+   "id": 7,
+   "number": 103,
+   "type": 7
+  },
+  {
+   "id": 8,
+   "number": 109,
+   "type": 7
+  },
+  {
+   "id": 9,
+   "number": 109,
+   "type": 7
+  },
+  {
+   "id": 10,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 11,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 12,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 13,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 14,
+   "number": 105,
+   "type": 7
+  },
+  {
+   "id": 15,
+   "number": 103,
+   "type": 7
+  },
+  {
+   "id": 16,
+   "number": 103,
+   "type": 7
+  },
+  {
+   "id": 17,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 18,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 19,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 20,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 21,
+   "number": 103,
+   "type": 7
+  },
+  {
+   "id": 22,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 23,
+   "number": 103,
+   "type": 7
+  },
+  {
+   "id": 24,
+   "number": 109,
+   "type": 7
+  },
+  {
+   "id": 25,
+   "number": 103,
+   "type": 7
+  },
+  {
+   "id": 26,
+   "number": 109,
+   "type": 7
+  },
+  {
+   "id": 27,
+   "number": 105,
+   "type": 7
+  },
+  {
+   "id": 28,
+   "number": 109,
+   "type": 7
+  },
+  {
+   "id": 29,
+   "number": 105,
+   "type": 7
+  },
+  {
+   "id": 30,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 31,
+   "number": 109,
+   "type": 7
+  },
+  {
+   "id": 32,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 33,
+   "number": 103,
+   "type": 7
+  },
+  {
+   "id": 34,
+   "number": 109,
+   "type": 7
+  },
+  {
+   "id": 35,
+   "number": 109,
+   "type": 7
+  },
+  {
+   "id": 36,
+   "number": 103,
+   "type": 7
+  },
+  {
+   "id": 37,
+   "number": 105,
+   "type": 7
+  },
+  {
+   "id": 38,
+   "number": 105,
+   "type": 7
+  },
+  {
+   "id": 39,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 40,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 41,
+   "number": 105,
+   "type": 7
+  },
+  {
+   "id": 42,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 43,
+   "number": 103,
+   "type": 7
+  },
+  {
+   "id": 44,
+   "number": 109,
+   "type": 7
+  },
+  {
+   "id": 45,
+   "number": 109,
+   "type": 7
+  },
+  {
+   "id": 46,
+   "number": 105,
+   "type": 7
+  },
+  {
+   "id": 47,
+   "number": 105,
+   "type": 7
+  },
+  {
+   "id": 48,
+   "number": 109,
+   "type": 7
+  },
+  {
+   "id": 49,
+   "number": 105,
+   "type": 7
+  },
+  {
+   "id": 50,
+   "number": 105,
+   "type": 7
+  },
+  {
+   "id": 51,
+   "number": 105,
+   "type": 7
+  },
+  {
+   "id": 52,
+   "number": 109,
+   "type": 7
+  },
+  {
+   "id": 53,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 54,
+   "number": 105,
+   "type": 7
+  },
+  {
+   "id": 55,
+   "number": 109,
+   "type": 7
+  },
+  {
+   "id": 56,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 57,
+   "number": 105,
+   "type": 7
+  },
+  {
+   "id": 58,
+   "number": 109,
+   "type": 7
+  },
+  {
+   "id": 59,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 60,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 61,
+   "number": 105,
+   "type": 7
+  },
+  {
+   "id": 62,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 63,
+   "number": 103,
+   "type": 7
+  },
+  {
+   "id": 64,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 65,
+   "number": 105,
+   "type": 7
+  },
+  {
+   "id": 66,
+   "number": 105,
+   "type": 7
+  },
+  {
+   "id": 67,
+   "number": 103,
+   "type": 7
+  },
+  {
+   "id": 68,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 69,
+   "number": 101,
+   "type": 7
+  },
+  {
+   "id": 70,
+   "number": 103,
+   "type": 7
+  }
+ ],
+ "roomTypes": [
+  {
+   "id": 1,
+   "name": "Classic",
+   "pricePerNight": 20000
+  },
+  {
+   "id": 2,
+   "name": "VIP",
+   "pricePerNight": 7000
+  },
+  {
+   "id": 3,
+   "name": "VIP",
+   "pricePerNight": 10000
+  },
+  {
+   "id": 4,
+   "name": "Classic",
+   "pricePerNight": 7000
+  },
+  {
+   "id": 5,
+   "name": "Classic",
+   "pricePerNight": 7000
+  },
+  {
+   "id": 6,
+   "name": "Deluxe",
+   "pricePerNight": 3000
+  }
+ ]
+}

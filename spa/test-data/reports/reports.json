@@ -1,0 +1,1768 @@
+{
+ "sales": [
+  {
+   "id": 1,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 2,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 3,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 4,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 5,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 6,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 7,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 8,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 9,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 10,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 11,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 12,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 13,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 14,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 15,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 16,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person B",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 17,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A, room 301",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 18,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 19,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 20,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 21,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person B",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 22,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A, room 301",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 23,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person B",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 24,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person B",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 25,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A, room 301",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 26,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A, room 301",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 27,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person B",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 28,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person B",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 29,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A, room 301",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 30,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A, room 301",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 31,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person B",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 32,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A, room 301",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 33,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 34,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A, room 301",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 35,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person B",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 36,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A, room 301",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 37,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person B",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 38,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 39,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A, room 301",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 40,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person B",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 41,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A, room 301",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 42,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 43,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A, room 301",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 44,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 45,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 0,
+   "balanceDue": 0,
+   "forgivenDebt": 20000,
+   "customerInfo": "Person A, room 301",
+   "status": "complementary",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 46,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A, room 301",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 47,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 48,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 49,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 50,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A, room 301",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 51,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 52,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A, room 301",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 53,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person B",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 54,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 55,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person B",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 56,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person B",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 57,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 58,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 59,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A, room 301",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  },
+  {
+   "id": 60,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 0,
+   "totalPaid": 50000,
+   "balanceDue": 0,
+   "forgivenDebt": 15000,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "discounted",
+   "dateCreated": "20th March, 2020"
+  }
+ ],
+ "creditSales": [
+  {
+   "id": 16,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person B",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 17,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A, room 301",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 18,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 19,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 20,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A again (different spelling)",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 21,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person B",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 22,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A, room 301",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 23,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person B",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 24,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person B",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 25,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A, room 301",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 26,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A, room 301",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 27,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person B",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 28,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person B",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 29,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A, room 301",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  },
+  {
+   "id": 30,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 10000,
+   "totalPaid": 0,
+   "balanceDue": 10000,
+   "forgivenDebt": 0,
+   "customerInfo": "Person A, room 301",
+   "status": "pending",
+   "dateCreated": "29th March, 2020"
+  }
+ ],
+ "pendingCreditSales": [],
+ "cashSales": [
+  {
+   "id": 1,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 2,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 3,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 4,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 5,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 6,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 7,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 8,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 9,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 10,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 11,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 12,
+   "details": "Booked Deluxe Room 107 from Friday, 2nd February 2020 to Tuesday, 5th February, 2020 at N1000 per night",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 13,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 14,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  },
+  {
+   "id": 15,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 70000,
+   "totalPaid": 70000,
+   "balanceDue": 0,
+   "forgivenDebt": 0,
+   "customerInfo": null,
+   "status": "paid",
+   "dateCreated": "5th March, 2020"
+  }
+ ],
+ "orders": [
+  {
+   "id": 1,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 20000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 2,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 3000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 3,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 5000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 4,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 5000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 5,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 20000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 6,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 5000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 7,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 5000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 8,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 3000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 9,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 3000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 10,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 5000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 11,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 20000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 12,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 5000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 13,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 5000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 14,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 20000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 15,
+   "details": "Purchased 2 bottles of coke and 3 bottles of heineken from bar on 3rd February, 2020",
+   "totalDue": 20000,
+   "status": "Pending",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 16,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 17,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 18,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 5000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 19,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 20,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 21,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 5000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 22,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 5000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 23,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 24,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 5000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 25,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 20000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 26,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 27,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 28,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 20000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 29,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 5000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 30,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Fulfilled",
+   "notes": null,
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 31,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 32,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 33,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 20000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 34,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 35,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 5000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 36,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 37,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 5000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 38,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 5000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 39,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 5000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 40,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 20000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 41,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 20000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Bar"
+  },
+  {
+   "id": 42,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 43,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 44,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 20000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  },
+  {
+   "id": 45,
+   "details": "Purchased 3 plates of rice from kitchen. Purchased 1 pack of Chi-Exotic on 5th February, 2020",
+   "totalDue": 3000,
+   "status": "Cancelled",
+   "notes": "Customer cancelled order",
+   "date": "March 3rd, 2020",
+   "department": "Kitchen"
+  }
+ ],
+ "bookings": [
+  {
+   "id": 1,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 2,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 3,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 4,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 5,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 6,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 7,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 8,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 9,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 10,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 11,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 12,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 13,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 14,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 15,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 16,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 17,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 18,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 19,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 20,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "5th January, 2020",
+   "endDate": "7th January, 2020",
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "closed"
+  },
+  {
+   "id": 21,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 22,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 23,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 24,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 25,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 26,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 27,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 28,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 29,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 30,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 31,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 32,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 33,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 34,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 35,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 36,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 37,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 38,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 39,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  },
+  {
+   "id": 40,
+   "roomDetails": "Deluxe room 301",
+   "startDate": "28th March, 2020",
+   "endDate": null,
+   "pricePerNight": 5000,
+   "totalDue": 15000,
+   "status": "open"
+  }
+ ]
+}

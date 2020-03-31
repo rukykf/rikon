@@ -16,7 +16,7 @@ const createWindow = () => {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadURL("http://127.0.0.1:8080")
+  mainWindow.loadURL("http://127.0.0.1:3990")
 }
 
 // This method will be called when Electron has finished

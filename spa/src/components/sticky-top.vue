@@ -12,7 +12,7 @@ export default {
 	},
 	data() {
 		return {
-			myStyle: { position: 'relative' },
+			myStyle: { position: "relative" },
 			originalTop: 0,
 		}
 	},
@@ -21,9 +21,9 @@ export default {
 			const newTop = this.scrollY + this.top - this.originalTop
 
 			if (newTop > 0) {
-				this.$set(this.myStyle, 'top', `${newTop}px`)
+				this.$set(this.myStyle, "top", `${newTop}px`)
 			} else {
-				this.$delete(this.myStyle, 'top')
+				this.$delete(this.myStyle, "top")
 			}
 		},
 	},

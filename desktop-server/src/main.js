@@ -1,5 +1,7 @@
-server = require("./server/server")
-const { app, BrowserWindow } = require("electron")
+const server = require("./server/server")
+const db = require("./server/src/data-access/db-setup")
+const { app, BrowserWindow, Menu, MenuItem } = require("electron")
+const { switchToDemo, switchToLive } = require("./demo-live")
 const path = require("path")
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -11,12 +13,32 @@ if (require("electron-squirrel-startup")) {
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600
+    width: 1800,
+    height: 1200
   })
 
+  const menu = Menu.buildFromTemplate([
+    {
+      label: "Switch to Demo Mode",
+      id: "demo",
+      click() {
+        switchToDemo()
+        console.log("switched to demo")
+      }
+    },
+    {
+      label: "Switch to Live Mode",
+      id: "live",
+      click() {
+        switchToLive()
+        console.log("switched to live")
+      }
+    }
+  ])
+
+  Menu.setApplicationMenu(menu)
   // and load the index.html of the app.
-  mainWindow.loadURL("http://127.0.0.1:3990")
+  mainWindow.loadURL("http://127.0.0.1:3990/api/session")
 }
 
 // This method will be called when Electron has finished

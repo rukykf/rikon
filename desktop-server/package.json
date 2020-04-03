@@ -5,7 +5,9 @@
   "description": "My Electron application description",
   "main": "src/main.js",
   "scripts": {
+    "quickstart": "electron-forge start",
     "start": "cd ../spa && yarn install && yarn build && cd ../desktop-server && electron-forge start",
+    "rebuild": "electron-rebuild -f -w sqlite3",
     "package": "cd ../spa && yarn install && yarn build && cd ../desktop-server && electron-forge package",
     "make": "cd ../spa && yarn install && yarn build && cd ../desktop-server && electron-forge make",
     "publish": "cd ../spa && yarn install && yarn build && cd ../desktop-server && electron-forge publish",
@@ -49,9 +51,14 @@
     }
   },
   "dependencies": {
+    "bookshelf": "^1.1.1",
     "connect-history-api-fallback": "^1.6.0",
     "electron-squirrel-startup": "^1.0.0",
-    "express": "^4.17.1"
+    "electron-store": "^5.1.1",
+    "express": "^4.17.1",
+    "helmet-csp": "^2.10.0",
+    "knex": "^0.20.13",
+    "sqlite3": "^4.1.1"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.50",
@@ -60,6 +67,7 @@
     "@electron-forge/maker-squirrel": "^6.0.0-beta.50",
     "@electron-forge/maker-zip": "^6.0.0-beta.50",
     "electron": "8.1.1",
+    "electron-rebuild": "^1.10.1",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-config-node": "^4.0.0",

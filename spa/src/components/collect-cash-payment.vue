@@ -14,10 +14,6 @@ export default {
 			type: Boolean,
 			default: false,
 		},
-		disabled: {
-			type: Boolean,
-			default: false,
-		},
 	},
 	data: function() {
 		return {
@@ -25,6 +21,14 @@ export default {
 			paymentMethod: "cash",
 			amountValidation: null,
 		}
+	},
+	computed: {
+		disabled: function() {
+			if (this.state === "success" || this.state === "fail") {
+				return true
+			}
+			return false
+		},
 	},
 
 	watch: {},

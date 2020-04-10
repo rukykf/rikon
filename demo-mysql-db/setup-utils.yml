@@ -1,0 +1,23 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  become: yes
+
+  pre_tasks:
+    - name: Update apt cache if needed.
+      apt: update_cache=yes cache_valid_time=3600
+
+    - name: Install utilities
+      apt:
+        name:
+          - git
+          - nano
+          - docker.io
+        state: present
+
+    - name: Add Vagrant user to docker
+      user:
+        name: vagrant
+        groups:
+          - docker

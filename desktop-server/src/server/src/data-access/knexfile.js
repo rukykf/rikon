@@ -2,9 +2,12 @@
 
 module.exports = {
   demo: {
-    client: "sqlite3",
+    client: "mysql",
     connection: {
-      filename: "C:\\rikon\\demo.db"
+      host: "192.168.33.10",
+      user: "root",
+      password: "test",
+      database: "rikon-db"
     },
     useNullAsDefault: true
   },

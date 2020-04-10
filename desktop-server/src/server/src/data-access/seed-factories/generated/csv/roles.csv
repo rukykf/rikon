@@ -1,0 +1,3 @@
+1,"administrator","{""permissions"":[""can-view-reports"",""can-create-configuration""]}"
+2,"accountant","{""permissions"":[""can-view-reports"",""can-create-configuration""]}"
+3,"receptionist","{""permissions"":[""can-view-reports"",""can-create-configuration""]}"

@@ -1,0 +1,31 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  become: yes
+  pre_tasks:
+    - name: Update cache if needed
+      apt: update_cache=yes cache_valid_time=3600
+
+    - name: Ensure package dependencies are installed
+      apt:
+        state: present
+        name: python-pip
+
+    - name: Ensure python package dependencies are installed
+      pip:
+        state: present
+        name: docker
+
+  tasks:
+    - name: MySQL Databases
+      block:
+        - name: Create MySQL local container
+          docker_container:
+            name: local-db
+            image: mysql:5.7
+            recreate: yes
+            env:
+              MYSQL_ROOT_PASSWORD: test
+              MYSQL_DATABASE: rikon-db
+            published_ports:
+              - 3306:3306

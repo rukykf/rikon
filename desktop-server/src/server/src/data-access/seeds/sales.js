@@ -1,11 +1,11 @@
-const { users } = require("../seed-factories/users-roles")
+const { sales } = require("../seed-factories/sales-transactions")
 
 exports.seed = function(knex) {
   // Deletes ALL existing entries
-  return knex("users")
+  return knex("sales")
     .del()
     .then(function() {
       // Inserts seed entries
-      return knex("users").insert(users)
+      return knex("sales").insert(sales)
     })
 }

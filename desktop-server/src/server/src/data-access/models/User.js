@@ -1,11 +1,22 @@
-const bookshelf = require("../db-config")
+const Objection = require("../db-config")
 const Role = require("./Role")
 
-const User = bookshelf.model("User", {
-  tableName: "users",
-  role: function() {
-    return this.belongsTo(Role)
+class User extends Objection {
+  static get tableName() {
+    return "users"
   }
-})
 
+  static get relationMappings() {
+    return {
+      role: {
+        relation: Objection.BelongsToOneRelation,
+        modelClass: Role,
+        join: {
+          from: "users.role_id",
+          to: "roles.id"
+        }
+      }
+    }
+  }
+}
 module.exports = User

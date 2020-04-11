@@ -4,3 +4,6 @@ provision-local:
 	sudo apt-get install -y ansible
 	ansible-playbook ./setup-utils.yml
 	ansible-playbook ./setup-containers.yml
+
+provision-db:
+	ansible-playbook ./setup-containers.yml

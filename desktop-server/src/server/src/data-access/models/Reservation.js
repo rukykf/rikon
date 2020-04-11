@@ -1,11 +1,23 @@
-const bookshelf = require("../db-config")
-const Room = require("./Room")
+const Objection = require("../db-config")
 
-const Reservation = bookshelf.model("Reservation", {
-  tableName: "reservations",
-  room: function() {
-    return this.belongsTo(Room)
+class Reservation extends Objection {
+  static get tableName() {
+    return "reservations"
   }
-})
+
+  static get relationMappings() {
+    const Room = require("./Room")
+    return {
+      room: {
+        relation: Objection.BelongsToOneRelation,
+        modelClass: Room,
+        join: {
+          from: "reservations.room_id",
+          to: "rooms.id"
+        }
+      }
+    }
+  }
+}
 
 module.exports = Reservation

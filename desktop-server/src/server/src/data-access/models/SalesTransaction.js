@@ -1,12 +1,23 @@
-const bookshelf = require("../db-config")
-const Sale = require("./Sale")
+const Objection = require("../db-config")
 
-const SalesTransaction = bookshelf.model("SalesTransaction", {
-  tableName: "sales_transactions",
-  hasTimestamps: true,
-  sale: function() {
-    return this.belongsTo(Sale)
+class SalesTransaction extends Objection {
+  static get tableName() {
+    return "sales_transactions"
   }
-})
+
+  static get relationMappings() {
+    const Sale = require("./Sale")
+    return {
+      sale: {
+        relation: Objection.BelongsToOneRelation,
+        modelClass: Sale,
+        join: {
+          from: "sales_transactions.sales_id",
+          to: "sales.id"
+        }
+      }
+    }
+  }
+}
 
 module.exports = SalesTransaction

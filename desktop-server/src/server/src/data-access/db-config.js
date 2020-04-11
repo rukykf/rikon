@@ -1,5 +1,5 @@
 const knex = require("knex")
-const bookshelfObj = require("bookshelf")
+const { Model } = require("objection")
 const config = require("./knexfile")
 // const { isDemo } = require("../../../demo-live")
 
@@ -16,5 +16,5 @@ if (isDemo()) {
   db = knex(config.live)
 }
 
-const bookshelf = bookshelfObj(db)
-module.exports = bookshelf
+const Objection = Model.knex(knex)
+module.exports = Objection

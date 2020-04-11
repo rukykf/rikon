@@ -1,7 +1,8 @@
-const bookshelf = require("../db-config")
+const Objection = require("../db-config")
 
-const Department = bookshelf.model("Department", {
-  tableName: "departments"
-})
-
+class Department extends Objection {
+  static get tableName() {
+    return "departments"
+  }
+}
 module.exports = Department

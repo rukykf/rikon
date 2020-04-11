@@ -3,6 +3,8 @@ const history = require("connect-history-api-fallback")
 const cors = require("cors")
 const path = require("path")
 const User = require("./src/data-access/models/User")
+const ConfigurationRoutes = require("./src/routes/configuration-module")
+const UsersController = require("./src/controllers/UsersController")
 
 const app = express()
 const port = 3990
@@ -16,12 +18,12 @@ const user = {
 }
 //
 app.use(express.static(path.join(__dirname, "dist")))
-app.use(cors)
+app.use(cors())
 app.use(express.json())
+app.use("/api", ConfigurationRoutes)
 
 // app.use(history())
 app.get("/", (req, res) => res.redirect("http://localhost:3990/index.html"))
-
 app.post("/api/session", (req, res) => res.json(user))
 app.get("/api/session", async (req, res) => res.json(user))
 

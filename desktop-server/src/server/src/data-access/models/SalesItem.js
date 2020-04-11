@@ -1,12 +1,23 @@
-const bookshelf = require("../db-config")
-const OrderItem = require("./OrderItem")
-const Order = require("./Order")
+const Objection = require("../db-config")
 
-const SalesItem = bookshelf.model("SalesItem", {
-  tableName: "sales_items",
-  orderItems: function() {
-    return this.hasMany(OrderItem, "sales_item_id")
+class SalesItem extends Objection {
+  static get tableName() {
+    return "sales_items"
   }
-})
 
+  static get relationMappings() {
+    const OrderItem = require("./OrderItem")
+
+    return {
+      orderItems: {
+        relation: Objection.HasManyRelation,
+        modelClass: OrderItem,
+        join: {
+          from: "sales_items.id",
+          to: "order_items.sales_item_id"
+        }
+      }
+    }
+  }
+}
 module.exports = SalesItem

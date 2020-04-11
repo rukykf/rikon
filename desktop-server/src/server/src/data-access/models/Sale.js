@@ -1,16 +1,22 @@
-const bookshelf = require("../db-config")
-const SalesTransaction = require("./SalesTransaction")
-const Booking = require("./Booking")
-const Order = require("./Order")
+const Objection = require("../db-config")
 
-const Sale = bookshelf.model("sales", {
-  tableName: "sales",
-  salesTransactions: function() {
-    return this.hasMany(SalesTransaction)
-  },
-  details: function() {
-    return this.morphTo("sellable", Booking, Order)
+class Sale extends Objection {
+  static get tableName() {
+    return "sales"
   }
-})
 
+  static get relationMappings() {
+    const SalesTransaction = require("./SalesTransaction")
+    return {
+      salesTransactions: {
+        relation: Objection.HasManyRelation,
+        modelClass: SalesTransaction,
+        join: {
+          from: "sales.id",
+          to: "sales_transactions.sales_id"
+        }
+      }
+    }
+  }
+}
 module.exports = Sale

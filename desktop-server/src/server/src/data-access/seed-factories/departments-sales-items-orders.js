@@ -7,14 +7,14 @@ const departments = [
 ]
 
 const salesItems = [
-  { id: 1, name: "Coca Cola", unit: "bottle", price_per_unit: 700, department: "bar" },
-  { id: 2, name: "Heineken", unit: "bottle", price_per_unit: 1200, department: "bar" },
-  { id: 3, name: "Hollandia", unit: "bottle", price_per_unit: 800, department: "bar" },
-  { id: 4, name: "Fanta", unit: "bottle", price_per_unit: 800, department: "bar" },
-  { id: 5, name: "White Rice", unit: "portion", price_per_unit: 1000, department: "kitchen" },
-  { id: 6, name: "Fried Rice", unit: "portion", price_per_unit: 1000, department: "kitchen" },
-  { id: 7, name: "Turkey", unit: "portion", price_per_unit: 1000, department: "kitchen" },
-  { id: 8, name: "Eba", unit: "portion", price_per_unit: 350, department: "kitchen" }
+  { id: 1, name: "Coca Cola", unit: "bottle", price_per_unit: 700, department_id: 2 },
+  { id: 2, name: "Heineken", unit: "bottle", price_per_unit: 1200, department_id: 2 },
+  { id: 3, name: "Hollandia", unit: "bottle", price_per_unit: 800, department_id: 2 },
+  { id: 4, name: "Fanta", unit: "bottle", price_per_unit: 800, department_id: 2 },
+  { id: 5, name: "White Rice", unit: "portion", price_per_unit: 1000, department_id: 1 },
+  { id: 6, name: "Fried Rice", unit: "portion", price_per_unit: 1000, department_id: 1 },
+  { id: 7, name: "Turkey", unit: "portion", price_per_unit: 1000, department_id: 1 },
+  { id: 8, name: "Eba", unit: "portion", price_per_unit: 350, department_id: 1 }
 ]
 
 let cancelledOrders = []
@@ -25,11 +25,11 @@ let orderItems = []
 let orderItemsCount = 1
 
 let kitchenItems = salesItems.filter((e) => {
-  return e.department === "kitchen"
+  return e.department_id === 1
 })
 
 let barItems = salesItems.filter((e) => {
-  return e.department === "bar"
+  return e.department_id === 2
 })
 
 function generateKitchenOrderItems(order) {

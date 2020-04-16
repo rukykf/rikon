@@ -1,6 +1,8 @@
 const knex = require("knex")
 const { Model } = require("objection")
 const config = require("./knexfile")
+const { AjvValidator } = require("objection")
+
 // const { isDemo } = require("../../../demo-live")
 
 function isDemo() {
@@ -16,5 +18,16 @@ if (isDemo()) {
   db = knex(config.live)
 }
 
-const Objection = Model.knex(knex)
-module.exports = Objection
+Model.knex(db)
+
+class BaseModel extends Model {
+  static createValidator() {
+    return new AjvValidator({
+      onCreateAjv(ajv) {
+        require("ajv-keywords")(ajv)
+      }
+    })
+  }
+}
+
+module.exports = BaseModel

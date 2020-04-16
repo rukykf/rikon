@@ -14,7 +14,7 @@ exports.up = function(knex) {
       table.string("name")
       table.string("unit")
       table.float("price_per_unit")
-      table.string("department")
+      table.integer("department_id")
     })
     .then(() => {
       console.log("created sales_items")

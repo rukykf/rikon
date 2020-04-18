@@ -66,6 +66,7 @@ module.exports = {
     try {
       let room = await Room.query()
         .findById(req.params.id)
+        .withGraphFetched("roomType")
         .throwIfNotFound()
       return res.json(room)
     } catch (error) {

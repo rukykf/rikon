@@ -115,7 +115,7 @@ test("RoomsController.show returns selected room when passed valid id", async ()
   let req = { params: { id: room.id } }
   let res = { json: jest.fn() }
   await RoomsController.show(req, res)
-  expect(res.json).toHaveBeenCalledWith(room)
+  expect(res.json).toHaveBeenCalledWith(expect.objectContaining(room))
 })
 
 test("RoomsController.show returns error message when passed invalid id", async () => {

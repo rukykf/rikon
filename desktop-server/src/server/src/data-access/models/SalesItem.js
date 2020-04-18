@@ -1,6 +1,6 @@
+const { ValidationError } = require("objection")
 const Objection = require("../db-config")
 const Department = require("./Department")
-const { ValidationError } = require("objection")
 
 class SalesItem extends Objection {
   static get tableName() {

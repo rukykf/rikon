@@ -4,6 +4,7 @@ exports.up = function(knex) {
       table.increments("id")
       table.string("name")
       table.json("permissions")
+      table.boolean("active").defaultTo(true)
     })
     .then(() => {
       console.log("created roles")
@@ -17,6 +18,7 @@ exports.up = function(knex) {
       table.string("last_name")
       table.string("password")
       table.integer("role_id")
+      table.boolean("active").defaultTo(true)
     })
     .then(() => {
       console.log("created users")

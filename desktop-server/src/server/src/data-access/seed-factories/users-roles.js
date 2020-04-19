@@ -2,17 +2,17 @@ const roles = [
   {
     id: 1,
     name: "administrator",
-    permissions: JSON.stringify({ permissions: ["can-view-reports", "can-create-configuration"] })
+    permissions: JSON.stringify(["can-view-reports", "can-create-configuration"])
   },
   {
     id: 2,
     name: "accountant",
-    permissions: JSON.stringify({ permissions: ["can-view-reports", "can-create-configuration"] })
+    permissions: JSON.stringify(["can-view-reports", "can-create-configuration"])
   },
   {
     id: 3,
     name: "receptionist",
-    permissions: JSON.stringify({ permissions: ["can-view-reports", "can-create-configuration"] })
+    permissions: JSON.stringify(["can-view-reports", "can-create-configuration"])
   }
 ]
 

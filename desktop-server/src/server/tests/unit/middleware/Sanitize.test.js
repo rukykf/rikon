@@ -15,4 +15,5 @@ test("Sanitize escapes unsafe html characters in strings", () => {
   expect(req.query.unsafe[1]).toEqual("safe item")
   expect(req.params.unsafe_obj.unsafe).toEqual("nested script")
   expect(req.params.unsafe_obj.safe).toEqual("another safe item")
+  expect(next).toHaveBeenCalledTimes(1)
 })

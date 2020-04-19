@@ -3,6 +3,7 @@ exports.up = function(knex) {
     .createTable("departments", (table) => {
       table.increments("id")
       table.string("name")
+      table.boolean("active").defaultTo(true)
     })
     .then(() => {
       console.log("created departments")
@@ -15,6 +16,7 @@ exports.up = function(knex) {
       table.string("unit")
       table.float("price_per_unit")
       table.integer("department_id")
+      table.boolean("active").defaultTo(true)
     })
     .then(() => {
       console.log("created sales_items")

@@ -4,6 +4,7 @@ exports.up = function(knex) {
       table.increments("id")
       table.float("price_per_night")
       table.string("name")
+      table.boolean("active").defaultTo(true)
     })
     .then(() => {
       console.log("created room_types")
@@ -14,6 +15,7 @@ exports.up = function(knex) {
       table.increments("id")
       table.integer("room_no")
       table.integer("room_type_id")
+      table.boolean("active").defaultTo(true)
     })
     .then(() => {
       console.log("created rooms")

@@ -29,12 +29,12 @@ test("SalesController.mergeSalesRecords returns new merged sale when passed vali
 
 test("SalesController.mergeSalesRecords returns error message when passed invalid sales ID", async () => {})
 
-test("SalesController.updateSalesRecordWithTransaciton succeeds with cash transaction", async () => {})
+test("SalesController.updateSalesRecordWithTransactionForSellable succeeds with cash transaction", async () => {})
 
-test("SalesController.updateSalesRecordWithTransaction succeeds with discount transaction", async () => {})
+test("SalesController.updateSalesRecordWithTransactionForSellable succeeds with discount transaction", async () => {})
 
-test("SalesController.updateDalesRecordWithTransaction succeeds with complementary transaction", async () => {})
+test("SalesController.updateSalesRecordWithTransactionForSellable succeedsForSellable with complementary transaction", async () => {})
 
-test("SalesController.updateSalesRecordWithTransaction returns error messages when passed invalid request data", async () => {})
+test("SalesController.updateSalesRecordWithTransactionForSellable returns error messages when passed invalid request data", async () => {})
 
-test("SalesController.updateSalesRecordWithTransaction returns error messages when passed invalid sellable_id", async () => {})
+test("SalesController.updateSalesRecordWithTransactionForSellable returns error messages when passed invalid sellable_id", async () => {})

@@ -49,6 +49,7 @@ class SalesItem extends Objection {
     if (this.name) {
       let existingItem = await SalesItem.query()
         .where("name", "=", this.name.toLowerCase())
+        .andWhere("active", "=", 1)
         .first()
 
       if (existingItem != null) {

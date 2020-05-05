@@ -6,7 +6,7 @@ const path = require("path")
 const { app, BrowserWindow, Menu, MenuItem } = require("electron")
 const server = require("./server/server")
 const db = require("./server/src/data-access/db-setup")
-const { switchToDemo, switchToLive } = require("./demo-live")
+const { runDBMigrations, setupAdminUser } = require("./setup-rikon-app")
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -23,20 +23,23 @@ const createWindow = () => {
 
   const menu = Menu.buildFromTemplate([
     {
-      label: "Switch to Demo Mode",
-      id: "demo",
-      click() {
-        switchToDemo()
-        console.log("switched to demo")
-      }
-    },
-    {
-      label: "Switch to Live Mode",
-      id: "live",
-      click() {
-        switchToLive()
-        console.log("switched to live")
-      }
+      label: "Rikon App Configuration",
+      submenu: [
+        {
+          label: "Run Migrations",
+          id: "migrations",
+          click() {
+            runDBMigrations()
+          }
+        },
+        {
+          label: "Setup Admin User",
+          id: "admin-user",
+          click() {
+            setupAdminUser()
+          }
+        }
+      ]
     }
   ])
 

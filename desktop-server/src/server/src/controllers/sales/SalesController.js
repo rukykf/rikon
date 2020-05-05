@@ -303,7 +303,7 @@ module.exports = {
    * @param req
    * @param res
    */
-  async updateSalesRecordWithTransaction(req, res) {
+  async updateSalesRecordWithTransactionForSellable(req, res) {
     try {
       // Ensure all required variables are present in the request
       let validationErrorMessages = isValidTransactionRequest(req)
@@ -336,5 +336,7 @@ module.exports = {
 
       return res.status(500).json({ messages: ["something went wrong, please try again later"] })
     }
-  }
+  },
+
+  async updateSalesRecordWithTransaction(req, res) {}
 }

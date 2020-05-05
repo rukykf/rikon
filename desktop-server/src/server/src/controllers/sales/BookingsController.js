@@ -112,7 +112,7 @@ module.exports = {
       // update the amount due for this booking in its sale record
       let numberOfNights = Booking.getNumNights(booking.start_date, booking.end_date)
       let newTotalAmount = numberOfNights * booking.price_per_night
-      let newTotalDue = newTotalAmount - booking.sale.total_paid
+      let newTotalDue = newTotalAmount - (booking.sale.total_paid + booking.sale.total_complementary)
 
       let sale = await Sale.query().patchAndFetchById(booking.sale.id, {
         total_amount: newTotalAmount,
@@ -138,5 +138,21 @@ module.exports = {
     }
   },
 
-  async cancelBooking(req, res) {}
+  async cancelBooking(req, res) {
+    try {
+      // update the status of the booking to cancelled
+      booking = await Booking.query()
+        .patchAndFetchById(_.toNumber(req.params.id), {
+          status: "cancelled"
+        })
+        .throwIfNotFound()
+      return res.json({ messages: ["successfully cancelled booking"] })
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        return res.status(400).json({ messages: ["invalid booing id"] })
+      }
+
+      return res.status(500).json({ messages: ["something went wrong, try again later"] })
+    }
+  }
 }

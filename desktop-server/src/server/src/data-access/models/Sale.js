@@ -49,17 +49,16 @@ class Sale extends Objection {
   }
 
   $beforeInsert(queryContext) {
-    // booking timestamps need to store the time
     if (this.created_at == null) {
-      this.created_at = DateTime.local().toISO()
+      this.created_at = DateTime.local().toISODate()
     }
 
-    this.updated_at = DateTime.local().toISO()
+    this.updated_at = DateTime.local().toISODate()
     super.$beforeInsert(queryContext)
   }
 
   $beforeUpdate(opt, queryContext) {
-    this.updated_at = DateTime.local().toISO()
+    this.updated_at = DateTime.local().toISODate()
     super.$beforeUpdate(opt, queryContext)
   }
 }

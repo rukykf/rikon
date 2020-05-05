@@ -72,6 +72,13 @@ module.exports = {
 
   async getCurrentBookingForRoom(req, res) {
     try {
+      await Booking.query()
+        .where("room_id", "=", _.toNumber(req.params.id))
+        .andWhere("status", "=", "open")
+        .patch({
+          end_date: DateTime.local().toISODate()
+        })
+
       let currentBooking = await Booking.query()
         .where("room_id", "=", _.toNumber(req.params.id))
         .andWhere("status", "=", "open")

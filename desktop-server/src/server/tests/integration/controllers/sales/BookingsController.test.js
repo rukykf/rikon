@@ -243,7 +243,7 @@ test("BookingsController.getCurrentBookingForRoom returns booking details for a 
   }
 
   await BookingsController.getCurrentBookingForRoom(req, res)
-  expect(output).toMatchObject(bookings[2])
+  expect(output.room_id).toEqual(bookings[2].room_id)
 
   req.params.id = rooms[0].id
   await BookingsController.getCurrentBookingForRoom(req, res)

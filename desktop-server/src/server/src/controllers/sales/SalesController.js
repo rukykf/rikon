@@ -7,8 +7,11 @@ const Order = require("../../data-access/models/Order")
 const SalesTransaction = require("../../data-access/models/SalesTransaction")
 
 async function getSaleDetails(sale) {
+  let details = { type: "order", elements: null }
+
   if (sale.merged_records != null) {
-    let details = []
+    details.type = "merged"
+    details.elements = []
     let mergedRecords = await Sale.query().findByIds(sale.merged_records)
 
     for (let i = 0; i < mergedRecords.length; i++) {
@@ -16,17 +19,16 @@ async function getSaleDetails(sale) {
 
       // eslint-disable-next-line no-await-in-loop
       let recordDetails = await getSaleDetails(record)
-      details.push(recordDetails)
+      details.elements.push(recordDetails)
     }
     return details
   }
 
-  let details = { type: "order" }
   if (sale.sellable_type === "booking") {
     details.type = "booking"
     let booking = await Booking.query()
       .findById(sale.sellable_id)
-      .withGraphFetched("room.room_type")
+      .withGraphFetched({ room: { room_type: true } })
     details.elements = booking
     return details
   }
@@ -66,6 +68,7 @@ function isValidTransactionRequest(req) {
   }
 
   if (
+    req.body.transaction_type !== "credit" &&
     !_.includes(
       ["cash", "pos", "transfer", "discount", "complementary"],
       _.get(req, ["body", "transaction_details", "transaction_type"])
@@ -144,7 +147,7 @@ async function createSaleForSellable(req) {
   return sale
 }
 
-async function updateSaleWithTransactionForSellable(req, sale) {
+async function updateSaleRecordWithTransaction(req, sale) {
   let transaction = req.body.transaction_details
   let updatedSale
 
@@ -180,7 +183,7 @@ async function updateSaleWithTransactionForSellable(req, sale) {
 
   if (transaction.transaction_type === "complementary") {
     updatedSale = await Sale.query().patchAndFetchById(sale.id, {
-      total_complementary: sale.total_due,
+      total_complementary: sale.total_due + sale.total_complementary,
       total_due: 0,
       status: "paid"
     })
@@ -263,6 +266,18 @@ module.exports = {
         .findByIds(salesIDs)
         .patch({ active: false })
 
+      let isCredit = true
+
+      records.forEach((record) => {
+        if (record.credit_authorized_by == null || record.customer_details == null) {
+          isCredit = false
+        }
+      })
+
+      if (isCredit === false) {
+        return res.status(400).json({ messages: ["you can only merge credit transactions"] })
+      }
+
       for (let i = 0; i < records.length; i++) {
         newTotalAmount += records[i].total_amount
         newTotalPaid += records[i].total_paid
@@ -308,10 +323,10 @@ module.exports = {
       // Ensure all required variables are present in the request
       let validationErrorMessages = isValidTransactionRequest(req)
       if (validationErrorMessages.length !== 0) {
-        return res.status(400).json({ messages: [validationErrorMessages] })
+        return res.status(400).json({ messages: validationErrorMessages })
       }
 
-      let sale = Sale.query()
+      let sale = await Sale.query()
         .where("sellable_id", "=", req.body.sellable_id)
         .andWhere("sellable_type", "=", req.body.sellable_type)
         .first()
@@ -321,7 +336,14 @@ module.exports = {
       }
 
       if (req.body.transaction_type !== "credit") {
-        sale = await updateSaleWithTransactionForSellable(req, sale)
+        sale = await updateSaleRecordWithTransaction(req, sale)
+      }
+
+      if (req.body.transaction_type === "credit") {
+        await Sale.query().patchAndFetchById(sale.id, {
+          customer_details: req.body.transaction_details.customer_details,
+          credit_authorized_by: req.body.transaction_details.credit_authorized_by
+        })
       }
 
       return res.json(sale)
@@ -338,5 +360,13 @@ module.exports = {
     }
   },
 
-  async updateSalesRecordWithTransaction(req, res) {}
+  async updateSalesRecordWithTransaction(req, res) {
+    try {
+      let sale = await Sale.query().findById(_.toNumber(req.params.id))
+      sale = await updateSaleRecordWithTransaction(req, sale)
+      return res.json(sale)
+    } catch (error) {
+      return res.status(500).json({ messages: ["something went wrong, please try again later"] })
+    }
+  }
 }

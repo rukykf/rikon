@@ -7,7 +7,7 @@ if (process.env.NODE_ENV === "production") {
 } else if (process.env.NODE_ENV === "test") {
   db = knex(config.testing)
 } else {
-  db = knex(config.live)
+  db = knex(config.demo)
 }
 
 module.exports = db

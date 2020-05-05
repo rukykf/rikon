@@ -368,5 +368,59 @@ module.exports = {
     } catch (error) {
       return res.status(500).json({ messages: ["something went wrong, please try again later"] })
     }
+  },
+
+  async revertSalesTransactionForSalesRecord(req, res) {
+    try {
+      let salesTransaction = await SalesTransaction.query()
+        .findById(_.toNumber(req.params.id))
+        .throwIfNotFound()
+      if (salesTransaction.transaction_type === "complementary") {
+        return res.status(400).json({ messages: ["you cannot reverse a complementary transaction"] })
+      }
+
+      let sale = await Sale.query().findById(salesTransaction.sales_id)
+
+      if (salesTransaction.transaction_type === "discount") {
+        let newTotalComplementary = sale.total_complementary - salesTransaction.amount
+        let newTotalDue = sale.total_amount - (newTotalComplementary + sale.total_paid)
+        await Sale.query()
+          .findById(sale.id)
+          .patch({
+            total_complementary: newTotalComplementary,
+            total_due: newTotalDue,
+            status: getStatus(newTotalDue)
+          })
+        let reversedSalesTransaction = await SalesTransaction.query().insert({
+          sales_id: sale.id,
+          transaction_type: "reverse-discount",
+          amount: salesTransaction.amount,
+          registered_by: req.get("full_name")
+        })
+        return res.json(reversedSalesTransaction)
+      }
+
+      let newTotalPaid = sale.total_paid - salesTransaction.amount
+      let newTotalDue = sale.total_amount - (newTotalPaid + sale.total_complementary)
+      await Sale.query()
+        .findById(sale.id)
+        .patch({
+          total_paid: newTotalPaid,
+          total_due: newTotalDue,
+          status: getStatus(newTotalDue)
+        })
+      let reversedSalesTransaction = await SalesTransaction.query().insert({
+        sales_id: sale.id,
+        transaction_type: `reverse-${salesTransaction.transaction_type.toLowerCase()}`,
+        amount: salesTransaction.amount,
+        registered_by: req.get("full_name")
+      })
+      return res.json(reversedSalesTransaction)
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        return res.status(400).json({ messages: ["could not find selected transaction"] })
+      }
+      return res.status(500).json({ messages: ["something went wrong, try again later"] })
+    }
   }
 }

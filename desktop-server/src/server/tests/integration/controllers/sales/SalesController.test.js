@@ -526,3 +526,103 @@ test("SalesController.updateSalesRecordWithTransactionForSellable returns error 
   expect(res.status).toHaveBeenLastCalledWith(400)
   expect(res.json).toHaveBeenLastCalledWith({ messages: ["invalid sellable_id"] })
 })
+
+test("SalesController.revertSalesTransactionForSalesRecord successfully reverts discount transactions", async () => {
+  let sale = await Sale.query().insert({
+    total_amount: 20000,
+    total_paid: 0,
+    total_complementary: 5000,
+    total_due: 15000,
+    sellable_type: "order",
+    sellable_id: order.id,
+    status: "owing"
+  })
+
+  let salesTransaction = await SalesTransaction.query().insert({
+    sales_id: sale.id,
+    transaction_type: "discount",
+    amount: 5000,
+    registered_by: "someone's name"
+  })
+
+  let req = { params: { id: salesTransaction.id }, get: jest.fn() }
+  req.get.mockReturnValue("someone's name")
+  let res = { json: jest.fn() }
+  await SalesController.revertSalesTransactionForSalesRecord(req, res)
+  sale = await Sale.query().findById(salesTransaction.sales_id)
+  salesTransaction = await SalesTransaction.query()
+    .where("transaction_type", "=", "reverse-discount")
+    .first()
+  expect(sale.total_due).toEqual(20000)
+  expect(sale.total_complementary).toEqual(0)
+  expect(salesTransaction.amount).toEqual(5000)
+})
+
+test("SalesController.revertSalesTransactionForSalesRecord successfully reverts cash transactions", async () => {
+  let sale = await Sale.query().insert({
+    total_amount: 20000,
+    total_paid: 5000,
+    total_complementary: 5000,
+    total_due: 10000,
+    sellable_type: "order",
+    sellable_id: order.id,
+    status: "owing"
+  })
+
+  let salesTransaction = await SalesTransaction.query().insert({
+    sales_id: sale.id,
+    transaction_type: "pos",
+    amount: 5000,
+    registered_by: "someone's name"
+  })
+
+  let req = { params: { id: salesTransaction.id }, get: jest.fn() }
+  req.get.mockReturnValue("someone's name")
+  let res = { json: jest.fn() }
+  await SalesController.revertSalesTransactionForSalesRecord(req, res)
+  sale = await Sale.query().findById(salesTransaction.sales_id)
+  salesTransaction = await SalesTransaction.query()
+    .where("transaction_type", "=", "reverse-pos")
+    .first()
+  expect(sale.total_due).toEqual(15000)
+  expect(sale.total_complementary).toEqual(5000)
+  expect(sale.total_paid).toEqual(0)
+  expect(salesTransaction.amount).toEqual(5000)
+})
+
+test("SalesController.revertSalesTransactionForSalesRecord returns error message when attempting to revert complementary transactions", async () => {
+  let sale = await Sale.query().insert({
+    total_amount: 20000,
+    total_paid: 0,
+    total_complementary: 20000,
+    total_due: 0,
+    sellable_type: "order",
+    sellable_id: order.id,
+    status: "owing"
+  })
+
+  let salesTransaction = await SalesTransaction.query().insert({
+    sales_id: sale.id,
+    transaction_type: "complementary",
+    amount: 5000,
+    registered_by: "someone's name"
+  })
+
+  let req = { params: { id: salesTransaction.id }, get: jest.fn() }
+  req.get.mockReturnValue("someone's name")
+  let res = { json: jest.fn(), status: jest.fn() }
+  res.status.mockReturnThis()
+  await SalesController.revertSalesTransactionForSalesRecord(req, res)
+  expect(res.status).toHaveBeenLastCalledWith(400)
+  expect(res.json).toHaveBeenLastCalledWith({ messages: ["you cannot reverse a complementary transaction"] })
+})
+
+test("SalesController.revertSalesTransactionForSalesRecord returns error message when passed invalid id", async () => {
+  let req = { params: { id: 48 }, get: jest.fn() }
+  let res = { json: jest.fn(), status: jest.fn() }
+  res.status.mockReturnThis()
+
+  await SalesController.revertSalesTransactionForSalesRecord(req, res)
+  expect(res.status).toHaveBeenLastCalledWith(400)
+  expect(res.json).toHaveBeenLastCalledWith({ messages: ["could not find selected transaction"] })
+})

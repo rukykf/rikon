@@ -24,7 +24,17 @@ exports.up = function(knex) {
       table.increments("id")
       table.integer("sales_id")
       table.string("date")
-      table.enum("transaction_type", ["cash", "pos", "transfer", "discount", "complementary"])
+      table.enum("transaction_type", [
+        "cash",
+        "pos",
+        "transfer",
+        "discount",
+        "complementary",
+        "reverse-cash",
+        "reverse-pos",
+        "reverse-transfer",
+        "reverse-discount"
+      ])
       table.float("amount")
       table.string("registered_by")
     })

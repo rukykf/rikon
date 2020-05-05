@@ -23,13 +23,23 @@ class SalesTransaction extends Objection {
   static get jsonSchema() {
     return {
       type: "object",
-      required: ["sales_id", "transaction_type", "amount", "registered_by", "date"],
+      required: ["sales_id", "transaction_type", "amount", "registered_by"],
       properties: {
         id: { type: "integer" },
         sales_id: { type: "integer" },
         transaction_type: {
           type: "string",
-          enum: ["cash", "pos", "transfer", "discount", "complementary"],
+          enum: [
+            "cash",
+            "pos",
+            "transfer",
+            "discount",
+            "complementary",
+            "reverse-cash",
+            "reverse-pos",
+            "reverse-transfer",
+            "reverse-discount"
+          ],
           transform: ["trim"]
         },
         amount: { type: "number", transform: ["trim"] },
@@ -40,8 +50,8 @@ class SalesTransaction extends Objection {
   }
 
   $beforeInsert(queryContext) {
-    this.date = DateTime.local().toISODate()
     super.$beforeInsert(queryContext)
+    this.date = DateTime.local().toISODate()
   }
 }
 

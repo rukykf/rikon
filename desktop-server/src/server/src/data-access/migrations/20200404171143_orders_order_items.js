@@ -3,8 +3,8 @@ exports.up = function(knex) {
     .createTable("orders", (table) => {
       table.increments("id")
       table.float("amount")
-      table.string("start_date")
-      table.string("close_date").nullable()
+      table.date("created_at")
+      table.date("updated_at")
       table.enum("status", ["pending", "fulfilled", "cancelled"])
       table.json("departments")
       table.json("placed_by")
@@ -24,7 +24,7 @@ exports.up = function(knex) {
       table.integer("quantity")
       table.string("unit")
       table.string("name")
-      table.string("date")
+      table.date("date")
       table.float("price_per_unit")
     })
     .then(() => {

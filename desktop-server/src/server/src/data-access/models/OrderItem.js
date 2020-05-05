@@ -1,4 +1,4 @@
-const Objection = require("../db-config")
+const Objection = require("../objection-config")
 
 class OrderItem extends Objection {
   static get tableName() {

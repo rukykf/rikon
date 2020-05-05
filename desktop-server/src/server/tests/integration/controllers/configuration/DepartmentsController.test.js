@@ -1,5 +1,10 @@
+const db = require(".../../../../src/data-access/db-config")
 const Department = require("../../../../src/data-access/models/Department")
 const DepartmentsController = require("../../../../src/controllers/configuration/DepartmentsController")
+
+beforeAll(async () => {
+  await db.migrate.latest({ directory: "./src/server/src/data-access/migrations" })
+})
 
 beforeEach(async () => {
   await Department.query().delete()

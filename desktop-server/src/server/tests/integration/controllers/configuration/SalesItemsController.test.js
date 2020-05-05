@@ -1,3 +1,4 @@
+const db = require(".../../../../src/data-access/db-config")
 const SalesItem = require("../../../../src/data-access/models/SalesItem")
 const Department = require("../../../../src/data-access/models/Department")
 const SalesItemsController = require("../../../../src/controllers/configuration/SalesItemsController")
@@ -5,7 +6,8 @@ const SalesItemsController = require("../../../../src/controllers/configuration/
 let newDepartment = null
 
 beforeAll(async () => {
-  newDepartment = await Department.query().insert({ name: "kitchen" })
+  await db.migrate.latest({ directory: "./src/server/src/data-access/migrations" })
+  newDepartment = await Department.query().insert({ name: "a department" })
 })
 beforeEach(async () => {
   await SalesItem.query().delete()
@@ -128,7 +130,7 @@ test("SalesItemsController.show returns selected sales item when passed valid id
   let req = { params: { id: salesItem.id } }
   let res = { json: jest.fn() }
   await SalesItemsController.show(req, res)
-  expect(res.json).toHaveBeenCalledWith(salesItem)
+  expect(res.json).toHaveBeenCalledWith(expect.objectContaining(salesItem))
 })
 
 test("SalesItemsController.show returns error message when passed invalid id", async () => {

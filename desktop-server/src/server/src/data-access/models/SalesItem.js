@@ -1,5 +1,6 @@
 const { ValidationError } = require("objection")
-const Objection = require("../db-config")
+const _ = require("lodash")
+const Objection = require("../objection-config")
 const Department = require("./Department")
 
 class SalesItem extends Objection {
@@ -11,7 +12,7 @@ class SalesItem extends Objection {
     const OrderItem = require("./OrderItem")
 
     return {
-      orderItems: {
+      order_items: {
         relation: Objection.HasManyRelation,
         modelClass: OrderItem,
         join: {
@@ -65,6 +66,12 @@ class SalesItem extends Objection {
 
   async $beforeUpdate() {
     await this.validateUnique()
+  }
+
+  $parseDatabaseJson(json) {
+    super.$parseDatabaseJson(json)
+    json = _.omit(json, ["active"])
+    return json
   }
 }
 module.exports = SalesItem

@@ -1,4 +1,5 @@
 const UsersController = require("../../../../src/controllers/configuration/UsersController")
+const db = require(".../../../../src/data-access/db-config")
 let User = require("../../../../src/data-access/models/User")
 let Role = require("../../../../src/data-access/models/Role")
 const Permissions = require("../../../../src/data-access/models/Permissions")
@@ -6,6 +7,7 @@ const Permissions = require("../../../../src/data-access/models/Permissions")
 let newRole = null
 
 beforeAll(async () => {
+  await db.migrate.latest({ directory: "./src/server/src/data-access/migrations" })
   newRole = await Role.query().insert({ name: "dummy", permissions: [Permissions[0]] })
 })
 

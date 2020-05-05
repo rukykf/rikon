@@ -1,11 +1,12 @@
+const _ = require("lodash")
 const User = require("../../data-access/models/User")
 
 module.exports = {
   async login(req, res) {
     try {
       let user = await User.query()
-        .where("username", "=", req.body.username.toLowerCase())
-        .andWhere("password", "=", req.body.password.toLowerCase())
+        .where("username", "=", _.get(req, ["body", "username"]).toLowerCase())
+        .andWhere("password", "=", _.get(req, ["body", "password"]).toLowerCase())
         .withGraphFetched("role")
         .first()
         .throwIfNotFound()

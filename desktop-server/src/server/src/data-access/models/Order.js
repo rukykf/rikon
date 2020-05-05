@@ -1,4 +1,4 @@
-const Objection = require("../db-config")
+const Objection = require("../objection-config")
 
 class Order extends Objection {
   static get tableName() {
@@ -10,7 +10,7 @@ class Order extends Objection {
     const Sale = require("./Sale")
 
     return {
-      orderItems: {
+      order_items: {
         relation: Objection.HasManyRelation,
         modelClass: OrderItem,
         join: {
@@ -31,6 +31,19 @@ class Order extends Objection {
           from: "orders.id",
           to: "sales.sellable_id"
         }
+      }
+    }
+  }
+
+  static get jsonSchema() {
+    return {
+      type: "object",
+      properties: {
+        id: { type: "integer" },
+        delivered_by: { type: "object" },
+        placed_by: { type: "object" },
+        departments: { type: "array" },
+        status: { type: "string", enum: ["pending", "fulfilled", "cancelled"] }
       }
     }
   }

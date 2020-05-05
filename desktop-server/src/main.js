@@ -1,8 +1,12 @@
+const dotenv = require("dotenv")
+
+dotenv.config({ path: "../.env" })
+
+const path = require("path")
+const { app, BrowserWindow, Menu, MenuItem } = require("electron")
 const server = require("./server/server")
 const db = require("./server/src/data-access/db-setup")
-const { app, BrowserWindow, Menu, MenuItem } = require("electron")
 const { switchToDemo, switchToLive } = require("./demo-live")
-const path = require("path")
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -38,7 +42,7 @@ const createWindow = () => {
 
   Menu.setApplicationMenu(menu)
   // and load the index.html of the app.
-  mainWindow.loadURL("http://127.0.0.1:3990/api/session")
+  mainWindow.loadURL("http://127.0.0.1:8080/")
 }
 
 // This method will be called when Electron has finished

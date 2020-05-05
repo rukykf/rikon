@@ -1,5 +1,6 @@
-const Objection = require("../db-config")
 const { ValidationError } = require("objection")
+const _ = require("lodash")
+const Objection = require("../objection-config")
 
 class Department extends Objection {
   static get tableName() {
@@ -12,9 +13,15 @@ class Department extends Objection {
       required: ["name"],
       properties: {
         id: { type: "integer" },
-        name: { type: "string", minLength: 1, transform: ["trim", "toLowerCase"] }
+        name: { type: "string", minLength: 1, transform: ["trim", "toLowerCase"] },
+        active: { type: "boolean" }
       }
     }
+  }
+
+  $parseDatabaseJson(json) {
+    json = super.$parseDatabaseJson(json)
+    return _.pick(json, ["id", "name"])
   }
 
   async validateUnique() {

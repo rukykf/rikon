@@ -23,8 +23,8 @@ function generateHistoricalReservations(room) {
   for (let i = 0; i < num; i++) {
     let numBreaks = faker.random.arrayElement([3, 8, 30])
     let numDays = faker.random.arrayElement([2, 4, 7])
-    let closeDate = currentDate.minus({ days: numBreaks })
-    let startDate = closeDate.minus({ days: numDays })
+    let endDate = currentDate.minus({ days: numBreaks })
+    let startDate = endDate.minus({ days: numDays })
     let customerDetails = faker.random.arrayElement([
       { customer_name: "Rukky Kofi", customer_phone: "081234567891" },
       { customer_name: "Nero Kofi", customer_phone: "0813234444444" }
@@ -33,10 +33,12 @@ function generateHistoricalReservations(room) {
     let newReservation = {
       id: reservationsCount,
       room_id: room.id,
+      created_at: startDate.toISODate(),
+      updated_at: startDate.toISODate(),
       start_date: startDate.toISODate(),
-      close_date: closeDate.toISODate(),
+      end_date: endDate.toISODate(),
       customer_details: JSON.stringify(customerDetails),
-      is_closed: true
+      status: "closed"
     }
     reservations.push(newReservation)
     reservationsCount += 1
@@ -50,19 +52,21 @@ function generateUpcomingReservations(room) {
     let numBreaks = faker.random.arrayElement([3, 8, 30])
     let numDays = faker.random.arrayElement([2, 4, 7])
     let startDate = currentDate.plus({ days: numBreaks })
-    let closeDate = startDate.plus({ days: numDays })
+    let endDate = startDate.plus({ days: numDays })
     let customerDetails = faker.random.arrayElement([
       { customer_name: "Rukky Kofi", customer_phone: "081234567891" },
       { customer_name: "Nero Kofi", customer_phone: "0813234444444" }
     ])
-    currentDate = closeDate
+    currentDate = endDate
     let newReservation = {
       id: reservationsCount,
       room_id: room.id,
-      start_date: startDate.toISODate(),
-      close_date: closeDate.toISODate(),
+      created_at: startDate.toISODate(),
+      updated_at: startDate.toISODate(),
+      start_at: startDate.toISODate(),
+      end_date: endDate.toISODate(),
       customer_details: JSON.stringify(customerDetails),
-      is_closed: false
+      status: "open"
     }
     reservations.push(newReservation)
     reservationsCount += 1
@@ -75,20 +79,22 @@ function generateHistoricalBookings(room, roomType) {
   for (let i = 0; i < num; i++) {
     let numBreaks = faker.random.arrayElement([2, 3, 4])
     let numDays = faker.random.arrayElement([2, 3, 4])
-    let closeDate = currentDate.minus({ days: numBreaks })
-    let startDate = closeDate.minus({ days: numDays })
+    let endDate = currentDate.minus({ days: numBreaks })
+    let startDate = endDate.minus({ days: numDays })
     let customerDetails = faker.random.arrayElement([
       { customer_name: "Rukky Kofi", customer_phone: "081234567891" },
       { customer_name: "Nero Kofi", customer_phone: "0813234444444" }
     ])
     let newBooking = {
       id: bookingsCount,
+      created_at: startDate.toISODate(),
+      updated_at: startDate.toISODate(),
       start_date: startDate.toISODate(),
-      close_date: closeDate.toISODate(),
+      end_date: endDate.toISODate(),
       price_per_night: roomType.price_per_night,
       room_id: room.id,
       customer_details: JSON.stringify(customerDetails),
-      is_closed: true
+      status: "closed"
     }
     closedBookings.push(newBooking)
     bookingsCount += 1
@@ -97,7 +103,6 @@ function generateHistoricalBookings(room, roomType) {
 }
 
 function generateCurrentReservation(room) {
-  let num = faker.random.arrayElement([0, 2, 5])
   let currentDate = DateTime.local()
   let numDays = faker.random.arrayElement([2, 4, 7])
   let customerDetails = faker.random.arrayElement([
@@ -107,10 +112,12 @@ function generateCurrentReservation(room) {
   let newReservation = {
     id: reservationsCount,
     room_id: room.id,
+    created_at: currentDate.toISODate(),
+    updated_at: currentDate.toISODate(),
     start_date: currentDate.toISODate(),
-    close_date: currentDate.plus({ days: numDays }).toISODate(),
+    end_date: currentDate.plus({ days: numDays }).toISODate(),
     customer_details: JSON.stringify(customerDetails),
-    is_closed: false
+    status: "open"
   }
   reservations.push(newReservation)
   reservationsCount += 1
@@ -124,12 +131,14 @@ function generateCurrentBooking(room, roomType) {
   ])
   let newBooking = {
     id: bookingsCount,
+    created_at: currentDate.minus({ days: 1 }).toISODate(),
+    updated_at: currentDate.minus({ days: 1 }).toISODate(),
     start_date: currentDate.minus({ days: 1 }).toISODate(),
-    close_date: null,
+    end_date: null,
     price_per_night: roomType.price_per_night,
     room_id: room.id,
     customer_details: JSON.stringify(customerDetails),
-    is_closed: false
+    status: "open"
   }
   openBookings.push(newBooking)
   bookingsCount += 1

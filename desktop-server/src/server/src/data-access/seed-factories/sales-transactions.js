@@ -27,15 +27,15 @@ function generateFullPaymentSale(sellable, type) {
   let newSalesTransaction = {
     id: salesTransactionsCount,
     sales_id: salesCount,
-    date: sellable.close_date,
-    payment_method: faker.random.arrayElement(["cash", "pos"]),
+    date: sellable.created_at,
+    transaction_type: faker.random.arrayElement(["cash", "pos"]),
     amount: sellable.amount,
-    committed_by: "Rukky Kofi"
+    registered_by: "Rukky Kofi"
   }
   let newSale = {
     id: salesCount,
-    created_at: sellable.close_date,
-    updated_at: sellable.close_date,
+    created_at: sellable.created_at,
+    updated_at: sellable.created_at,
     total_amount: sellable.amount,
     total_paid: sellable.amount,
     total_due: 0,
@@ -54,15 +54,15 @@ function generateFullComplementarySale(sellable, type) {
   let newSalesTransaction = {
     id: salesTransactionsCount,
     sales_id: salesCount,
-    date: sellable.close_date,
-    payment_method: "complementary",
+    date: sellable.created_at,
+    transaction_type: "complementary",
     amount: sellable.amount,
-    committed_by: "Rukky Kofi"
+    registered_by: "Rukky Kofi"
   }
   let newSale = {
     id: salesCount,
-    created_at: sellable.close_date,
-    updated_at: sellable.close_date,
+    created_at: sellable.created_at,
+    updated_at: sellable.created_at,
     total_amount: sellable.amount,
     total_paid: 0,
     total_due: 0,
@@ -73,7 +73,8 @@ function generateFullComplementarySale(sellable, type) {
     customer_details: JSON.stringify({
       name: "Rukky Kofi",
       room_no: "101"
-    })
+    }),
+    credit_authorized_by: { name: "Rukky Kofi" }
   }
   sales.push(newSale)
   salesTransactions.push(newSalesTransaction)
@@ -84,8 +85,8 @@ function generateFullComplementarySale(sellable, type) {
 function generateFullCreditSale(sellable, type) {
   let newSale = {
     id: salesCount,
-    created_at: sellable.close_date,
-    updated_at: sellable.close_date,
+    created_at: sellable.created_at,
+    updated_at: sellable.created_at,
     total_amount: sellable.amount,
     total_paid: 0,
     total_due: sellable.amount,
@@ -96,7 +97,8 @@ function generateFullCreditSale(sellable, type) {
     customer_details: JSON.stringify({
       name: `${faker.name.firstName()} ${faker.name.lastName()}`,
       room_no: "113"
-    })
+    }),
+    credit_authorized_by: { name: "Rukky Kofi" }
   }
   sales.push(newSale)
   salesCount += 1
@@ -107,15 +109,15 @@ function generatePartialComplementarySale(sellable, type) {
   let newSalesTransaction = {
     id: salesTransactionsCount,
     sales_id: salesCount,
-    date: sellable.close_date,
-    payment_method: "discount",
+    date: sellable.created_at,
+    transaction_type: "discount",
     amount: discountAmount,
-    committed_by: "Rukky Kofi"
+    registered_by: "Rukky Kofi"
   }
   let newSale = {
     id: salesCount,
-    created_at: sellable.close_date,
-    updated_at: sellable.close_date,
+    created_at: sellable.created_at,
+    updated_at: sellable.created_at,
     total_amount: sellable.amount,
     total_paid: 0,
     total_due: sellable.amount - discountAmount,
@@ -126,7 +128,8 @@ function generatePartialComplementarySale(sellable, type) {
     customer_details: JSON.stringify({
       name: `${faker.name.firstName()} ${faker.name.lastName()}`,
       room_no: "114"
-    })
+    }),
+    credit_authorized_by: { name: "Rukky Kofi" }
   }
   sales.push(newSale)
   salesTransactions.push(newSalesTransaction)
@@ -139,10 +142,10 @@ function generatePartialPaymentComplementarySale(sellable, type) {
   let newSalesTransaction = {
     id: salesTransactionsCount,
     sales_id: salesCount,
-    date: sellable.close_date,
-    payment_method: "discount",
+    date: sellable.created_at,
+    transaction_type: "discount",
     amount: transactionAmount,
-    committed_by: "Rukky Kofi"
+    registered_by: "Rukky Kofi"
   }
   salesTransactions.push(newSalesTransaction)
   salesTransactionsCount += 1
@@ -150,18 +153,18 @@ function generatePartialPaymentComplementarySale(sellable, type) {
   newSalesTransaction = {
     id: salesTransactionsCount,
     sales_id: salesCount,
-    date: sellable.close_date,
-    payment_method: faker.random.arrayElement(["cash", "pos"]),
+    date: sellable.created_at,
+    transaction_type: faker.random.arrayElement(["cash", "pos"]),
     amount: transactionAmount,
-    committed_by: "Rukky Kofi"
+    registered_by: "Rukky Kofi"
   }
   salesTransactions.push(newSalesTransaction)
   salesTransactionsCount += 1
 
   let newSale = {
     id: salesCount,
-    created_at: sellable.close_date,
-    updated_at: sellable.close_date,
+    created_at: sellable.created_at,
+    updated_at: sellable.created_at,
     total_amount: sellable.amount,
     total_paid: transactionAmount,
     total_due: sellable.amount - 2 * transactionAmount,
@@ -172,7 +175,8 @@ function generatePartialPaymentComplementarySale(sellable, type) {
     customer_details: JSON.stringify({
       name: `${faker.name.firstName()} ${faker.name.lastName()}`,
       room_no: "114"
-    })
+    }),
+    credit_authorized_by: { name: "Rukky Kofi" }
   }
 
   sales.push(newSale)

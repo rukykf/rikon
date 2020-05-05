@@ -24,12 +24,13 @@ exports.up = function(knex) {
   knex.schema
     .createTable("bookings", (table) => {
       table.increments("id")
-      table.string("start_date")
-      table.string("close_date")
+      table.timestamps()
+      table.date("start_date")
+      table.date("end_date").nullable()
       table.float("price_per_night")
       table.integer("room_id")
       table.json("customer_details")
-      table.boolean("is_closed").defaultTo(false)
+      table.enum("status", ["closed", "open", "cancelled"]).defaultTo("open")
     })
     .then(() => {
       console.log("created bookings")
@@ -39,10 +40,11 @@ exports.up = function(knex) {
     .createTable("reservations", (table) => {
       table.increments("id")
       table.integer("room_id")
-      table.string("start_date")
-      table.string("close_date")
+      table.timestamps()
+      table.date("start_date")
+      table.date("end_date")
       table.json("customer_details")
-      table.boolean("is_closed").defaultTo(false)
+      table.enum("status", ["open", "closed", "cancelled"]).defaultTo("open")
     })
     .then(() => {
       console.log("created reservations")

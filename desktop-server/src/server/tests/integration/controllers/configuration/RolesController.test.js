@@ -1,6 +1,11 @@
+const db = require(".../../../../src/data-access/db-config")
 const Role = require("../../../../src/data-access/models/Role")
 const RolesController = require("../../../../src/controllers/configuration/RolesController")
 const Permissions = require("../../../../src/data-access/models/Permissions")
+
+beforeAll(async () => {
+  await db.migrate.latest({ directory: "./src/server/src/data-access/migrations" })
+})
 
 beforeEach(async () => {
   await Role.query().delete()

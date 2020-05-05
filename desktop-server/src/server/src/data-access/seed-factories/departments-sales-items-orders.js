@@ -49,7 +49,7 @@ function generateKitchenOrderItems(order) {
       quantity: quantity,
       unit: salesItem.unit,
       name: salesItem.name,
-      date: order.start_date,
+      date: order.created_at,
       price_per_unit: salesItem.price_per_unit
     }
     orderItemsCount += 1
@@ -75,7 +75,7 @@ function generateBarOrderItems(order) {
       quantity: quantity,
       unit: salesItem.unit,
       name: salesItem.name,
-      date: order.start_date,
+      date: order.created_at,
       price_per_unit: salesItem.price_per_unit
     }
     orderItemsCount += 1
@@ -101,7 +101,7 @@ function generateMixedOrderItems(order) {
       quantity: quantity,
       unit: salesItem.unit,
       name: salesItem.name,
-      date: order.start_date,
+      date: order.created_at,
       price_per_unit: salesItem.price_per_unit
     }
     orderItemsCount += 1
@@ -132,10 +132,10 @@ function generateCancelledOrders(num) {
     let numDays = faker.random.arrayElement([0, 4, 30, 60])
     let newOrder = {
       id: ordersCount,
-      start_date: DateTime.local()
+      created_at: DateTime.local()
         .minus({ days: numDays })
         .toISODate(),
-      close_date: DateTime.local()
+      updated_at: DateTime.local()
         .minus({ days: numDays })
         .toISODate(),
       status: "cancelled",
@@ -149,19 +149,13 @@ function generateCancelledOrders(num) {
     }
     let department = faker.random.arrayElement(["kitchen", "bar", "mixed"])
     if (department === "kitchen") {
-      newOrder.departments = JSON.stringify({
-        departments: ["kitchen"]
-      })
+      newOrder.departments = JSON.stringify(["kitchen"])
       newOrder.amount = generateKitchenOrderItems(newOrder)
     } else if (department === "bar") {
-      newOrder.departments = JSON.stringify({
-        departments: ["bar"]
-      })
+      newOrder.departments = JSON.stringify(["bar"])
       newOrder.amount = generateBarOrderItems(newOrder)
     } else {
-      newOrder.departments = JSON.stringify({
-        departments: ["kitchen", "bar"]
-      })
+      newOrder.departments = JSON.stringify(["kitchen", "bar"])
       newOrder.amount = generateMixedOrderItems(newOrder)
     }
 
@@ -175,10 +169,10 @@ function generateFulfilledOrders(num) {
     let numDays = faker.random.arrayElement([0, 4, 30, 60])
     let newOrder = {
       id: ordersCount,
-      start_date: DateTime.local()
+      created_at: DateTime.local()
         .minus({ days: numDays })
         .toISODate(),
-      close_date: DateTime.local()
+      updated_at: DateTime.local()
         .minus({ days: numDays })
         .toISODate(),
       status: "fulfilled",
@@ -191,19 +185,13 @@ function generateFulfilledOrders(num) {
     }
     let department = faker.random.arrayElement(["kitchen", "bar", "mixed"])
     if (department === "kitchen") {
-      newOrder.departments = JSON.stringify({
-        departments: ["kitchen"]
-      })
+      newOrder.departments = JSON.stringify(["kitchen"])
       newOrder.amount = generateKitchenOrderItems(newOrder)
     } else if (department === "bar") {
-      newOrder.departments = JSON.stringify({
-        departments: ["bar"]
-      })
+      newOrder.departments = JSON.stringify(["bar"])
       newOrder.amount = generateBarOrderItems(newOrder)
     } else {
-      newOrder.departments = JSON.stringify({
-        departments: ["kitchen", "bar"]
-      })
+      newOrder.departments = JSON.stringify(["kitchen", "bar"])
       newOrder.amount = generateMixedOrderItems(newOrder)
     }
 
@@ -217,10 +205,10 @@ function generatePendingOrders(num) {
     let numDays = faker.random.arrayElement([0, 1, 2])
     let newOrder = {
       id: ordersCount,
-      start_date: DateTime.local()
+      created_at: DateTime.local()
         .minus({ days: numDays })
         .toISODate(),
-      close_date: DateTime.local()
+      updated_at: DateTime.local()
         .minus({ days: numDays })
         .toISODate(),
       status: "pending",
@@ -233,19 +221,13 @@ function generatePendingOrders(num) {
     }
     let department = faker.random.arrayElement(["kitchen", "bar", "mixed"])
     if (department === "kitchen") {
-      newOrder.departments = JSON.stringify({
-        departments: ["kitchen"]
-      })
+      newOrder.departments = JSON.stringify(["kitchen"])
       newOrder.amount = generateKitchenOrderItems(newOrder)
     } else if (department === "bar") {
-      newOrder.departments = JSON.stringify({
-        departments: ["bar"]
-      })
+      newOrder.departments = JSON.stringify(["bar"])
       newOrder.amount = generateBarOrderItems(newOrder)
     } else {
-      newOrder.departments = JSON.stringify({
-        departments: ["kitchen", "bar"]
-      })
+      newOrder.departments = JSON.stringify(["kitchen", "bar"])
       newOrder.amount = generateMixedOrderItems(newOrder)
     }
 

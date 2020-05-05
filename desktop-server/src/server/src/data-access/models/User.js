@@ -1,5 +1,6 @@
 const { ValidationError } = require("objection")
-const Objection = require("../db-config")
+const _ = require("lodash")
+const Objection = require("../objection-config")
 const Role = require("./Role")
 
 class User extends Objection {
@@ -56,6 +57,12 @@ class User extends Objection {
 
   async $beforeUpdate() {
     await this.validateUnique()
+  }
+
+  $parseDatabaseJson(json) {
+    super.$parseDatabaseJson(json)
+    json = _.omit(json, ["active"])
+    return json
   }
 }
 module.exports = User

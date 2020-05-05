@@ -1,5 +1,6 @@
-const Objection = require("../db-config")
 const { ValidationError } = require("objection")
+const _ = require("lodash")
+const Objection = require("../objection-config")
 
 class RoomType extends Objection {
   static get tableName() {
@@ -53,6 +54,12 @@ class RoomType extends Objection {
 
   async $beforeUpdate() {
     await this.validateUnique()
+  }
+
+  $parseDatabaseJson(json) {
+    super.$parseDatabaseJson(json)
+    json = _.omit(json, ["active"])
+    return json
   }
 }
 module.exports = RoomType

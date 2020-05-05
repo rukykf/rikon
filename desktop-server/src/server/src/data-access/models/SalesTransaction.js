@@ -1,4 +1,5 @@
-const Objection = require("../db-config")
+const { DateTime } = require("luxon")
+const Objection = require("../objection-config")
 
 class SalesTransaction extends Objection {
   static get tableName() {
@@ -17,6 +18,30 @@ class SalesTransaction extends Objection {
         }
       }
     }
+  }
+
+  static get jsonSchema() {
+    return {
+      type: "object",
+      required: ["sales_id", "transaction_type", "amount", "registered_by", "date"],
+      properties: {
+        id: { type: "integer" },
+        sales_id: { type: "integer" },
+        transaction_type: {
+          type: "string",
+          enum: ["cash", "pos", "transfer", "discount", "complementary"],
+          transform: ["trim"]
+        },
+        amount: { type: "number", transform: ["trim"] },
+        registered_by: { type: "string", transform: ["trim"] },
+        date: { type: "string" }
+      }
+    }
+  }
+
+  $beforeInsert(queryContext) {
+    this.date = DateTime.local().toISODate()
+    super.$beforeInsert(queryContext)
   }
 }
 

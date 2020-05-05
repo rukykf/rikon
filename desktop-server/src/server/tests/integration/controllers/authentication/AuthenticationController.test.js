@@ -1,9 +1,15 @@
+const db = require(".../../../../src/data-access/db-config")
 const AuthenticationController = require("../../../../src/controllers/authentication/AuthenticationController")
 const User = require("../../../../src/data-access/models/User")
 const Role = require("../../../../src/data-access/models/Role")
 const Permissions = require("../../../../src/data-access/models/Permissions")
 
+beforeAll(async () => {
+  await db.migrate.latest({ directory: "./src/server/src/data-access/migrations" })
+})
+
 test("AuthenticationController.login returns authenticated user when passed valid credentials", async () => {
+  await Role.query().delete()
   let newRole = await Role.query().insert({ name: "dummy", permissions: [Permissions[0]] })
   let user = await User.query().insert({
     username: "myuser",

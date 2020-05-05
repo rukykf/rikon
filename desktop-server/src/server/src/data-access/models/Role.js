@@ -1,5 +1,6 @@
 const { ValidationError } = require("objection")
-const Objection = require("../db-config")
+const _ = require("lodash")
+const Objection = require("../objection-config")
 const Permissions = require("./Permissions")
 
 class Role extends Objection {
@@ -68,6 +69,12 @@ class Role extends Objection {
         })
       }
     }
+  }
+
+  $parseDatabaseJson(json) {
+    super.$parseDatabaseJson(json)
+    json = _.omit(json, ["active"])
+    return json
   }
 }
 

@@ -1,6 +1,6 @@
 const { DateTime } = require("luxon")
 const db = require(".../../../../src/data-access/db-config")
-const PointOfSaleController = require("../../../../src/controllers/sales/PointOfSaleController")
+const PointOfSaleController = require("../../../../src/modules/sales/PointOfSaleController")
 const SalesItem = require("../../../../src/data-access/models/SalesItem")
 const Department = require("../../../../src/data-access/models/Department")
 const OrderItem = require("../../../../src/data-access/models/OrderItem")

@@ -1,6 +1,6 @@
 const db = require(".../../../../src/data-access/db-config")
 const RoomType = require("../../../../src/data-access/models/RoomType")
-const RoomTypesController = require("../../../../src/controllers/configuration/RoomTypesController")
+const RoomTypesController = require("../../../../src/modules/configuration/RoomTypesController")
 
 beforeAll(async () => {
   await db.migrate.latest({ directory: "./src/server/src/data-access/migrations" })

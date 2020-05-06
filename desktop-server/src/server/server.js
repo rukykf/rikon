@@ -4,7 +4,7 @@ const cors = require("cors")
 const path = require("path")
 const User = require("./src/data-access/models/User")
 const ConfigurationRoutes = require("./src/routes/configuration-module")
-const UsersController = require("./src/controllers/configuration/UsersController")
+const UsersController = require("./src/modules/configuration/UsersController")
 
 const app = express()
 const port = 3990

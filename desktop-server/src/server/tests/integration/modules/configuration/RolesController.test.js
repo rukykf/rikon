@@ -1,6 +1,6 @@
 const db = require(".../../../../src/data-access/db-config")
 const Role = require("../../../../src/data-access/models/Role")
-const RolesController = require("../../../../src/controllers/configuration/RolesController")
+const RolesController = require("../../../../src/modules/configuration/RolesController")
 const Permissions = require("../../../../src/data-access/models/Permissions")
 
 beforeAll(async () => {

@@ -1,7 +1,7 @@
 const db = require(".../../../../src/data-access/db-config")
 const SalesItem = require("../../../../src/data-access/models/SalesItem")
 const Department = require("../../../../src/data-access/models/Department")
-const SalesItemsController = require("../../../../src/controllers/configuration/SalesItemsController")
+const SalesItemsController = require("../../../../src/modules/configuration/SalesItemsController")
 
 let newDepartment = null
 

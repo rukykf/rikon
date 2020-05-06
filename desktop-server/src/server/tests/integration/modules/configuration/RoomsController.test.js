@@ -1,7 +1,7 @@
 const db = require(".../../../../src/data-access/db-config")
 const Room = require("../../../../src/data-access/models/Room")
 const RoomType = require("../../../../src/data-access/models/RoomType")
-const RoomsController = require("../../../../src/controllers/configuration/RoomsController")
+const RoomsController = require("../../../../src/modules/configuration/RoomsController")
 
 let newRoomType = null
 

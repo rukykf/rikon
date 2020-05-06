@@ -1,4 +1,4 @@
-const UsersController = require("../../../../src/controllers/configuration/UsersController")
+const UsersController = require("../../../../src/modules/configuration/UsersController")
 const db = require(".../../../../src/data-access/db-config")
 let User = require("../../../../src/data-access/models/User")
 let Role = require("../../../../src/data-access/models/Role")

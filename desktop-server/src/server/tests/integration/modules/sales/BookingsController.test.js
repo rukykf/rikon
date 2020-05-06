@@ -1,6 +1,6 @@
 const { DateTime } = require("luxon")
 const db = require(".../../../../src/data-access/db-config")
-const BookingsController = require("../../../../src/controllers/sales/BookingsController")
+const BookingsController = require("../../../../src/modules/sales/BookingsController")
 const Booking = require("../../../../src/data-access/models/Booking")
 const Room = require("../../../../src/data-access/models/Room")
 const Sale = require("../../../../src/data-access/models/Sale")

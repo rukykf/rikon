@@ -1,5 +1,5 @@
 const db = require(".../../../../src/data-access/db-config")
-const AuthenticationController = require("../../../../src/controllers/authentication/AuthenticationController")
+const AuthenticationController = require("../../../../src/modules/authentication/AuthenticationController")
 const User = require("../../../../src/data-access/models/User")
 const Role = require("../../../../src/data-access/models/Role")
 const Permissions = require("../../../../src/data-access/models/Permissions")

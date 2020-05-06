@@ -127,7 +127,7 @@ module.exports = {
         status: newTotalDue <= 0 ? "paid" : "owing"
       })
 
-      // check that either the booking has been fully paid or a credit transaction has been registered
+      // check that either the booking has been fully paid or a credit transaction has been recorded
       if (sale.total_amount !== sale.total_paid && sale.credit_authorized_by == null) {
         return res.status(400).json({ messages: ["you cannot close the booking without making full payment"] })
       }
@@ -148,7 +148,7 @@ module.exports = {
   async cancelBooking(req, res) {
     try {
       // update the status of the booking to cancelled
-      booking = await Booking.query()
+      let booking = await Booking.query()
         .patchAndFetchById(_.toNumber(req.params.id), {
           status: "cancelled"
         })

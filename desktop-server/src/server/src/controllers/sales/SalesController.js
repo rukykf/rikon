@@ -206,6 +206,7 @@ module.exports = {
         .where("active", "=", 1)
         .andWhere("created_at", ">=", startDate)
         .andWhere("created_at", "<=", endDate)
+        .withGraphFetched("sales_transactions")
 
       if (_.get(req, ["query", "status"]) != null) {
         salesQueryBuilder.where("status", "=", req.query.status)
@@ -400,22 +401,26 @@ module.exports = {
         return res.json(reversedSalesTransaction)
       }
 
-      let newTotalPaid = sale.total_paid - salesTransaction.amount
-      let newTotalDue = sale.total_amount - (newTotalPaid + sale.total_complementary)
-      await Sale.query()
-        .findById(sale.id)
-        .patch({
-          total_paid: newTotalPaid,
-          total_due: newTotalDue,
-          status: getStatus(newTotalDue)
+      if (_.includes(["pos", "transfer", "cash"], salesTransaction.transaction_type)) {
+        let newTotalPaid = sale.total_paid - salesTransaction.amount
+        let newTotalDue = sale.total_amount - (newTotalPaid + sale.total_complementary)
+        await Sale.query()
+          .findById(sale.id)
+          .patch({
+            total_paid: newTotalPaid,
+            total_due: newTotalDue,
+            status: getStatus(newTotalDue)
+          })
+        let reversedSalesTransaction = await SalesTransaction.query().insert({
+          sales_id: sale.id,
+          transaction_type: `reverse-${salesTransaction.transaction_type.toLowerCase()}`,
+          amount: salesTransaction.amount,
+          registered_by: req.get("full_name")
         })
-      let reversedSalesTransaction = await SalesTransaction.query().insert({
-        sales_id: sale.id,
-        transaction_type: `reverse-${salesTransaction.transaction_type.toLowerCase()}`,
-        amount: salesTransaction.amount,
-        registered_by: req.get("full_name")
-      })
-      return res.json(reversedSalesTransaction)
+        return res.json(reversedSalesTransaction)
+      }
+
+      return res.status(400).json({ messages: "could not revert selected transaction" })
     } catch (error) {
       if (error instanceof NotFoundError) {
         return res.status(400).json({ messages: ["could not find selected transaction"] })

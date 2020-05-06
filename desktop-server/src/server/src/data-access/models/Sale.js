@@ -9,7 +9,7 @@ class Sale extends Objection {
   static get relationMappings() {
     const SalesTransaction = require("./SalesTransaction")
     return {
-      salesTransactions: {
+      sales_transactions: {
         relation: Objection.HasManyRelation,
         modelClass: SalesTransaction,
         join: {

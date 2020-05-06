@@ -1,21 +1,21 @@
 <script>
-import Layout from '@layouts/default'
-import { authMethods } from '@state/helpers'
-import appConfig from '@src/app.config'
+import Layout from "@layouts/default"
+import { authMethods } from "@state/helpers"
+import appConfig from "@src/app.config"
 
 /**
  * Login component
  */
 export default {
 	page: {
-		title: 'Log in',
-		meta: [{ name: 'description', content: `Log in to ${appConfig.title}` }],
+		title: "Log in",
+		meta: [{ name: "description", content: `Log in to ${appConfig.title}` }],
 	},
 	components: { Layout },
 	data() {
 		return {
-			username: 'admin',
-			password: 'password',
+			username: "admin",
+			password: "password",
 			authError: null,
 			tryingToLogIn: false,
 			isAuthError: false,
@@ -23,7 +23,7 @@ export default {
 	},
 	computed: {
 		placeholders() {
-			return process.env.NODE_ENV === 'production'
+			return process.env.NODE_ENV === "production"
 				? {}
 				: {
 						username: 'Use "admin" to log in with the mock API',
@@ -47,13 +47,11 @@ export default {
 					this.tryingToLogIn = false
 					this.isAuthError = false
 					// Redirect to the originally requested page, or to the home page
-					this.$router.push(
-						this.$route.query.redirectFrom || { name: 'Dashboard' }
-					)
+					this.$router.push(this.$route.query.redirectFrom || { name: "Dashboard" })
 				})
 				.catch((error) => {
 					this.tryingToLogIn = false
-					this.authError = error.response ? error.response.data.message : ''
+					this.authError = error.response ? error.response.data.message : ""
 					this.isAuthError = true
 				})
 		},
@@ -83,25 +81,14 @@ export default {
 											Enter your username and password to access admin panel
 										</p>
 
-										<b-alert
-											v-model="isAuthError"
-											variant="danger"
-											dismissible
-											>{{ authError }}</b-alert
-										>
+										<b-alert v-model="isAuthError" variant="danger" dismissible>{{ authError }}</b-alert>
 
-										<b-form
-											class="authentication-form"
-											@submit.prevent="tryToLogIn"
-										>
+										<b-form class="authentication-form" @submit.prevent="tryToLogIn">
 											<div class="form-group">
 												<div class="input-group input-group-merge">
 													<div class="input-group-prepend">
 														<span class="input-group-text">
-															<feather
-																type="mail"
-																class="align-middle icon-dual"
-															></feather>
+															<feather type="mail" class="align-middle icon-dual"></feather>
 														</span>
 													</div>
 													<b-form-input
@@ -115,18 +102,10 @@ export default {
 											</div>
 											<div class="form-group mt-4">
 												<label class="form-control-label">Password</label>
-												<router-link
-													to="forget-password"
-													class="float-right text-muted text-unline-dashed ml-1"
-													>Forgot your password?</router-link
-												>
 												<div class="input-group input-group-merge">
 													<div class="input-group-prepend">
 														<span class="input-group-text">
-															<feather
-																type="lock"
-																class="align-middle icon-dual"
-															></feather>
+															<feather type="lock" class="align-middle icon-dual"></feather>
 														</span>
 													</div>
 													<b-form-input
@@ -138,29 +117,9 @@ export default {
 													></b-form-input>
 												</div>
 											</div>
-											<div class="form-group mb-4">
-												<div class="custom-control custom-checkbox">
-													<input
-														id="checkbox-signin"
-														type="checkbox"
-														class="custom-control-input"
-														checked
-													/>
-													<label
-														class="custom-control-label"
-														for="checkbox-signin"
-													>
-														Remember me
-													</label>
-												</div>
-											</div>
+
 											<b-form-group id="button-group" class="mt-4 mb-1">
-												<b-button
-													type="submit"
-													variant="primary"
-													class="btn-block"
-													>Log In</b-button
-												>
+												<b-button type="submit" variant="primary" class="btn-block">Log In</b-button>
 											</b-form-group>
 										</b-form>
 										<div class="py-3 text-center">

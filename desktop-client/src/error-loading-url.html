@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Setup Rikon App IP Address!</title>
+
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/skeleton.css">
+
+    <style type="text/css">
+      body{
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background:#f1f2f6;
+        font-family: 'Nunito', sans-serif;
+      }
+      h1{
+        text-align: center;
+        margin: 0;
+        padding-top: 20px;
+      }
+      .main{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      input[type=submit].button-primary{
+        font-size: 14px;
+      }
+      form{
+        width: 40%;
+        margin-top: 100px;
+      }
+      @media(max-width: 660px){
+        form{
+          width: 70%;
+        }
+      }
+    </style>
+
+  </head>
+  <body>
+  <header>
+    <h1>RIKON HMS is currently unavailable. Contact Management to resolve the issue.</h1>
+  </header>
+  <div class="main">
+    <div class="row">
+      <a href="#" class="button button-primary" id="reloadBtn">Click to Reload Rikon App</a>
+    </div>
+  </div>
+  <script>
+    const { ipcRenderer } = require('electron')
+
+    document.addEventListener("DOMContentLoaded", function(){
+      const submitButton = document.getElementById("reloadBtn")
+      submitButton.addEventListener("click", function(event){
+
+        ipcRenderer.send('reload-rikon-app')
+      })
+    })
+
+
+
+  </script>
+  </body>
+</html>

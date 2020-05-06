@@ -3,7 +3,7 @@ const dotenv = require("dotenv")
 dotenv.config({ path: "../.env" })
 
 const path = require("path")
-const { app, BrowserWindow, Menu, MenuItem } = require("electron")
+const { app, BrowserWindow, Menu } = require("electron")
 const server = require("./server/server")
 const db = require("./server/src/data-access/db-setup")
 const { runDBMigrations, setupAdminUser } = require("./setup-rikon-app")
@@ -45,6 +45,7 @@ const createWindow = () => {
 
   Menu.setApplicationMenu(menu)
   // and load the index.html of the app.
+  mainWindow.maximize()
   mainWindow.loadURL("http://127.0.0.1:8080/")
 }
 

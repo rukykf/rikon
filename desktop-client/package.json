@@ -1,8 +1,8 @@
 {
-  "name": "desktop-client",
-  "productName": "desktop-client",
+  "name": "rikonclient",
+  "productName": "rikonhms",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Client application for Rikon HMS",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
@@ -19,12 +19,14 @@
   "license": "MIT",
   "config": {
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "./assets/icons/win/icon.ico"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "desktop_client"
+            "name": "rikon_client"
           }
         },
         {
@@ -45,7 +47,9 @@
     }
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    "check-url": "^1.0.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "electron-store": "^5.1.1"
   },
   "devDependencies": {
     "@electron-forge/cli": "6.0.0-beta.50",
@@ -53,6 +57,7 @@
     "@electron-forge/maker-rpm": "6.0.0-beta.50",
     "@electron-forge/maker-squirrel": "6.0.0-beta.50",
     "@electron-forge/maker-zip": "6.0.0-beta.50",
-    "electron": "8.2.5"
+    "electron": "8.2.5",
+    "electron-winstaller": "^4.0.0"
   }
 }

@@ -8,6 +8,7 @@ class Order extends Objection {
   static get relationMappings() {
     const OrderItem = require("./OrderItem")
     const Sale = require("./Sale")
+    const SalesItem = require("./SalesItem")
 
     return {
       order_items: {
@@ -30,6 +31,18 @@ class Order extends Objection {
         join: {
           from: "orders.id",
           to: "sales.sellable_id"
+        }
+      },
+      sales_item: {
+        relation: Objection.ManyToManyRelation,
+        modelClass: SalesItem,
+        join: {
+          from: "orders.id",
+          through: {
+            from: "order_items.order_id",
+            to: "order_items.sales_item_id"
+          },
+          to: "sales_items.id"
         }
       }
     }

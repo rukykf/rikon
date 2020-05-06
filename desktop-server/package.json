@@ -2,7 +2,7 @@
   "name": "rikon-app",
   "productName": "rikon-app",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Server application for Rikon HMS",
   "main": "src/main.js",
   "scripts": {
     "quickstart": "electron-forge start",

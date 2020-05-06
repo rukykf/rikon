@@ -21,6 +21,7 @@
     "prefer-const": "off",
     "object-shorthand": ["warn", "never"],
     "no-param-reassign": "off",
-    "global-require": "off"
+    "global-require": "off",
+    "no-await-in-loop": "off"
   }
 }

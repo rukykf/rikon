@@ -2,11 +2,162 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
-    <link rel="stylesheet" href="index.css">
+    <title>Setup Rikon App IP Address!</title>
+
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/skeleton.css">
+
+    <style type="text/css">
+      body{
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background:#f1f2f6;
+        font-family: 'Nunito', sans-serif;
+      }
+      h1{
+        text-align: center;
+        margin: 0;
+        padding-top: 20px;
+      }
+      .main{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      input[type=submit].button-primary{
+        font-size: 14px;
+      }
+      form{
+        width: 40%;
+        margin-top: 100px;
+      }
+      @media(max-width: 660px){
+        form{
+          width: 70%;
+        }
+      }
+    </style>
+
   </head>
   <body>
-    <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
+  <header>
+    <h1>Setup Rikon Desktop Client</h1>
+  </header>
+  <div class="main">
+    <form name="setupForm" id="mainSetupForm">
+      <div class="row">
+        <label>IP Address: </label>
+        <div class="twelve">
+          <input type="text" name="ipAddress" placeholder="127.0.0.1" class="u-full-width" required>
+        </div>
+      </div>
+      <div class="row">
+        <label>Scheme: </label>
+        <div class="twelve">
+          <input type="text" name="scheme" placeholder="http(s)" class="u-full-width" required>
+        </div>
+      </div>
+      <div class="row">
+        <label>Port: </label>
+        <div class="twelve">
+          <input type="text" name="port" placeholder="8090" class="u-full-width" required>
+        </div>
+      </div>
+      <div class="row">
+        <div class="twelve">
+          <input type="submit" id="save-config" class="button-primary u-full-width" value="Save">
+        </div>
+      </div>
+    </form>
+  </div>
+  <script>
+    const { ipcRenderer } = require('electron')
+
+    function validateInput(ipAddress, port, scheme) {
+      let errorMessages = []
+      if (ipAddress.value.length === 0) {
+        errorMessages.push("IP address is required")
+      }
+
+      if (port.value.length === 0) {
+        errorMessages.push("port is required")
+      }
+
+      if (scheme.value.length === 0) {
+        errorMessages.push("scheme is required")
+      }
+
+      if (errorMessages.length !== 0) {
+        errorMessages.forEach((errorMessage) => {
+          let error = document.createElement("p")
+          error.classList.add("twelve")
+          error.innerHTML = errorMessage
+
+          let errorParent = document.createElement("div")
+          errorParent.classList.add("row")
+          errorParent.appendChild(error)
+
+          let target = document.getElementById("mainSetupForm")
+          target.prepend(errorParent)
+        })
+
+      }
+      return errorMessages.length === 0
+    }
+
+    function displaySuccessMessage(){
+      let successMessageElement = document.createElement("p")
+      successMessageElement.classList.add("twelve")
+      successMessageElement.innerHTML = "CONFIGURATION SUCCESSFUL!!!"
+
+      let successMessageParent = document.createElement("div")
+      successMessageParent.classList.add("row")
+      successMessageParent.appendChild(successMessageElement)
+
+      let target = document.getElementById("mainSetupForm")
+      target.prepend(successMessageParent)
+    }
+
+    ipcRenderer.on("successful-configuration", (event, arg) => {
+      displaySuccessMessage()
+    })
+
+    document.addEventListener("DOMContentLoaded", function(){
+      const submitButton = document.getElementById("save-config")
+      submitButton.addEventListener("click", function(event){
+        // get form data
+        event.preventDefault()
+        let ipAddress = document.forms["setupForm"]["ipAddress"]
+        let port = document.forms["setupForm"]["port"]
+        let scheme = document.forms["setupForm"]["scheme"]
+
+        if(!validateInput(ipAddress, port, scheme)){
+          return
+        }
+
+        let configData = {
+          ipAddress: ipAddress.value,
+          port: port.value,
+          httpScheme: scheme.value
+        }
+
+        ipcRenderer.send('configure-rikon', configData)
+      })
+    })
+
+
+
+  </script>
   </body>
 </html>

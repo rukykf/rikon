@@ -1,7 +1,6 @@
 const { ValidationError } = require("objection")
 const _ = require("lodash")
 const Objection = require("../objection-config")
-const Department = require("./Department")
 
 class SalesItem extends Objection {
   static get tableName() {
@@ -10,6 +9,8 @@ class SalesItem extends Objection {
 
   static get relationMappings() {
     const OrderItem = require("./OrderItem")
+    const Department = require("./Department")
+    const Order = require("./Order")
 
     return {
       order_items: {
@@ -26,6 +27,18 @@ class SalesItem extends Objection {
         join: {
           from: "sales_items.department_id",
           to: "departments.id"
+        }
+      },
+      orders: {
+        relation: Objection.ManyToManyRelation,
+        modelClass: Order,
+        join: {
+          from: "sales_items.id",
+          through: {
+            from: "order_items.sales_item_id",
+            to: "order_items.order_id"
+          },
+          to: "orders.id"
         }
       }
     }

@@ -363,10 +363,10 @@ test("SalesController.updateSalesRecordWithTransactionForSellable succeeds with 
 
 test("SalesController.updateSalesRecordWithTransactionForSellable succeeds with complementary transaction", async () => {
   await Sale.query().insert({
-    total_amount: 20000,
+    total_amount: 25000,
     total_paid: 5000,
     total_complementary: 5000,
-    total_due: 10000,
+    total_due: 15000,
     sellable_type: "order",
     sellable_id: order.id,
     status: "owing"
@@ -389,14 +389,14 @@ test("SalesController.updateSalesRecordWithTransactionForSellable succeeds with 
   await SalesController.updateSalesRecordWithTransactionForSellable(req, res)
   let sale = await Sale.query().first()
   let salesTransaction = await SalesTransaction.query().first()
-  expect(sale.total_amount).toEqual(20000)
+  expect(sale.total_amount).toEqual(25000)
   expect(sale.total_paid).toEqual(5000)
-  expect(sale.total_complementary).toEqual(15000)
+  expect(sale.total_complementary).toEqual(20000)
   expect(sale.total_due).toEqual(0)
   expect(sale.sellable_id).toEqual(order.id)
   expect(sale.sellable_type).toEqual("order")
   expect(sale.status).toEqual("paid")
-  expect(salesTransaction.amount).toEqual(15000)
+  expect(salesTransaction.amount).toEqual(20000)
   expect(salesTransaction.transaction_type).toEqual("complementary")
   expect(salesTransaction.registered_by).toEqual("some name")
 })

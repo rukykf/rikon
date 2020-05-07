@@ -187,6 +187,11 @@ async function updateSaleRecordWithTransaction(req, sale) {
       total_due: 0,
       status: "paid"
     })
+
+    // ensure the transaction reflects the amount that was forgiven
+    await SalesTransaction.query().patchAndFetchById(transaction.id, {
+      amount: updatedSale.total_complementary
+    })
   }
 
   return updatedSale

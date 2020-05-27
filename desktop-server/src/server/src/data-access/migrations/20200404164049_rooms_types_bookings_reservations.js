@@ -4,6 +4,8 @@ exports.up = function(knex) {
       table.increments("id")
       table.float("price_per_night")
       table.string("name")
+      table.integer("deleted_at").defaultTo(0)
+      table.unique(["name", "deleted_at"])
       table.boolean("active").defaultTo(true)
     })
     .then(() => {
@@ -15,6 +17,8 @@ exports.up = function(knex) {
       table.increments("id")
       table.integer("room_no")
       table.integer("room_type_id")
+      table.integer("deleted_at").defaultTo(0)
+      table.unique(["room_no", "deleted_at"])
       table.boolean("active").defaultTo(true)
     })
     .then(() => {
@@ -24,9 +28,10 @@ exports.up = function(knex) {
   knex.schema
     .createTable("bookings", (table) => {
       table.increments("id")
-      table.timestamps()
-      table.date("start_date")
-      table.date("end_date").nullable()
+      table.string("created_at")
+      table.string("updated_at")
+      table.string("start_date")
+      table.string("end_date").nullable()
       table.float("price_per_night")
       table.integer("room_id")
       table.json("customer_details")
@@ -40,9 +45,10 @@ exports.up = function(knex) {
     .createTable("reservations", (table) => {
       table.increments("id")
       table.integer("room_id")
-      table.timestamps()
-      table.date("start_date")
-      table.date("end_date")
+      table.string("created_at")
+      table.string("updated_at")
+      table.string("start_date")
+      table.string("end_date")
       table.json("customer_details")
       table.enum("status", ["open", "closed", "cancelled"]).defaultTo("open")
     })

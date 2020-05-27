@@ -1,108 +1,111 @@
 <script>
-    import StateButton from "./state-button";
-    import SuccessFailureAlert from "./success-failure-alert";
+import SuccessFailureAlert from "./success-failure-alert"
+import ManagedStateButton from "./managed-state-button"
+import ErrorHandler from "../ErrorHandler"
 
-    export default {
-        name: "save-department",
-        components: {SuccessFailureAlert, StateButton},
-        props: {
-            department: {
-                type: Object,
-                default: function(){
-                    return {
-                        name: null
-                    }
-                }
-            },
-            addMultiple: {
-                type: Boolean,
-                default: false
-            }
-        },
-        data: function(){
-            return {
-                submitBtn: {
-                    title: "Save Department",
-                    variant: "primary",
-                    loading: false,
-                    disabled: false,
-                    icon: 'none'
-                },
-                newDepartmentNameValidation: null,
-                newDepartment: {
-                    name: this.department.name
-                },
-                disabled: false,
-                errors: [],
-                success: []
-            }
-        },
-        methods: {
-            validateAndSubmit: function(){
-                if(this.isValid()){
-                    this.newDepartmentNameValidation = null
-                    this.submitBtn.loading = true
-                    setTimeout(() => {
-                        this.submitBtn.variant = 'success'
-                        this.submitBtn.loading = false
-                        this.submitBtn.disabled = true
-                        this.submitBtn.icon = 'check'
-                        this.submitBtn.title = "Success"
-                        this.disabled = true
-                        this.$emit('department-saved', this.newDepartment)
-                        this.success.push('Successfully saved')
-                        if(this.addMultiple){
-                            this.resetForm()
-                        }
-                    }, 1200)
-                }
-            },
-            isValid: function(){
-                if(this.newDepartment.name === null || this.newDepartment.name.length < 1){
-                    this.newDepartmentNameValidation = 'Department name is required'
-                    return false
-                }
+export default {
+	name: "SaveDepartment",
+	components: { ManagedStateButton, SuccessFailureAlert },
+	props: {
+		department: {
+			type: Object,
+			default: function() {
+				return {
+					id: null,
+					name: null,
+				}
+			},
+		},
+		addMultiple: {
+			type: Boolean,
+			default: false,
+		},
+	},
+	data: function() {
+		return {
+			submitBtnState: "initialize",
+			newDepartmentNameValidation: null,
+			newDepartment: {
+				id: this.department.id,
+				name: this.department.name,
+			},
+			disabled: false,
+			errors: [],
+			success: [],
+		}
+	},
+	methods: {
+		validateAndSubmit: async function() {
+			if (this.isValid()) {
+				try {
+					this.submitBtnState = "loading"
+					let url = "api/departments/"
 
-                return true
-            },
-            resetForm: function(){
-                this.submitBtn.loading = true
-                this.submitBtn.variant = 'primary'
-                setTimeout(() => {
-                    this.newDepartment.name = null
-                    this.submitBtn.loading = false
-                    this.submitBtn.disabled = false
-                    this.submitBtn.icon = 'none'
-                    this.submitBtn.title = 'Save Another Department'
-                    this.disabled = false
-                }, 500)
+					if (this.department.id != null) {
+						url += this.department.id
+					}
 
-            }
-        }
-    }
+					await this.$httpClient.post(url, this.newDepartment)
+					this.success.push(`Successfully saved department: ${this.newDepartment.name}`)
+					if (this.addMultiple) {
+						this.submitBtnState = "success-try-again"
+						this.resetForm()
+					} else {
+						this.disabled = true
+						this.submitBtnState = "success"
+					}
+				} catch (error) {
+					this.submitBtnState = "fail-try-again"
+					let errors = ErrorHandler(error)
+					this.errors.push(...errors)
+				}
+			}
+		},
+		isValid: function() {
+			if (this.newDepartment.name === null || this.newDepartment.name.length < 1) {
+				this.newDepartmentNameValidation = "Department name is required"
+				return false
+			}
+
+			return true
+		},
+		resetForm: function() {
+			this.newDepartment.name = null
+			this.newDepartmentNameValidation = null
+		},
+	},
+}
 </script>
 
 <template>
+	<div>
+		<SuccessFailureAlert :errors="errors" :success="success"></SuccessFailureAlert>
+		<div class="pt-3">
+			<div class="form-group">
+				<label for="departmentName">
+					<h6>Enter Department Name: </h6>
+					<small v-if="newDepartmentNameValidation !== null" class="text-danger">* {{ newDepartmentNameValidation }}</small>
+				</label>
 
-    <div>
-        <SuccessFailureAlert :errors="errors" :success="success"></SuccessFailureAlert>
-        <div class="pt-3">
-            <div class="form-group">
-                <label for="departmentName">
-                    <h6>Enter Department Name: </h6>
-                    <small v-if="newDepartmentNameValidation !== null" class="text-danger">* {{ newDepartmentNameValidation }}</small>
-                </label>
+				<input
+					id="departmentName"
+					v-model="newDepartment.name"
+					type="text"
+					name="departmentName"
+					:disabled="disabled"
+					placeholder=""
+					class="form-control "
+				/>
+			</div>
+		</div>
 
-                <input type="text" id="departmentName" name="departmentName" :disabled="disabled" v-model="newDepartment.name" placeholder=""
-                       required
-                       class="form-control ">
-            </div>
-        </div>
-
-        <p>
-            <StateButton :buttonState="submitBtn" @clicked="validateAndSubmit"></StateButton>
-        </p>
-    </div>
-
+		<p>
+			<ManagedStateButton
+				main-title="Save Department"
+				success-try-again-title="Save Another Department"
+				:state="submitBtnState"
+				@clicked="validateAndSubmit"
+			></ManagedStateButton>
+		</p>
+	</div>
 </template>
-

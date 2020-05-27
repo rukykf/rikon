@@ -12,7 +12,7 @@ export default {
 	props: {
 		room: {
 			type: Object,
-			required: true,
+			required: false,
 		},
 	},
 	data: function() {
@@ -23,42 +23,18 @@ export default {
 			currentTab: "loading",
 		}
 	},
-	computed: {
-		currentDate: function() {
-			console.log(DateTime.local().toISO())
-			return DateTime.local().toISODate()
-		},
-		bookingStartDate: function() {
-			if (this.roomDetails.booking) {
-				return DateTime.fromISO(this.roomDetails.booking.startDate).toLocaleString(DateTime.DATE_FULL)
-			}
-			return ""
-		},
-		newReservationNights: function() {
-			let nights = Interval.fromDateTimes(
-				DateTime.fromISO(this.newReservation.reservationStart),
-				DateTime.fromISO(this.newReservation.reservationEnd)
-			)
-				.length("days")
-				.toFixed(0)
-			return isNaN(nights) ? 0 : nights
-		},
-	},
 	mounted: function() {
 		this.currentTab = "loading"
-		setTimeout(() => {
-			console.log("hello")
-			this.currentTab = this.tabs[0]
-		}, 1900)
-		if (this.room.status === "reserved") {
+		if (this.room.room_status === "reserved") {
 			this.tabs.unshift("current reservation")
 		}
-		if (this.room.status === "available") {
+		if (this.room.room_status === "available") {
 			this.tabs.unshift("book room")
 		}
-		if (this.room.status === "booked") {
+		if (this.room.room_status === "booked") {
 			this.tabs.unshift("booking")
 		}
+		this.currentTab = this.tabs[0]
 	},
 	methods: {},
 }

@@ -3,6 +3,8 @@ exports.up = function(knex) {
     .createTable("departments", (table) => {
       table.increments("id")
       table.string("name")
+      table.integer("deleted_at").defaultTo(0)
+      table.unique(["name", "deleted_at"])
       table.boolean("active").defaultTo(true)
     })
     .then(() => {
@@ -16,6 +18,8 @@ exports.up = function(knex) {
       table.string("unit")
       table.float("price_per_unit")
       table.integer("department_id")
+      table.integer("deleted_at").defaultTo(0)
+      table.unique(["name", "deleted_at"])
       table.boolean("active").defaultTo(true)
     })
     .then(() => {

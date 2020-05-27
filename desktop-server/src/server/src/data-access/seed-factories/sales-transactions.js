@@ -1,9 +1,10 @@
 const { DateTime, Interval } = require("luxon")
 const faker = require("faker")
 const { fulfilledOrders } = require("./departments-sales-items-orders")
-const { closedBookings } = require("./rooms-bookings-reservations-types")
+const { closedBookings, openBookings } = require("./rooms-bookings-reservations-types")
+const Booking = require("../models/Booking")
 
-const salesBookings = JSON.parse(JSON.stringify(closedBookings))
+let salesBookings = JSON.parse(JSON.stringify(closedBookings))
 
 let sales = []
 let salesTransactions = []
@@ -74,7 +75,7 @@ function generateFullComplementarySale(sellable, type) {
       name: "Rukky Kofi",
       room_no: "101"
     }),
-    credit_authorized_by: { name: "Rukky Kofi" }
+    credit_authorized_by: JSON.stringify({ name: "Rukky Kofi" })
   }
   sales.push(newSale)
   salesTransactions.push(newSalesTransaction)
@@ -98,7 +99,7 @@ function generateFullCreditSale(sellable, type) {
       name: `${faker.name.firstName()} ${faker.name.lastName()}`,
       room_no: "113"
     }),
-    credit_authorized_by: { name: "Rukky Kofi" }
+    credit_authorized_by: JSON.stringify({ name: "Rukky Kofi" })
   }
   sales.push(newSale)
   salesCount += 1
@@ -129,7 +130,7 @@ function generatePartialComplementarySale(sellable, type) {
       name: `${faker.name.firstName()} ${faker.name.lastName()}`,
       room_no: "114"
     }),
-    credit_authorized_by: { name: "Rukky Kofi" }
+    credit_authorized_by: JSON.stringify({ name: "Rukky Kofi" })
   }
   sales.push(newSale)
   salesTransactions.push(newSalesTransaction)
@@ -176,7 +177,7 @@ function generatePartialPaymentComplementarySale(sellable, type) {
       name: `${faker.name.firstName()} ${faker.name.lastName()}`,
       room_no: "114"
     }),
-    credit_authorized_by: { name: "Rukky Kofi" }
+    credit_authorized_by: JSON.stringify({ name: "Rukky Kofi" })
   }
 
   sales.push(newSale)
@@ -195,39 +196,62 @@ function getSaleType() {
 fulfilledOrders.forEach((order) => {
   let saleType = getSaleType()
   if (saleType === "partial-complementary") {
-    generatePartialComplementarySale(order, "orders")
+    generatePartialComplementarySale(order, "order")
   }
   if (saleType === "partial-payment-complementary") {
-    generatePartialPaymentComplementarySale(order, "orders")
+    generatePartialPaymentComplementarySale(order, "order")
   }
   if (saleType === "full-payment") {
-    generateFullPaymentSale(order, "orders")
+    generateFullPaymentSale(order, "order")
   }
   if (saleType === "full-complementary") {
-    generateFullComplementarySale(order, "orders")
+    generateFullComplementarySale(order, "order")
   }
   if (saleType === "full-credit") {
-    generateFullCreditSale(order, "orders")
+    generateFullCreditSale(order, "order")
   }
 })
 
 salesBookings.forEach((booking) => {
-  booking.amount = 12000
+  booking.amount = booking.price_per_night * Booking.getNumNights(booking.start_date, booking.end_date)
   let saleType = getSaleType()
   if (saleType === "partial-complementary") {
-    generatePartialComplementarySale(booking, "bookings")
+    generatePartialComplementarySale(booking, "booking")
   }
   if (saleType === "partial-payment-complementary") {
-    generatePartialPaymentComplementarySale(booking, "bookings")
+    generatePartialPaymentComplementarySale(booking, "booking")
   }
   if (saleType === "full-payment") {
-    generateFullPaymentSale(booking, "bookings")
+    generateFullPaymentSale(booking, "booking")
   }
   if (saleType === "full-complementary") {
-    generateFullComplementarySale(booking, "bookings")
+    generateFullComplementarySale(booking, "booking")
   }
   if (saleType === "full-credit") {
-    generateFullCreditSale(booking, "bookings")
+    generateFullCreditSale(booking, "booking")
+  }
+})
+
+let openBookingSaleType = "full-payment"
+function getOpenBookingSaleType() {
+  if (openBookingSaleType === "full-payment") {
+    openBookingSaleType = "partial-payment-complementary"
+  } else {
+    openBookingSaleType = "full-payment"
+  }
+  return openBookingSaleType
+}
+
+salesBookings = JSON.parse(JSON.stringify(openBookings))
+salesBookings.forEach((booking) => {
+  booking.amount = booking.price_per_night * Booking.getNumNights(booking.start_date, booking.end_date)
+  let saleType = getOpenBookingSaleType()
+
+  if (saleType === "partial-payment-complementary") {
+    generatePartialPaymentComplementarySale(booking, "booking")
+  }
+  if (saleType === "full-payment") {
+    generateFullPaymentSale(booking, "booking")
   }
 })
 

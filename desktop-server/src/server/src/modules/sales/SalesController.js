@@ -425,12 +425,16 @@ module.exports = {
         return res.json(reversedSalesTransaction)
       }
 
-      return res.status(400).json({ messages: "could not revert selected transaction" })
+      return res.status(400).json({ messages: ["could not revert selected transaction"] })
     } catch (error) {
       if (error instanceof NotFoundError) {
         return res.status(400).json({ messages: ["could not find selected transaction"] })
       }
       return res.status(500).json({ messages: ["something went wrong, try again later"] })
     }
+  },
+
+  async getSalesTransactionsForSalesRecord(req, res) {
+    return res.json({ messages: ["hello world"] })
   }
 }

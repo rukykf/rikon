@@ -1,5 +1,6 @@
-const { NotFoundError, ValidationError } = require("objection")
+const { NotFoundError, ValidationError, UniqueViolationError } = require("objection")
 const _ = require("lodash")
+const { DateTime } = require("luxon")
 const Role = require("../../data-access/models/Role")
 const Permissions = require("../../data-access/models/Permissions")
 
@@ -21,6 +22,10 @@ module.exports = {
       })
       return res.json(role)
     } catch (error) {
+      if (error instanceof UniqueViolationError) {
+        return res.status(400).json({ messages: ["this name is already assigned to another role"] })
+      }
+
       if (error.type === "InvalidRolePermissionError" || error.type === "NewRoleNameValidation") {
         return res.status(400).json({ messages: [error.message] })
       }
@@ -54,6 +59,10 @@ module.exports = {
     } catch (error) {
       if (error instanceof NotFoundError) {
         return res.status(400).json({ messages: ["the selected role was not found"] })
+      }
+
+      if (error instanceof UniqueViolationError) {
+        return res.status(400).json({ messages: ["this name is already assigned to another role"] })
       }
 
       if (error.type === "InvalidRolePermissionError") {
@@ -94,7 +103,7 @@ module.exports = {
     try {
       let numDeletedRows = await Role.query()
         .findById(_.toNumber(req.params.id))
-        .patch({ active: false })
+        .patch({ active: false, deleted_at: DateTime.local().toSeconds() })
         .throwIfNotFound()
       return res.json({ message: "successfully deleted selected role" })
     } catch (error) {

@@ -14,6 +14,14 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		sellableType: {
+			type: String,
+			required: true,
+		},
+		sellableId: {
+			type: Number,
+			required: true,
+		},
 	},
 	data: function() {
 		return {

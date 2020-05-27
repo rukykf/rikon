@@ -1,4 +1,5 @@
-const { NotFoundError, ValidationError } = require("objection")
+const { NotFoundError, ValidationError, UniqueViolationError } = require("objection")
+const { DateTime } = require("luxon")
 const _ = require("lodash")
 const SalesItem = require("../../data-access/models/SalesItem")
 
@@ -20,8 +21,8 @@ module.exports = {
       })
       return res.json(salesItem)
     } catch (error) {
-      if (error.type === "NewSalesItemNameValidation") {
-        return res.status(400).json({ messages: [error.message] })
+      if (error instanceof UniqueViolationError) {
+        return res.status(400).json({ messages: ["a sales item with this name already exists"] })
       }
 
       if (error instanceof ValidationError) {
@@ -56,8 +57,8 @@ module.exports = {
         return res.status(400).json({ messages: ["the selected sales item was not found"] })
       }
 
-      if (error.type === "NewSalesItemNameValidation") {
-        return res.status(400).json({ messages: [error.message] })
+      if (error instanceof UniqueViolationError) {
+        return res.status(400).json({ messages: ["a sales item with this name already exists"] })
       }
 
       if (error instanceof ValidationError) {
@@ -95,7 +96,7 @@ module.exports = {
     try {
       let numDeletedRows = await SalesItem.query()
         .findById(_.toNumber(req.params.id))
-        .patch({ active: false })
+        .patch({ active: false, deleted_at: DateTime.local().toSeconds() })
         .throwIfNotFound()
       return res.json({ message: "successfully deleted the selected sales item" })
     } catch (error) {

@@ -14,12 +14,15 @@ import VueFeather from "vue-feather"
 import flatPickr from "vue-flatpickr-component"
 import VueHtmlToPaper from "vue-html-to-paper/src"
 import { formatMoney } from "accounting-js"
+import { DateTime } from "luxon"
+import ApiClient from "./ApiClient"
 
 Vue.use(VueFeather)
 Vue.use(flatPickr)
 
 Vue.use(VueRouter)
 Vue.use(vco)
+Vue.prototype.$httpClient = ApiClient
 
 // Don't warn about using the dev version of Vue in development.
 Vue.config.productionTip = process.env.NODE_ENV === "production"
@@ -57,6 +60,21 @@ Vue.filter("money", function(value) {
 		return formatMoney(value, { symbol: "N", precision: 2 })
 	}
 	return formatMoney(value, { symbol: "N", precision: 0 })
+})
+
+Vue.filter("humanDate", function(value) {
+	let date = DateTime.fromISO(value)
+	return date.toLocaleString(DateTime.DATE_HUGE)
+})
+
+Vue.filter("humanDateWithTime", function(value) {
+	let date = DateTime.fromISO(value)
+	return date.toLocaleString(DateTime.DATETIME_MED)
+})
+
+Vue.filter("humanTime", function(value) {
+	let date = DateTime.fromISO(value)
+	return date.toLocaleString(DateTime.TIME_SIMPLE)
 })
 
 const app = new Vue({

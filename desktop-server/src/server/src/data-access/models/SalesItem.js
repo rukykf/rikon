@@ -58,30 +58,6 @@ class SalesItem extends Objection {
     }
   }
 
-  async validateUnique() {
-    if (this.name) {
-      let existingItem = await SalesItem.query()
-        .where("name", "=", this.name.toLowerCase())
-        .andWhere("active", "=", 1)
-        .first()
-
-      if (existingItem != null) {
-        throw new ValidationError({
-          message: "a sales item with this name already exists",
-          type: "NewSalesItemNameValidation"
-        })
-      }
-    }
-  }
-
-  async $beforeInsert() {
-    await this.validateUnique()
-  }
-
-  async $beforeUpdate() {
-    await this.validateUnique()
-  }
-
   $parseDatabaseJson(json) {
     super.$parseDatabaseJson(json)
     json = _.omit(json, ["active"])

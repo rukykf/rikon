@@ -52,28 +52,6 @@ class Room extends Objection {
     }
   }
 
-  async validateUnique() {
-    if (this.room_no) {
-      let existingRoom = await Room.query()
-        .where("room_no", "=", this.room_no)
-        .first()
-      if (existingRoom != null) {
-        throw new ValidationError({
-          message: "this number is already assigned to another room",
-          type: "NewRoomNumberValidation"
-        })
-      }
-    }
-  }
-
-  async $beforeInsert() {
-    await this.validateUnique()
-  }
-
-  async $beforeUpdate() {
-    await this.validateUnique()
-  }
-
   $parseDatabaseJson(json) {
     super.$parseDatabaseJson(json)
     json = _.omit(json, ["active"])

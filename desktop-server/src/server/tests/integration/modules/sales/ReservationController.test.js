@@ -163,7 +163,7 @@ test("ReservationsController.createReservationForRoom returns newly created rese
       end_date: DateTime.local()
         .plus({ days: 60 })
         .toISODate(),
-      customer_details: { full_name: "some customer", phone_number: "0812345678" }
+      customer_details: { name: "some customer", phone: "0812345678" }
     }
   }
   let output
@@ -245,7 +245,7 @@ test("ReservationsController.createReservationForRoom returns error message when
       end_date: DateTime.local()
         .plus({ days: 12 })
         .toISODate(),
-      customer_details: { full_name: "some customer", phone_number: "08123456789" }
+      customer_details: { name: "some customer", phone: "08123456789" }
     }
   }
 
@@ -256,7 +256,9 @@ test("ReservationsController.createReservationForRoom returns error message when
   res.status.mockReturnThis()
   await ReservationsController.createReservationForRoom(req, res)
   expect(res.status).toHaveBeenLastCalledWith(400)
-  expect(res.json).toHaveBeenLastCalledWith({ messages: ["a reservation already exists at the selected end date"] })
+  expect(res.json).toHaveBeenLastCalledWith({
+    messages: ["this room already has a reservation for the selected dates, cancel those reservations first"]
+  })
 
   req.body.start_date = DateTime.local()
     .plus({ days: 12 })
@@ -266,7 +268,33 @@ test("ReservationsController.createReservationForRoom returns error message when
     .toISODate()
   await ReservationsController.createReservationForRoom(req, res)
   expect(res.status).toHaveBeenLastCalledWith(400)
-  expect(res.json).toHaveBeenLastCalledWith({ messages: ["a reservation already exists at the selected start date"] })
+  expect(res.json).toHaveBeenLastCalledWith({
+    messages: ["this room already has a reservation for the selected dates, cancel those reservations first"]
+  })
+
+  req.body.start_date = DateTime.local()
+    .plus({ days: 12 })
+    .toISODate()
+  req.body.end_date = DateTime.local()
+    .plus({ days: 13 })
+    .toISODate()
+  await ReservationsController.createReservationForRoom(req, res)
+  expect(res.status).toHaveBeenLastCalledWith(400)
+  expect(res.json).toHaveBeenLastCalledWith({
+    messages: ["this room already has a reservation for the selected dates, cancel those reservations first"]
+  })
+
+  req.body.start_date = DateTime.local()
+    .plus({ days: 8 })
+    .toISODate()
+  req.body.end_date = DateTime.local()
+    .plus({ days: 16 })
+    .toISODate()
+  await ReservationsController.createReservationForRoom(req, res)
+  expect(res.status).toHaveBeenLastCalledWith(400)
+  expect(res.json).toHaveBeenLastCalledWith({
+    messages: ["this room already has a reservation for the selected dates, cancel those reservations first"]
+  })
 })
 
 test("ReservationsController.getCurrentReservationForRoom returns the reservation starting today for a room", async () => {

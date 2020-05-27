@@ -39,36 +39,47 @@ function isReservationDateValid(req) {
 }
 
 async function checkReservationForConflicts(req) {
-  // check start date
   let startDate = DateTime.fromISO(req.body.start_date)
+    .toLocal()
+    .toISODate()
+  let endDate = DateTime.fromISO(req.body.end_date)
     .toLocal()
     .toISODate()
 
   let reservation
   reservation = await Reservation.query()
-    .where("start_date", "<=", startDate)
-    .andWhere("end_date", ">=", startDate)
-    .andWhere("status", "=", "open")
-    .andWhere("room_id", "=", _.toNumber(req.params.id))
+    .where((builder) => {
+      builder
+        .where("start_date", "<=", startDate)
+        .andWhere("end_date", ">=", startDate)
+        .andWhere("status", "=", "open")
+        .andWhere("room_id", "=", _.toNumber(req.params.id))
+    })
+    .orWhere((builder) => {
+      builder
+        .where("start_date", "<=", endDate)
+        .andWhere("end_date", ">=", endDate)
+        .andWhere("status", "=", "open")
+        .andWhere("room_id", "=", _.toNumber(req.params.id))
+    })
+    .orWhere((builder) => {
+      builder
+        .where("start_date", ">", startDate)
+        .andWhere("end_date", "<", endDate)
+        .andWhere("status", "=", "open")
+        .andWhere("room_id", "=", _.toNumber(req.params.id))
+    })
+    .orWhere((builder) => {
+      builder
+        .where("start_date", "<", startDate)
+        .andWhere("end_date", ">", endDate)
+        .andWhere("status", "=", "open")
+        .andWhere("room_id", "=", _.toNumber(req.params.id))
+    })
     .first()
 
   if (reservation != null) {
-    return "a reservation already exists at the selected start date"
-  }
-
-  // check end date
-  let endDate = DateTime.fromISO(req.body.end_date)
-    .toLocal()
-    .toISODate()
-  reservation = await Reservation.query()
-    .where("start_date", "<=", endDate)
-    .andWhere("end_date", ">=", endDate)
-    .andWhere("status", "=", "open")
-    .andWhere("room_id", "=", _.toNumber(req.params.id))
-    .first()
-
-  if (reservation != null) {
-    return "a reservation already exists at the selected end date"
+    return "this room already has a reservation for the selected dates, cancel those reservations first"
   }
 
   return null
@@ -106,10 +117,7 @@ module.exports = {
         return res.status(400).json({ messages: ["the dates for this reservation are invalid"] })
       }
 
-      if (
-        !_.get(req, ["body", "customer_details", "full_name"]) ||
-        !_.get(req, ["body", "customer_details", "phone_number"])
-      ) {
+      if (!_.get(req, ["body", "customer_details", "name"]) || !_.get(req, ["body", "customer_details", "phone"])) {
         return res.status(400).json({ messages: ["customer name and phone number are required"] })
       }
 

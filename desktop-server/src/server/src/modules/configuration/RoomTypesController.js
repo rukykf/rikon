@@ -1,4 +1,5 @@
-const { NotFoundError, ValidationError } = require("objection")
+const { NotFoundError, ValidationError, UniqueViolationError } = require("objection")
+const { DateTime } = require("luxon")
 const _ = require("lodash")
 const RoomType = require("../../data-access/models/RoomType")
 
@@ -16,8 +17,8 @@ module.exports = {
       })
       return res.json(roomType)
     } catch (error) {
-      if (error.type === "NewRoomTypeNameValidation") {
-        return res.status(400).json({ messages: [error.message] })
+      if (error instanceof UniqueViolationError) {
+        return res.status(400).json({ messages: ["this name is already assigned to another room type"] })
       }
 
       if (error instanceof ValidationError) {
@@ -51,8 +52,8 @@ module.exports = {
         return res.status(400).json({ messages: ["the selected room type was not found"] })
       }
 
-      if (error.type === "NewRoomTypeNameValidation") {
-        return res.status(400).json({ messages: [error.message] })
+      if (error instanceof UniqueViolationError) {
+        return res.status(400).json({ messages: ["this name is already assigned to another room type"] })
       }
 
       if (error instanceof ValidationError) {
@@ -89,7 +90,7 @@ module.exports = {
     try {
       let numDeletedRows = await RoomType.query()
         .findById(_.toNumber(req.params.id))
-        .patch({ active: false })
+        .patch({ active: false, deleted_at: DateTime.local().toSeconds() })
         .throwIfNotFound()
       return res.json({ message: "successfully deleted selected room type" })
     } catch (error) {

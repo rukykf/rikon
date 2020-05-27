@@ -23,28 +23,5 @@ class Department extends Objection {
     json = super.$parseDatabaseJson(json)
     return _.pick(json, ["id", "name"])
   }
-
-  async validateUnique() {
-    if (this.name) {
-      let existingDepartment = await Department.query()
-        .where("name", "=", this.name.toLowerCase())
-        .first()
-
-      if (existingDepartment != null) {
-        throw new ValidationError({
-          message: "this name is already assigned to another department",
-          type: "NewDepartmentNameValidation"
-        })
-      }
-    }
-  }
-
-  async $beforeInsert() {
-    await this.validateUnique()
-  }
-
-  async $beforeUpdate() {
-    await this.validateUnique()
-  }
 }
 module.exports = Department

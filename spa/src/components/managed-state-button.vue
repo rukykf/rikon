@@ -6,6 +6,11 @@ export default {
 			type: String,
 			default: "Submit",
 		},
+		featherIcon: {
+			type: String,
+			required: false,
+			default: "",
+		},
 		mainVariant: {
 			type: String,
 			default: "primary",
@@ -33,6 +38,10 @@ export default {
 	},
 	computed: {
 		icon: function() {
+			if (this.featherIcon.length > 0) {
+				return this.featherIcon
+			}
+
 			if (this.state === "success") {
 				return "check"
 			}
@@ -100,7 +109,7 @@ export default {
 			<b-spinner variant="white" class="mx-5"></b-spinner>
 		</span>
 		<span v-else>
-			<feather v-if="icon !== 'none'" :type="icon" class="align-middle"></feather>
+			<feather v-if="icon !== 'none'" :type="icon" class="align-middle mr-2"></feather>
 			<span class="align-middle">{{ title }}</span>
 		</span>
 	</b-button>

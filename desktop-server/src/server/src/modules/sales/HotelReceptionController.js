@@ -26,9 +26,7 @@ module.exports = {
       let rooms = await Room.query().withGraphFetched("room_type")
       let output = []
       for (let i = 0; i < rooms.length; i++) {
-        // eslint-disable-next-line no-await-in-loop
         let reservation = await getCurrentReservationForRoom(rooms[i])
-        // eslint-disable-next-line no-await-in-loop
         let booking = await getCurrentBookingForRoom(rooms[i])
 
         if (reservation != null) {

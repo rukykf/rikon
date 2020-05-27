@@ -23,7 +23,7 @@ test("RolesController.index returns list of available roles", async () => {
   let res = { json: jest.fn() }
   let req = {}
   await RolesController.index(req, res)
-  expect(res.json).toHaveBeenCalledWith(expect.arrayContaining([role]))
+  expect(res.json).toHaveBeenCalledWith(expect.arrayContaining([expect.objectContaining(role)]))
 })
 
 test("RolesController.create returns newly created role when passed valid data", async () => {
@@ -136,7 +136,7 @@ test("RolesController.show returns selected role when passed valid id", async ()
   let req = { params: { id: role.id } }
   let res = { json: jest.fn() }
   await RolesController.show(req, res)
-  expect(res.json).toHaveBeenCalledWith(role)
+  expect(res.json).toHaveBeenCalledWith(expect.objectContaining(role))
 })
 
 test("RolesController.show returns error message when passed invalid id", async () => {

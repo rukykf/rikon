@@ -13,7 +13,31 @@ export default {
 			type: String,
 			default: "initialize", // possible values are ['loading', 'success', 'fail', 'try-again', 'add-another-payment'] Note that add-another-payment is only valid for cash payments
 		},
+		sellableType: {
+			type: String,
+			required: true,
+		},
+		sellableId: {
+			type: Number,
+			required: true,
+		},
 		disabled: {
+			type: Boolean,
+			default: false,
+		},
+		requiredAmount: {
+			type: Number,
+			default: 200.0,
+		},
+		exactAmountRequired: {
+			type: Boolean,
+			default: false,
+		},
+		roomNumberRequired: {
+			type: Boolean,
+			default: false,
+		},
+		phoneNumberRequired: {
 			type: Boolean,
 			default: false,
 		},
@@ -25,15 +49,8 @@ export default {
 	},
 	computed: {},
 	methods: {
-		collectCashPayment: function(paymentInfo) {
-			paymentInfo.type = "cash"
-			this.$emit("submit-payment", paymentInfo)
-		},
-
-		collectCreditPayment: function(paymentInfo) {
-			paymentInfo.type = "credit"
-			this.$emit("submit-payment", paymentInfo)
-		},
+		paymentSuccessful: function(paymentInfo) {},
+		paymentFailed: function(paymentInfo) {},
 	},
 }
 </script>
@@ -53,10 +70,24 @@ export default {
 				<CollectCredit
 					:state="state"
 					v-if="creditForm"
-					:disabled="disabled"
 					@clicked="collectCreditPayment"
+					:room-number-required="roomNumberRequired"
+					:phone-number-required="phoneNumberRequired"
+					:sellable-type="sellableType"
+					:sellable-id="sellableId"
+					@payment-successful="paymentSuccessful"
+					@payment-failed="paymentFailed"
 				></CollectCredit>
-				<CollectCashPayment :state="state" v-else :disabled="disabled" @clicked="collectCashPayment"></CollectCashPayment>
+				<CollectCashPayment
+					:sellable-id="sellableId"
+					:sellable-type="sellableType"
+					:required-amount="requiredAmount"
+					:exact-amount-required="exactAmountRequired"
+					:state="state"
+					v-else
+					@payment-successful="paymentSuccessful"
+					@payment-failed="paymentFailed"
+				></CollectCashPayment>
 			</div>
 		</div>
 	</div>

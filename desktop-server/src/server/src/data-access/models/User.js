@@ -1,4 +1,3 @@
-const { ValidationError } = require("objection")
 const _ = require("lodash")
 const Objection = require("../objection-config")
 const Role = require("./Role")
@@ -34,29 +33,6 @@ class User extends Objection {
         role_id: { type: "integer" }
       }
     }
-  }
-
-  async validateUnique() {
-    if (this.username) {
-      let existingUser = await User.query()
-        .where("username", "=", this.username.toLowerCase())
-        .first()
-
-      if (existingUser != null) {
-        throw new ValidationError({
-          message: "This username is already taken, try another one",
-          type: "NewUserValidation"
-        })
-      }
-    }
-  }
-
-  async $beforeInsert() {
-    await this.validateUnique()
-  }
-
-  async $beforeUpdate() {
-    await this.validateUnique()
   }
 
   $parseDatabaseJson(json) {

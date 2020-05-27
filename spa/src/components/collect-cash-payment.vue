@@ -1,6 +1,9 @@
 <script>
+import SuccessFailureAlert from "./success-failure-alert"
+import ManagedStateButton from "./managed-state-button"
 export default {
 	name: "collect-cash-payment",
+	components: { ManagedStateButton, SuccessFailureAlert },
 	props: {
 		state: {
 			type: String,
@@ -8,7 +11,15 @@ export default {
 		},
 		requiredAmount: {
 			type: Number,
-			default: 1000.0,
+			default: 200.0,
+		},
+		sellableType: {
+			type: String,
+			required: true,
+		},
+		sellableId: {
+			type: Number,
+			required: true,
 		},
 		exactAmountRequired: {
 			type: Boolean,
@@ -18,8 +29,12 @@ export default {
 	data: function() {
 		return {
 			amount: this.requiredAmount,
-			paymentMethod: "cash",
+			paymentMethod: null,
 			amountValidation: null,
+			paymentMethodValidation: null,
+			errors: [],
+			success: [],
+			paymentBtnState: this.state,
 		}
 	},
 	computed: {
@@ -29,12 +44,19 @@ export default {
 			}
 			return false
 		},
+		computedPaymentBtnState: function() {
+			return this.paymentBtnState
+		},
 	},
 
 	watch: {},
 
 	methods: {
-		validateAndSubmit: function() {
+		validateAndPay: function() {
+			if (!this.validate()) {
+				return
+			}
+
 			if (this.validate()) {
 				let paymentInfo = {
 					paymentMethod: this.paymentMethod,
@@ -54,6 +76,12 @@ export default {
 				this.amountValidation = "Amount should be less than or equal to: " + this.requiredAmount
 				return false
 			}
+
+			if (this.paymentMethod === null) {
+				this.paymentMethodValidation = "Select a valid payment method"
+				return false
+			}
+
 			return true
 		},
 	},
@@ -65,8 +93,10 @@ export default {
 		<div class="col-12 payment-form pt-4 mt-2 mx-auto">
 			<div class="card ">
 				<div class="card-body">
+					<SuccessFailureAlert :errors="errors" :success="success"></SuccessFailureAlert>
 					<div class="pt-3">
 						<div class="form-group ">
+							<small v-if="paymentMethodValidation !== null" class="text-danger">* {{ paymentMethodValidation }}</small>
 							<h6 class="pb-2">Select payment method</h6>
 							<label class="radio-inline">
 								<input type="radio" name="optradio" :disabled="disabled" value="cash" v-model="paymentMethod" checked /> Cash
@@ -106,35 +136,13 @@ export default {
 					</div>
 
 					<p>
-						<button class="btn btn-primary" v-if="state === 'loading'">
-							<b-spinner variant="white" class="mx-5"></b-spinner>
-						</button>
-						<button class="btn btn-success" disabled v-else-if="state === 'success'">
-							<i class="uil-check mr-2"></i> Payment Success
-						</button>
-						<button
-							class="btn btn-success"
-							@click.stop.prevent="validateAndSubmit"
-							v-else-if="state === 'add-another-payment'"
-						>
-							<i class="uil-refresh mr-2"></i> Add Another Payment
-						</button>
-						<button class="btn btn-danger" disabled v-else-if="state === 'fail'">
-							<i class="uil-times mr-2"></i> Payment Failed
-						</button>
-						<button class="btn btn-danger" @click.stop.prevent="validateAndSubmit" v-else-if="state === 'try-again'">
-							<i class="uil-refresh mr-2"></i> Try Again
-						</button>
-						<button
-							v-else
-							type="button"
-							:disabled="disabled"
-							@click.stop.prevent="validateAndSubmit"
-							class="btn btn-primary px-4"
-						>
-							<i class="uil-atm-card mr-2"></i> Add Payment
-						</button>
-						{{ amount }}
+						<ManagedStateButton
+							:state="computedPaymentBtnState"
+							main-title="Add Payment"
+							main-variant="primary"
+							feather-icon="credit-card"
+							@clicked="validateAndPay"
+						></ManagedStateButton>
 					</p>
 				</div>
 			</div>

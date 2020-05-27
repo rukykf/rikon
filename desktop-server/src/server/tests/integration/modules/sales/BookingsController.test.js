@@ -234,6 +234,15 @@ test("BookingsController.createBookingForRoom returns error message when passed 
 
 test("BookingsController.getCurrentBookingForRoom returns booking details for a currently booked room, if any", async () => {
   let bookings = await populateBookings()
+  let sale = await Sale.query().insert({
+    sellable_type: "booking",
+    sellable_id: bookings[2].id,
+    total_amount: 4000,
+    total_paid: 4000,
+    total_complementary: 0,
+    total_due: 0,
+    status: "paid"
+  })
   let req = { params: { id: rooms[2].id } }
   let output
   let res = {

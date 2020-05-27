@@ -7,6 +7,14 @@ const SalesTransaction = require("../../data-access/models/SalesTransaction")
 const Booking = require("../../data-access/models/Booking")
 
 module.exports = {
+  /**
+   * Some other interesting data points for later include
+   * RoomTypes sales (ordered from highest to lowest sales)
+   *
+   * @param req
+   * @param res
+   * @returns {Promise<*>}
+   */
   async getSalesAnalytics(req, res) {
     try {
       let startDateISO = _.hasIn(req, ["query", "start_date"]) ? req.query.start_date : DateTime.local().toISODate()

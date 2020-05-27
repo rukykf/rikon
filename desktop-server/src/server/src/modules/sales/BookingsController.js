@@ -161,5 +161,27 @@ module.exports = {
 
       return res.status(500).json({ messages: ["something went wrong, try again later"] })
     }
+  },
+
+  async updateCustomerDetailsForBooking(req, res) {
+    try {
+      // update the status of the booking to cancelled
+      let booking = await Booking.query()
+        .patchAndFetchById(_.toNumber(req.params.id), {
+          customer_details: _.get(req, ["body", "customer_details"])
+        })
+        .throwIfNotFound()
+      return res.json(booking)
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        return res.status(400).json({ messages: ["invalid booing id"] })
+      }
+
+      if (error instanceof ValidationError) {
+        return res.status(400).json({ messages: ["invalid customer details"] })
+      }
+
+      return res.status(500).json({ messages: ["something went wrong, try again later"] })
+    }
   }
 }

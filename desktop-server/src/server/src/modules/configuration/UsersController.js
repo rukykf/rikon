@@ -1,4 +1,5 @@
-const { NotFoundError, ValidationError } = require("objection")
+const { NotFoundError, ValidationError, UniqueViolationError } = require("objection")
+const { DateTime } = require("luxon")
 const _ = require("lodash")
 const User = require("../../data-access/models/User")
 
@@ -21,8 +22,8 @@ module.exports = {
       })
       return res.json(newUser)
     } catch (error) {
-      if (error.type === "NewUserValidation") {
-        return res.status(400).json({ messages: [error.message] })
+      if (error instanceof UniqueViolationError) {
+        return res.status(400).json({ messages: ["This username is already taken, try another one"] })
       }
 
       if (error instanceof ValidationError) {
@@ -56,12 +57,12 @@ module.exports = {
 
       return res.json(updatedUser)
     } catch (error) {
-      if (error instanceof NotFoundError) {
-        return res.status(400).json({ messages: ["The selected user was not found"] })
+      if (error instanceof UniqueViolationError) {
+        return res.status(400).json({ messages: ["This username is already taken, try another one"] })
       }
 
-      if (error.type === "NewUserValidation") {
-        return res.status(400).json({ messages: [error.message] })
+      if (error instanceof NotFoundError) {
+        return res.status(400).json({ messages: ["The selected user was not found"] })
       }
 
       if (error instanceof ValidationError) {
@@ -100,7 +101,7 @@ module.exports = {
     try {
       let numDeletedRows = await User.query()
         .findById(_.toNumber(req.params.id))
-        .patch({ active: false })
+        .patch({ active: false, deleted_at: DateTime.local().toSeconds() })
         .throwIfNotFound()
       return res.json({ message: "successfully deleted selected user" })
     } catch (error) {

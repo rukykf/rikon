@@ -19,7 +19,7 @@ test("RoomTypesController.index returns list of available room types", async () 
   let res = { json: jest.fn() }
   let req = {}
   await RoomTypesController.index(req, res)
-  expect(res.json).toHaveBeenCalledWith(expect.arrayContaining([roomType]))
+  expect(res.json).toHaveBeenCalledWith(expect.arrayContaining([expect.objectContaining(roomType)]))
 })
 
 test("RoomTypesController.create returns newly created room type when passed valid data", async () => {
@@ -80,7 +80,7 @@ test("RoomTypesController.show returns selected room type when passed valid id",
   let req = { params: { id: roomType.id } }
   let res = { json: jest.fn() }
   await RoomTypesController.show(req, res)
-  expect(res.json).toHaveBeenCalledWith(roomType)
+  expect(res.json).toHaveBeenCalledWith(expect.objectContaining(roomType))
 })
 
 test("RoomTypesController.show returns error when passed invalid id", async () => {

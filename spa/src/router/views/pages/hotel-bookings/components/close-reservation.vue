@@ -1,15 +1,17 @@
 <script>
-import axios from "axios"
 import { DateTime, Interval } from "luxon"
 import ManagedStateButton from "../../../../../components/managed-state-button"
+import ErrorHandler from "@src/ErrorHandler"
+import ApiClient from "@src/ApiClient"
+import SuccessFailureAlert from "../../../../../components/success-failure-alert"
 
 export default {
 	name: "close-reservation",
-	components: { ManagedStateButton },
+	components: { SuccessFailureAlert, ManagedStateButton },
 	props: {
 		room: {
 			type: Object,
-			required: true,
+			required: false,
 		},
 	},
 	data: function() {
@@ -17,35 +19,62 @@ export default {
 			reservation: null,
 			success: [],
 			errors: [],
+			reservationIsExpired: false,
+			closeReservationBtnState: "initialize",
 		}
+	},
+	computed: {
+		numberOfNights: function() {
+			if (this.reservation === null) {
+				return 0
+			}
+			let startDate = DateTime.fromISO(this.reservation.start_date)
+			let endDate = DateTime.fromISO(this.reservation.end_date)
+
+			let nights = Interval.fromDateTimes(startDate, endDate)
+			if (nights.length("days") < 1) {
+				return 1
+			}
+			return nights.length("days")
+		},
 	},
 	mounted: function() {
 		this.getReservation()
 	},
 	methods: {
 		getReservation: async function() {
-			let reservationData = await axios.get("http://localhost:3000/reservation")
-			let reservation = reservationData.data
-			reservation.friendlyStartDate = DateTime.fromISO(reservation.startDate).toLocaleString(DateTime.DATE_HUGE)
-			reservation.friendlyEndDate = DateTime.fromISO(reservation.endDate).toLocaleString(DateTime.DATE_HUGE)
-			let expiresIn = Interval.fromDateTimes(DateTime.local(), DateTime.fromISO(reservation.startDate))
-				.length("hours")
-				.toFixed(0)
-			reservation.expiresIn = isNaN(expiresIn) ? "Already Expired" : expiresIn.concat(" hours")
-			console.log(reservation)
-			this.reservation = reservation
+			try {
+				let url = `api/hotel-rooms/${this.room.room.id}/reservation`
+				let response = await ApiClient.get(url)
+				this.reservation = response.data
+				if (
+					DateTime.local().toLocaleString(DateTime.TIME_SIMPLE) >= "12:00 PM" &&
+					DateTime.local().toLocaleString(DateTime.TIME_SIMPLE) <= "9:00 PM"
+				) {
+					this.reservationIsExpired = true
+				}
+			} catch (error) {
+				let errors = ErrorHandler(error)
+				this.errors.push(...errors)
+			}
 		},
-		closeReservation: function() {
-			this.buttons.closeReservationBtn.loading = true
-			setTimeout(() => {
-				this.success.push("Successfully closed reservation")
-				this.buttons.closeReservationBtn.loading = false
-				this.buttons.closeReservationBtn.disabled = true
-				this.buttons.closeReservationBtn.variant = "success"
-				this.buttons.closeReservationBtn.title = "Successfully closed reservation"
-				this.buttons.closeReservationBtn.icon = "check"
-				this.$emit("update-room-status")
-			}, 2000)
+		closeReservation: async function() {
+			if (this.reservation === null) {
+				return
+			}
+
+			try {
+				this.closeReservationBtnState = "loading"
+				let url = `api/reservations/${this.reservation.id}`
+				await ApiClient.patch(url, {
+					status: "closed",
+				})
+				this.success.push(`Successfully closed reservation for ${this.reservation.customer_details.name}`)
+				this.closeReservationBtnState = "success"
+			} catch (error) {
+				let errors = ErrorHandler(error)
+				this.errors.push(...errors)
+			}
 		},
 	},
 }
@@ -54,6 +83,7 @@ export default {
 <template>
 	<div>
 		<div>
+			<SuccessFailureAlert :success="success" :errors="errors"></SuccessFailureAlert>
 			<b-card-header class="font-weight-semibold">
 				Reservation Details
 			</b-card-header>
@@ -62,20 +92,25 @@ export default {
 					<tbody>
 						<tr>
 							<td class="font-weight-semibold">Customer Name:</td>
-							<td> {{ reservation.customerName }}</td>
+							<td> {{ reservation.customer_details.name }}</td>
+						</tr>
+						<tr>
+							<td class="font-weight-semibold">Customer Phone:</td>
+							<td> {{ reservation.customer_details.phone }}</td>
 						</tr>
 						<tr>
 							<td class="font-weight-semibold">Start Date:</td>
-							<td> {{ reservation.friendlyStartDate }}</td>
+							<td> {{ reservation.start_date | humanDate }}</td>
 						</tr>
 
 						<tr>
 							<td class="font-weight-semibold">End Date:</td>
-							<td> {{ reservation.friendlyEndDate }}</td>
+							<td> {{ reservation.end_date | humanDate }}</td>
 						</tr>
+
 						<tr>
-							<td class="font-weight-semibold">Expires in:</td>
-							<td> {{ reservation.expiresIn }}</td>
+							<td class="font-weight-semibold">Number of Nights:</td>
+							<td> {{ numberOfNights }}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -83,7 +118,12 @@ export default {
 		</div>
 
 		<div class="text-center">
-			<ManagedStateButton state="initialize" mainTitle="Close Reservation" mainVariant="dark"></ManagedStateButton>
+			<ManagedStateButton
+				:state="closeReservationBtnState"
+				mainTitle="Close Reservation"
+				mainVariant="dark"
+				@clicked="closeReservation"
+			></ManagedStateButton>
 		</div>
 	</div>
 </template>

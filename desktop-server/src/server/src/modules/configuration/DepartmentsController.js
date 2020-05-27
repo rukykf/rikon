@@ -1,4 +1,5 @@
-const { NotFoundError, ValidationError } = require("objection")
+const { NotFoundError, ValidationError, UniqueViolationError } = require("objection")
+const { DateTime } = require("luxon")
 const _ = require("lodash")
 const Department = require("../../data-access/models/Department")
 
@@ -15,8 +16,8 @@ module.exports = {
       })
       return res.json(department)
     } catch (error) {
-      if (error.type === "NewDepartmentNameValidation") {
-        return res.status(400).json({ messages: [error.message] })
+      if (error instanceof UniqueViolationError) {
+        return res.status(400).json({ messages: ["this name is already assigned to another department"] })
       }
 
       if (error instanceof ValidationError) {
@@ -48,8 +49,8 @@ module.exports = {
         return res.status(400).json({ messages: ["the selected department was not found"] })
       }
 
-      if (error.type === "NewDepartmentNameValidation") {
-        return res.status(400).json({ messages: [error.message] })
+      if (error instanceof UniqueViolationError) {
+        return res.status(400).json({ messages: ["this name is already assigned to another department"] })
       }
 
       if (error instanceof ValidationError) {
@@ -88,7 +89,7 @@ module.exports = {
       let numDeletedRows = await Department.query()
         .findById(req.params.id)
         .throwIfNotFound()
-        .patch({ active: false })
+        .patch({ active: false, deleted_at: DateTime.local().toSeconds() })
       return res.json({ message: "successfully deleted selected department" })
     } catch (error) {
       if (error instanceof NotFoundError) {

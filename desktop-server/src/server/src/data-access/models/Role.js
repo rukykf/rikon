@@ -48,29 +48,6 @@ class Role extends Objection {
     }
   }
 
-  async $beforeInsert() {
-    await this.validateUnique()
-  }
-
-  async $beforeUpdate() {
-    await this.validateUnique()
-  }
-
-  async validateUnique() {
-    if (this.name) {
-      let existingRole = await Role.query()
-        .where("name", "=", this.name.toLowerCase())
-        .first()
-
-      if (existingRole != null) {
-        throw new ValidationError({
-          message: "this name is already assigned to another role",
-          type: "NewRoleNameValidation"
-        })
-      }
-    }
-  }
-
   $parseDatabaseJson(json) {
     super.$parseDatabaseJson(json)
     json = _.omit(json, ["active"])

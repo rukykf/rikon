@@ -21,6 +21,10 @@ export default {
 			<b-col>{{ details.amount | money }}</b-col>
 		</b-row>
 		<b-row class="mb-2">
+			<b-col sm="3" class="text-sm-right"><b>Order Destination:</b></b-col>
+			<b-col>{{ details.destination }}</b-col>
+		</b-row>
+		<b-row class="mb-2">
 			<b-col sm="3" class="text-sm-right"><b>Order Placed By:</b></b-col>
 			<b-col>{{ JSON.stringify(details.placed_by) }}</b-col>
 		</b-row>

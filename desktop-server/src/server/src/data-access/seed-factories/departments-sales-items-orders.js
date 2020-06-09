@@ -145,7 +145,8 @@ function generateCancelledOrders(num) {
       delivered_by: JSON.stringify({
         name: "Hehe Smiley"
       }),
-      cancellation_remarks: "Service Delay"
+      cancellation_remarks: "Service Delay",
+      destination: "Bar/Garden"
     }
     let department = faker.random.arrayElement(["kitchen", "bar", "mixed"])
     if (department === "kitchen") {
@@ -179,6 +180,7 @@ function generateFulfilledOrders(num) {
       placed_by: JSON.stringify({
         name: "Joker Haha"
       }),
+      destination: "Bar/Garden",
       delivered_by: JSON.stringify({
         name: "Hehe Smiley"
       })
@@ -215,6 +217,7 @@ function generatePendingOrders(num) {
       placed_by: JSON.stringify({
         name: "Joker Haha"
       }),
+      destination: "Bar/Garden",
       delivered_by: JSON.stringify({
         name: "Hehe Smiley"
       })

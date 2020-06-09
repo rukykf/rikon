@@ -1,336 +1,334 @@
 <script>
-import VuePerfectScrollbar from 'vue-perfect-scrollbar'
+import appConfig from "@src/app.config"
+import Layout from "@layouts/main"
+import { DateTime } from "luxon"
+import StatChart from "@components/widget-stat-chart"
+import SuccessFailureAlert from "@components/success-failure-alert"
+import ManagedStateButton from "@components/managed-state-button"
+import ErrorHandler from "@src/ErrorHandler"
+import _ from "lodash"
 
-import appConfig from '@src/app.config'
-import Layout from '@layouts/main'
-
-import StatChart from '@components/widget-stat-chart'
-import Overview from '@components/overview'
-import Member from '@components/member'
-import Task from '@components/task'
-import Chat from '@components/chat'
-
-import {
-	revenueAreaChart,
-	targetsBarChart,
-	salesDonutChart,
-	ordersData,
-} from './data'
+import { revenueAreaChart, targetsBarChart } from "./data"
 
 /**
  * Dashboard-1 Component
  */
 export default {
 	page: {
-		title: 'Dashboard',
-		meta: [{ name: 'description', content: appConfig.description }],
+		title: "Dashboard",
+		meta: [{ name: "description", content: appConfig.description }],
 	},
 	components: {
-		VuePerfectScrollbar,
 		Layout,
 		StatChart,
-		Overview,
-		Member,
-		Task,
-		Chat,
+		SuccessFailureAlert,
+		ManagedStateButton,
 	},
 	data() {
 		return {
+			fromDate: DateTime.local().toISODate(),
+			toDate: DateTime.local().toISODate(),
+			errors: [],
+			success: [],
+			loading: false,
+			analyticsData: {},
+			filterBtnState: "initialize",
+			areaChartOptions: {
+				chart: {
+					toolbar: {
+						show: false,
+					},
+				},
+				tooltip: {
+					theme: "dark",
+					x: { show: false },
+				},
+				stroke: {
+					curve: "smooth",
+					width: 4,
+				},
+				zoom: {
+					enabled: false,
+				},
+				dataLabels: {
+					enabled: false,
+				},
+				legend: {
+					show: false,
+				},
+				colors: ["#43d39e"],
+				xaxis: {
+					type: "string",
+					categories: [],
+					tooltip: {
+						enabled: false,
+					},
+					axisBorder: {
+						show: false,
+					},
+				},
+				fill: {
+					type: "gradient",
+					gradient: {
+						type: "vertical",
+						shadeIntensity: 1,
+						inverseColors: false,
+						opacityFrom: 0.45,
+						opacityTo: 0.05,
+						stops: [45, 100],
+					},
+				},
+			},
+			cancelledOrdersSeriesData: [{ name: "Cancelled Orders", data: [] }],
+			monthlySalesSeriesData: [{ name: "Sales", data: [] }],
+			departmentAnalytics: [],
 			revenueAreaChart: revenueAreaChart,
 			targetsBarChart: targetsBarChart,
-			salesDonutChart: salesDonutChart,
-			ordersData: ordersData,
-
-			maxHeight: '328px',
-			overviewData: [
-				{
-					class: 'border-bottom py-4',
-					icon: 'users',
-					value: '121,000',
-					title: 'Total Visitors',
-				},
-				{
-					class: 'border-bottom py-4',
-					icon: 'image',
-					value: '21,000',
-					title: 'Total Product Views',
-				},
-				{
-					class: 'py-4',
-					icon: 'shopping-bag',
-					value: '$21.5',
-					title: 'Revenue Per Visitor',
-				},
-			],
-			membersData: [
-				{
-					image: require('@assets/images/users/avatar-7.jpg'),
-					text: 'Senior Sales Guy',
-					name: 'Shreyu N',
-				},
-				{
-					image: require('@assets/images/users/avatar-9.jpg'),
-					text: 'Social Media Campaign',
-					name: 'Greeva Y',
-				},
-				{
-					image: require('@assets/images/users/avatar-4.jpg'),
-					text: 'Inventory Manager',
-					name: 'Nik G',
-				},
-				{
-					image: require('@assets/images/users/avatar-1.jpg'),
-					text: 'Sales Persons',
-					name: 'Hardik G',
-				},
-				{
-					image: require('@assets/images/users/avatar-2.jpg'),
-					text: 'Sales Persons',
-					name: 'Stive K',
-				},
-			],
-			tasksData: [
-				{
-					title: 'Draft the new contract document for sales team',
-					text: 'Due on 24 Aug, 2019',
-					id: 1,
-				},
-				{
-					title: 'iOS App home page',
-					text: 'Due on 23 Aug, 2019',
-					id: 2,
-				},
-				{
-					title: 'Write a release note for Shreyu',
-					text: 'Due on 22 Aug, 2019',
-					id: 3,
-				},
-				{
-					title: 'Invite Greeva to a project shreyu admin',
-					text: 'Due on 21 Aug, 2019',
-					id: 4,
-				},
-				{
-					title: 'Enable analytics tracking for main website',
-					text: 'Due on 20 Aug, 2019',
-					id: 5,
-				},
-				{
-					title: 'Invite user to a project',
-					text: 'Due on 28 Aug, 2019',
-					id: 6,
-				},
-				{
-					title: 'Write a release note',
-					text: 'Due on 14 Aug, 2019',
-					id: 7,
-				},
-			],
-			statChart: [
-				{
-					mainTitle: 'Total Sales',
-					value: 'N210,000',
-					subValue: '10.21%',
-					chartColor: '#5369f8',
-				},
-				{
-					mainTitle: 'Total Cash Sales',
-					value: 'N150,000',
-					subValue: '5.05%',
-					chartColor: '#f77e53',
-				},
-				{
-					mainTitle: 'Total Credit Sales',
-					value: 'N70,000',
-					subValue: '25.16%',
-					chartColor: '#43d39e',
-				},
-				{
-					mainTitle: 'Total Pending Orders',
-					value: 20,
-					subValue: '5.05%',
-					chartColor: '#ffbe0b',
-				},
-				{
-					mainTitle: 'Booked Rooms',
-					value: 30,
-					subValue: '5.05%',
-					chartColor: '#5369f8'
-				},
-				{
-					mainTitle: 'Closed Orders',
-					value: 50,
-					subValue: '5.09%',
-					chartColor: '#5369f8'
-				}
-			],
-			chatMessages: [
-				{
-					id: 1,
-					image: require('@assets/images/users/avatar-9.jpg'),
-					name: 'Greeva',
-					message: 'Hello!',
-					time: '10:00',
-				},
-				{
-					id: 2,
-					image: require('@assets/images/users/avatar-7.jpg'),
-					name: 'Shreyu',
-					message: 'Hi, How are you? What about our next meeting?',
-					time: '10:01',
-				},
-				{
-					id: 3,
-					image: require('@assets/images/users/avatar-9.jpg'),
-					name: 'Greeva',
-					message: 'Yeah everything is fine',
-					time: '10:01',
-				},
-				{
-					id: 4,
-					image: require('@assets/images/users/avatar-7.jpg'),
-					name: 'Shreyu',
-					message: 'Awesome! let me know if we can talk in 20 min',
-					time: '10:02',
-				},
-			],
-			dateConfig: {
-				mode: 'range',
-			},
-			selectedDate: [new Date().setDate(new Date().getDate() - 7), new Date()],
 		}
+	},
+
+	computed: {
+		isToday() {
+			return this.fromDate === this.toDate && this.toDate === DateTime.local().toISODate()
+		},
+	},
+
+	mounted() {
+		this.getAnalyticsData()
+	},
+
+	methods: {
+		async getAnalyticsData() {
+			try {
+				this.loading = true
+				this.filterBtnState = "loading"
+				let url = `api/analytics?start_date=${this.fromDate}&end_date=${this.toDate}`
+				let response = await this.$httpClient.get(url)
+				this.analyticsData = response.data
+				let months = []
+				let seriesData = []
+				this.analyticsData.cancelled_orders_by_month.forEach((stat) => {
+					months.push(stat.month)
+					seriesData.push(stat.orders)
+				})
+				this.cancelledOrdersSeriesData[0].data = _.reverse(seriesData)
+				this.areaChartOptions.xaxis.categories = _.reverse(months)
+
+				seriesData = []
+				this.analyticsData.sales_by_month.forEach((stat) => {
+					seriesData.push(stat.sales)
+				})
+				this.monthlySalesSeriesData[0].data = _.reverse(seriesData)
+
+				this.departmentAnalytics = []
+				for (let [department, analytics] of Object.entries(this.analyticsData.analytics_by_department)) {
+					analytics.name = department
+					this.departmentAnalytics.push(analytics)
+				}
+
+				this.loading = false
+				this.filterBtnState = "initialize"
+			} catch (error) {
+				console.log(error)
+				this.loading = false
+				this.filterBtnState = "fail-try-again"
+				let errors = ErrorHandler(error)
+				this.errors.push(...errors)
+			}
+		},
+
+		filterAnalytics() {
+			if (this.isFilterByDateValid()) {
+				this.getAnalyticsData()
+			}
+		},
+
+		isFilterByDateValid: function() {
+			if (this.toDate === null || this.fromDate === null) {
+				this.errors.push("Please select a FROM and TO date")
+				return false
+			}
+
+			if (DateTime.fromISO(this.toDate) >= DateTime.local()) {
+				this.errors.push("You cannot get results for a day after today")
+				return false
+			}
+
+			if (DateTime.fromISO(this.fromDate) > DateTime.fromISO(this.toDate)) {
+				this.errors.push("The FROM date must be a day before the TO date")
+				return false
+			}
+			return true
+		},
 	},
 }
 </script>
 
 <template>
 	<Layout>
-		<div class="row page-title align-items-center">
-			<div class="col-sm-4 col-xl-6">
-				<h3 class="mb-1 mt-0">Today's Summary</h3>
-			</div>
-			<div class="col-sm-8 col-xl-6">
-				<form class="form-inline float-sm-right mt-3 mt-sm-0">
-					<div class="form-group mb-sm-0 mr-2">
-						<flat-pickr
-							v-model="selectedDate"
-							class="form-control"
-							:config="dateConfig"
-							name="date"
-						></flat-pickr>
-					</div>
-					<div class="btn-group">
-						<b-dropdown variant="primary" right>
-							<template v-slot:button-content>
-								<i class="uil uil-file-alt mr-1"></i>Download
-								<i class="icon">
-									<feather type="chevron-down" class="align-middle"></feather>
-								</i>
-							</template>
-							<b-dropdown-item href="#" class="notify-item">
-								<feather
-									type="mail"
-									class="icon-dual icon-xs mr-2 align-middle"
-								></feather>
-								<span>Email</span>
-							</b-dropdown-item>
-							<b-dropdown-item href="#" class="notify-item">
-								<feather
-									type="printer"
-									class="icon-dual icon-xs mr-2 align-middle"
-								></feather>
-								<span>Print</span>
-							</b-dropdown-item>
-							<b-dropdown-divider></b-dropdown-divider>
-							<b-dropdown-item href="#" class="notify-item">
-								<feather
-									type="file"
-									class="icon-dual icon-xs mr-2 align-middle"
-								></feather>
-								<span>Re-Generate</span>
-							</b-dropdown-item>
-						</b-dropdown>
-					</div>
-				</form>
-			</div>
-		</div>
+		<div class="page-title align-items-center">
+			<SuccessFailureAlert :errors="errors" :success="success"></SuccessFailureAlert>
 
-		<div class="row">
-			<div
-				v-for="stat of statChart"
-				:key="stat.mainTitle"
-				class="col-md-6 col-xl-3"
-			>
-				<StatChart
-					:main-title="stat.mainTitle"
-					:value="stat.value"
-					:sub-value="stat.subValue"
-					:chart-color="stat.chartColor"
-				/>
-			</div>
-		</div>
-
-		<div class="row">
-
-			<div class="col-xl-6">
-				<div class="card">
-					<div class="card-body pb-0">
-						<ul class="nav card-nav float-right">
-							<li class="nav-item">
-								<a class="nav-link text-muted" href="javascript: void(0);"
-									>Today</a
-								>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link text-muted" href="javascript: void(0);"
-									>7d</a
-								>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link active" href="javascript: void(0);">15d</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link text-muted" href="javascript: void(0);"
-									>1m</a
-								>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link text-muted" href="javascript: void(0);"
-									>1y</a
-								>
-							</li>
-						</ul>
-						<h5 class="card-title mb-0 header-title">Total Sales</h5>
-						<!-- Revenue Area Chart -->
-						<apexchart
-							type="area"
-							height="296"
-							:series="revenueAreaChart.series"
-							:options="revenueAreaChart.chartOptions"
-						></apexchart>
-						<!-- end revenue chart -->
-					</div>
+			<div class="row">
+				<div class="col-12 col-sm-4 col-lg-6">
+					<h3 class="mb-1 mt-0">
+						<span v-if="isToday">Today's Summary</span>
+						<span v-else
+							>Rikon Analytics from <span class="text-info">{{ fromDate | humanDate }}</span> to
+							<span class="text-info">{{ toDate | humanDate }}</span></span
+						>
+					</h3>
 				</div>
 			</div>
 
-			<div class="col-xl-3">
-				<div class="card">
-					<div class="card-body pb-0">
-						<h5 class="card-title header-title">Cash Sales vs. Credit Sales</h5>
-						<!-- Target Radialbar chart -->
-						<div class="mt-3">
-							<apexchart
-								type="bar"
-								height="282"
-								:series="targetsBarChart.series"
-								:options="targetsBarChart.chartOptions"
-							></apexchart>
+			<div class="row mb-5 mt-2">
+				<div class="form-group col-12 col-lg-3">
+					<label class="font-weight-bold">
+						From:
+					</label>
+					<input type="date" class="form-control" v-model="fromDate" />
+				</div>
+
+				<div class="form-group col-12 col-lg-3">
+					<label class="font-weight-bold">
+						To:
+					</label>
+					<input type="date" class="form-control" v-model="toDate" />
+				</div>
+				<div class="col-12 col-lg-3 mt-1">
+					<ManagedStateButton
+						main-title="Filter"
+						:state="filterBtnState"
+						class="px-5 mt-4"
+						@clicked="filterAnalytics"
+					></ManagedStateButton>
+				</div>
+			</div>
+		</div>
+
+		<div v-if="loading" class="text-center">
+			<b-spinner class="p-5"></b-spinner>
+		</div>
+
+		<div v-else>
+			<div class="row">
+				<div class="col-12">
+					<h3>Analytics Overview</h3>
+				</div>
+
+				<div v-for="stat of analyticsData.statCards" :key="stat.mainTitle" class="col-12 col-md-6 col-xl-3">
+					<StatChart :main-title="stat.mainTitle" :value="stat.value" :isMoney="stat.isMoney" />
+				</div>
+			</div>
+
+			<div class="row mt-5">
+				<div class="col-12">
+					<h3>Trends</h3>
+				</div>
+
+				<div class="col-12 col-xl-6">
+					<div class="card">
+						<div class="card-body pb-0">
+							<h5 class="card-title mb-0 header-title">Cancelled Orders</h5>
+							<apexchart type="bar" height="296" :series="cancelledOrdersSeriesData" :options="areaChartOptions"></apexchart>
+							<!-- end revenue chart -->
 						</div>
-						<!-- end target chart -->
+					</div>
+				</div>
+
+				<div class="col-12 col-xl-6">
+					<div class="card">
+						<div class="card-body pb-0">
+							<h5 class="card-title header-title">Monthly Sales</h5>
+							<!-- Target Radialbar chart -->
+							<div class="mt-3">
+								<apexchart type="bar" height="282" :series="monthlySalesSeriesData" :options="areaChartOptions"></apexchart>
+							</div>
+							<!-- end target chart -->
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row mt-5">
+				<div class="col-12">
+					<h3>Department Analytics</h3>
+				</div>
+
+				<div class="col-12">
+					<div class="card">
+						<div class="card-body pb-0">
+							<h5 class="card-title header-title"
+								>Department Analytics from <span class="text-info">{{ fromDate | humanDate }}</span> to
+								<span class="text-info">{{ toDate | humanDate }}</span>
+							</h5>
+
+							<table class="table table-responsive table-hover">
+								<thead>
+									<tr>
+										<th>Department Name</th>
+										<th>Pending Orders</th>
+										<th>Fulfilled Orders</th>
+										<th>Sales <br /><span class="text-secondary">(for fulfilled orders)</span></th>
+										<th>Cancelled Orders</th>
+										<th>Lost Sales <br /><span class="text-secondary">(for cancelled orders)</span></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="analytics in departmentAnalytics" :key="analytics.name">
+										<td>{{ analytics.name | capitalize }}</td>
+										<td>{{ analytics.total_pending_orders }}</td>
+										<td>{{ analytics.total_fulfilled_orders }}</td>
+										<td>{{ analytics.total_sales | money }}</td>
+										<td>{{ analytics.total_cancelled_orders }}</td>
+										<td>{{ analytics.total_lost_sales | money }}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row mt-5">
+				<div class="col-12">
+					<h3>Sales Items Analytics</h3>
+				</div>
+
+				<div class="col-12">
+					<div class="card">
+						<div class="card-body pb-0">
+							<h5 class="card-title header-title"
+								>Sales Item Analytics from <span class="text-info">{{ fromDate | humanDate }}</span> to
+								<span class="text-info">{{ toDate | humanDate }}</span>
+							</h5>
+
+							<table class="table table-responsive table-hover">
+								<thead>
+									<tr>
+										<th>Item Name</th>
+										<th>Total Quantity Ordered</th>
+										<th>Total Fulfilled Sales</th>
+										<th>Sales <br /><span class="text-secondary">(for fulfilled orders)</span></th>
+										<th>Cancelled Orders</th>
+										<th>Lost Sales <br /><span class="text-secondary">(for cancelled orders)</span></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr v-for="analytics in analyticsData.analytics_by_sales_item">
+										<td>{{ analytics.name | capitalize }}</td>
+										<td>{{ analytics.total_quantity_ordered }}</td>
+										<td>{{ analytics.total_quantity_sold }}</td>
+										<td>{{ analytics.total_sales | money }}</td>
+										<td>{{ analytics.total_quantity_of_lost_sales }}</td>
+										<td>{{ analytics.total_lost_sales | money }}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
 	</Layout>
 </template>

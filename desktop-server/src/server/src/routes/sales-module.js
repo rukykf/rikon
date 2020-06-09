@@ -4,6 +4,7 @@ const BookingsController = require("../modules/sales/BookingsController")
 const ReservationsController = require("../modules/sales/ReservationsController")
 const SalesController = require("../modules/sales/SalesController")
 const OrdersController = require("../modules/sales/OrdersController")
+const AnalyticsController = require("../modules/reports/AnalyticsController")
 
 let router = Router()
 
@@ -28,11 +29,12 @@ router.get("/sales", SalesController.index)
 router.get("/credit-sales", SalesController.getCreditSales)
 router.put("/sales", SalesController.mergeSalesRecords)
 router.post("/sales", SalesController.updateSalesRecordWithTransactionForSellable)
-
 router.get("/sales/:id/sales-transactions", SalesController.getSalesTransactionsForSalesRecord)
 router.post("/sales/:id", SalesController.updateSalesRecordWithTransaction)
 router.post("/sales-transactions/:id", SalesController.revertSalesTransactionForSalesRecord)
 
 router.get("/orders", OrdersController.index)
+
+router.get("/analytics", AnalyticsController.getSalesAnalytics)
 
 module.exports = router

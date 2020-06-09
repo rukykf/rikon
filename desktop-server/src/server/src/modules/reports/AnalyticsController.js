@@ -20,73 +20,189 @@ module.exports = {
       let startDateISO = _.hasIn(req, ["query", "start_date"]) ? req.query.start_date : DateTime.local().toISODate()
       let endDateISO = _.hasIn(req, ["query", "end_date"]) ? req.query.end_date : DateTime.local().toISODate()
 
-      let salesAnalyticsData = {}
+      let salesAnalyticsData = { statCards: [] }
 
       salesAnalyticsData.total_sales = await Sale.query()
         .where("created_at", ">=", startDateISO)
         .andWhere("created_at", "<=", endDateISO)
-        .sum("total_amount")
+        .andWhere("active", "=", 1)
+        .sum("total_amount as sales")
+      salesAnalyticsData.statCards.push({
+        mainTitle: "Total Sales",
+        isMoney: true,
+        value: salesAnalyticsData.total_sales[0].sales
+      })
 
       salesAnalyticsData.total_credit = await Sale.query()
         .where("created_at", ">=", startDateISO)
         .andWhere("created_at", "<=", endDateISO)
-        .sum("total_due")
+        .andWhere("active", "=", 1)
+        .sum("total_due as credit")
+      salesAnalyticsData.statCards.push({
+        mainTitle: "Total Credit Owed",
+        isMoney: true,
+        value: salesAnalyticsData.total_credit[0].credit
+      })
 
       salesAnalyticsData.total_cash_sales = await SalesTransaction.query()
         .where("date", ">=", startDateISO)
         .andWhere("date", "<=", endDateISO)
         .andWhere("transaction_type", "=", "cash")
-        .sum("amount")
+        .andWhere("active", "=", 1)
+        .sum("amount as amount")
+      salesAnalyticsData.statCards.push({
+        mainTitle: "Total Cash Sales",
+        isMoney: true,
+        value: salesAnalyticsData.total_cash_sales[0].amount
+      })
 
       salesAnalyticsData.total_pos_sales = await SalesTransaction.query()
         .where("date", ">=", startDateISO)
         .andWhere("date", "<=", endDateISO)
         .andWhere("transaction_type", "=", "pos")
-        .sum("amount")
+        .andWhere("active", "=", 1)
+        .sum("amount as amount")
+      salesAnalyticsData.statCards.push({
+        mainTitle: "Total POS Sales",
+        isMoney: true,
+        value: salesAnalyticsData.total_pos_sales[0].amount
+      })
 
       salesAnalyticsData.total_transfer_sales = await SalesTransaction.query()
         .where("date", ">=", startDateISO)
         .andWhere("date", "<=", endDateISO)
         .andWhere("transaction_type", "=", "transfer")
-        .sum("amount")
+        .andWhere("active", "=", 1)
+        .sum("amount as amount")
+      salesAnalyticsData.statCards.push({
+        mainTitle: "Total Transfer Sales",
+        isMoney: true,
+        value: salesAnalyticsData.total_transfer_sales[0].amount
+      })
+
+      salesAnalyticsData.total_booking_sales = await Sale.query()
+        .where("created_at", ">=", startDateISO)
+        .andWhere("created_at", "<=", endDateISO)
+        .andWhere("sellable_type", "=", "booking")
+        .whereNull("merged_records")
+        .sum("total_amount as amount")
+      salesAnalyticsData.statCards.push({
+        mainTitle: "Total Sales from Bookings",
+        isMoney: true,
+        value: salesAnalyticsData.total_booking_sales[0].amount
+      })
+
+      salesAnalyticsData.total_bookings = await Booking.query()
+        .where("created_at", ">=", startDateISO)
+        .andWhere("created_at", "<=", endDateISO)
+        .resultSize()
+      salesAnalyticsData.statCards.push({
+        mainTitle: "Total Bookings",
+        isMoney: false,
+        value: salesAnalyticsData.total_bookings
+      })
+
+      salesAnalyticsData.total_closed_bookings = await Booking.query()
+        .where("created_at", ">=", startDateISO)
+        .andWhere("created_at", "<=", endDateISO)
+        .andWhere("status", "=", "closed")
+        .resultSize()
+      salesAnalyticsData.statCards.push({
+        mainTitle: "Total Closed Bookings",
+        isMoney: false,
+        value: salesAnalyticsData.total_closed_bookings
+      })
+
+      salesAnalyticsData.total_open_bookings = await Booking.query()
+        .where("created_at", ">=", startDateISO)
+        .andWhere("created_at", "<=", endDateISO)
+        .andWhere("status", "=", "open")
+        .resultSize()
+      salesAnalyticsData.statCards.push({
+        mainTitle: "Total Open Bookings",
+        isMoney: false,
+        value: salesAnalyticsData.total_open_bookings
+      })
+
+      salesAnalyticsData.total_cancelled_bookings = await Booking.query()
+        .where("created_at", ">=", startDateISO)
+        .andWhere("created_at", "<=", endDateISO)
+        .andWhere("status", "=", "cancelled")
+        .resultSize()
+      salesAnalyticsData.statCards.push({
+        mainTitle: "Total Cancelled Bookings",
+        isMoney: false,
+        value: salesAnalyticsData.total_cancelled_bookings
+      })
+
+      salesAnalyticsData.total_order_sales = await Sale.query()
+        .where("created_at", ">=", startDateISO)
+        .andWhere("created_at", "<=", endDateISO)
+        .andWhere("sellable_type", "=", "order")
+        .whereNull("merged_records")
+        .sum("total_amount as amount")
+      salesAnalyticsData.statCards.push({
+        mainTitle: "Total Sales from Orders",
+        isMoney: true,
+        value: salesAnalyticsData.total_order_sales[0].amount
+      })
 
       salesAnalyticsData.total_pending_orders = await Order.query()
         .where("created_at", ">=", startDateISO)
         .andWhere("created_at", "<=", endDateISO)
         .andWhere("status", "=", "pending")
         .resultSize()
+      salesAnalyticsData.statCards.push({
+        mainTitle: "Total Pending Orders",
+        isMoney: false,
+        value: salesAnalyticsData.total_pending_orders
+      })
 
-      salesAnalyticsData.total_booking_sales = await Sale.query()
+      salesAnalyticsData.total_fulfilled_orders = await Order.query()
         .where("created_at", ">=", startDateISO)
         .andWhere("created_at", "<=", endDateISO)
-        .andWhere("sellable_type", "=", "booking")
-        .sum("total_amount")
-
-      salesAnalyticsData.total_bookings = await Booking.query().where("created_at", ">=")
-
-      salesAnalyticsData.total_order_sales = await Sale.query()
-        .where("created_at", ">=", startDateISO)
-        .andWhere("created_at", "<=", endDateISO)
-        .andWhere("sellable_type", "=", "order")
-        .sum("total_amount")
+        .andWhere("status", "=", "fulfilled")
+        .resultSize()
+      salesAnalyticsData.statCards.push({
+        mainTitle: "Total Fulfilled Orders",
+        isMoney: false,
+        value: salesAnalyticsData.total_fulfilled_orders
+      })
 
       salesAnalyticsData.total_cancelled_orders = await Order.query()
         .where("created_at", ">=", startDateISO)
         .andWhere("created_at", "<=", endDateISO)
         .andWhere("status", "=", "cancelled")
         .resultSize()
+      salesAnalyticsData.statCards.push({
+        mainTitle: "Total Cancelled Orders",
+        isMoney: false,
+        value: salesAnalyticsData.total_cancelled_orders
+      })
 
       salesAnalyticsData.total_discount = await SalesTransaction.query()
         .where("date", ">=", startDateISO)
         .andWhere("date", "<=", endDateISO)
         .andWhere("transaction_type", "=", "discount")
-        .sum("amount")
+        .andWhere("active", "=", 1)
+        .sum("amount as amount")
+      salesAnalyticsData.statCards.push({
+        mainTitle: "Total Discount",
+        isMoney: true,
+        value: salesAnalyticsData.total_discount[0].amount
+      })
 
       salesAnalyticsData.total_complementary = await SalesTransaction.query()
         .where("date", ">=", startDateISO)
         .andWhere("date", "<=", endDateISO)
         .andWhere("transaction_type", "=", "complementary")
-        .sum("amount")
+        .andWhere("active", "=", 1)
+        .sum("amount as amount")
+      salesAnalyticsData.statCards.push({
+        mainTitle: "Total Complementary",
+        isMoney: true,
+        value: salesAnalyticsData.total_complementary[0].amount
+      })
 
       salesAnalyticsData.cancelled_orders_by_month = await OrderAndSalesAnalyticsService.getCancelledOrdersChartData()
       salesAnalyticsData.sales_by_month = await OrderAndSalesAnalyticsService.getMonthlySalesChartData()

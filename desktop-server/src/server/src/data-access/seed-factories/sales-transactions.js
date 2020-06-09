@@ -125,7 +125,7 @@ function generatePartialComplementarySale(sellable, type) {
     total_complementary: discountAmount,
     sellable_id: sellable.id,
     sellable_type: type,
-    status: "paid",
+    status: "owing",
     customer_details: JSON.stringify({
       name: `${faker.name.firstName()} ${faker.name.lastName()}`,
       room_no: "114"
@@ -172,7 +172,7 @@ function generatePartialPaymentComplementarySale(sellable, type) {
     total_complementary: transactionAmount,
     sellable_id: sellable.id,
     sellable_type: type,
-    status: "paid",
+    status: "owing",
     customer_details: JSON.stringify({
       name: `${faker.name.firstName()} ${faker.name.lastName()}`,
       room_no: "114"

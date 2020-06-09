@@ -2,11 +2,12 @@
 import appConfig from "@src/app.config"
 import Layout from "@layouts/main"
 import { DateTime } from "luxon"
-import StateButton from "../../../../components/state-button"
 import SuccessFailureAlert from "../../../../components/success-failure-alert"
-import axios from "axios"
 import JsonExcel from "vue-json-excel"
-import { formatMoney } from "accounting-js"
+import ErrorHandler from "@src/ErrorHandler"
+import ManagedStateButton from "../../../../components/managed-state-button"
+import FormBackground from "../../../../components/form-background"
+import CreditSaleRecord from "../../../../components/credit-sale-record"
 
 /**
  * Starter component
@@ -17,8 +18,10 @@ export default {
 		meta: [{ name: "description", content: appConfig.description }],
 	},
 	components: {
+		CreditSaleRecord,
+		FormBackground,
+		ManagedStateButton,
 		SuccessFailureAlert,
-		StateButton,
 		Layout,
 		JsonExcel,
 	},
@@ -27,23 +30,25 @@ export default {
 			sales: [],
 			saleFields: [
 				{ key: "SN", label: "S/N", sortable: false, sortDirection: "desc" },
-				{ key: "dateCreated", label: "Date Created", sortable: true, sortDirection: "desc" },
-				{ key: "totalDue", label: "Total Due", sortable: true, sortDirection: "desc" },
-				{ key: "totalPaid", label: "Total Paid", sortable: true, sortDirection: "desc" },
-				{ key: "balanceDue", label: "Balance Due", sortable: true, sortDirection: "desc" },
-				{ key: "forgivenDebt", label: "Forgiven Debt", sortable: true, sortDirection: "desc" },
-				{ key: "status", label: "Status", sortable: true, sortDirection: "desc" },
 				{ key: "showDetails", label: "Show Customer and Order Details", sortable: true, sortDirection: "desc" },
+				{ key: "actions", label: "Actions", sortable: true, sortDirection: "desc" },
+				{ key: "created_at", label: "Date Created", sortable: true, sortDirection: "desc" },
+				{ key: "updated_at", label: "Date Last Modified", sortable: true, sortDirection: "desc" },
+				{ key: "total_amount", label: "Total Amount", sortable: true, sortDirection: "desc" },
+				{ key: "total_paid", label: "Total Paid", sortable: true, sortDirection: "desc" },
+				{ key: "total_due", label: "Total Due", sortable: true, sortDirection: "desc" },
+				{ key: "total_complementary", label: "Total Complementary", sortable: true, sortDirection: "desc" },
+				{ key: "status", label: "Status", sortable: true, sortDirection: "desc" },
 			],
 			saleExcelFields: {
-				Date: "dateCreated",
-				"Total Due": "totalDue",
-				"Total Paid": "totalPaid",
-				"Balance Due": "balanceDue",
-				"Forgiven Debt": "forgivenDebt",
+				"Date Created": "created_at",
+				"Total Sales Amount": "total_amount",
+				"Total Paid": "total_paid",
+				"Total Balance Due": "total_due",
+				"Total Complementary / Forgiven Debt": "total_complementary",
 				Status: "status",
-				"Customer Details": "customerInfo",
-				"Order Details": "details",
+				"Customer Name": "customer_details.name",
+				"Customer Phone": "customer_details.phone",
 			},
 			totalRows: 1,
 			currentPage: 1,
@@ -54,15 +59,23 @@ export default {
 			sortBy: "age",
 			sortDesc: false,
 			loading: false,
-			filterBtn: {
-				title: "Filter",
-				icon: "none",
-				disabled: false,
-				variant: "primary",
-				loading: false,
+			selectedSalesRecord: {
+				id: null,
+				details: null,
+				total_amount: null,
+				total_paid: null,
+				total_complementary: null,
+				total_due: 0,
+				customer_details: null,
+				status: null,
+				credit_authorized_by: null,
+				merged_records: null,
 			},
-			fromDate: null,
-			toDate: null,
+			fromDate: DateTime.local()
+				.minus({ days: 90 })
+				.toISODate(),
+			toDate: DateTime.local().toISODate(),
+			filterBtnState: "initialize",
 			selectedStatus: null,
 			success: [],
 			errors: [],
@@ -75,49 +88,62 @@ export default {
 		today: function() {
 			return DateTime.local().toLocaleString(DateTime.DATE_HUGE)
 		},
-		totalDue: function() {
+		totalAmount: function() {
 			let sum = 0
 			this.sales.forEach((sale) => {
-				sum += sale.totalDue
+				sum += sale.total_amount
 			})
-			return formatMoney(sum, { symbol: "N", precision: 0 })
+			return sum
 		},
 		totalPaid: function() {
 			let sum = 0
 			this.sales.forEach((sale) => {
-				sum += sale.totalPaid
+				sum += sale.total_paid
 			})
-			return formatMoney(sum, { symbol: "N", precision: 0 })
+			return sum
 		},
-		totalBalanceDue: function() {
+		totalDue: function() {
 			let sum = 0
 			this.sales.forEach((sale) => {
-				sum += sale.balanceDue
+				sum += sale.total_due
 			})
-			return formatMoney(sum, { symbol: "N", precision: 0 })
+			return sum
 		},
-		totalForgivenDebt: function() {
+		totalComplementary: function() {
 			let sum = 0
 			this.sales.forEach((sale) => {
-				sum += sale.forgivenDebt
+				sum += sale.total_complementary
 			})
-			return formatMoney(sum, { symbol: "N", precision: 0 })
+			return sum
 		},
 	},
 	mounted: function() {
-		this.loading = true
-		setTimeout(() => {
-			this.getData()
-		}, 1500)
+		this.getSalesData()
 	},
 	methods: {
+		getSalesData: async function() {
+			try {
+				this.loading = true
+				this.filterBtnState = "loading"
+				let url = `api/sales?start_date=${this.fromDate}&end_date=${this.toDate}`
+				if (this.selectedStatus !== null && this.selectedStatus !== "") {
+					url += `&status=${this.selectedStatus}`
+				}
+
+				let response = await this.$httpClient.get(url)
+				this.sales = response.data
+				this.loading = false
+				this.filterBtnState = "initialize"
+			} catch (error) {
+				this.loading = false
+				this.filterBtnState = "fail-try-again"
+				let errors = ErrorHandler(error)
+				this.errors.push(...errors)
+			}
+		},
 		filterSales: function() {
 			if (this.isFilterByDateValid()) {
-				this.loading = true
-				this.filterBtn.loading = true
-				setTimeout(() => {
-					this.getData()
-				}, 1000)
+				this.getSalesData()
 			}
 		},
 		isFilterByDateValid: function() {
@@ -137,16 +163,10 @@ export default {
 			}
 			return true
 		},
-		getData: async function() {
-			let history = await axios.get("http://localhost:3000/sales")
-			this.sales = history.data
-			this.loading = false
-		},
-		formatSaleItem(money) {
-			if (money === 0) {
-				return formatMoney(money, { symbol: "N", precision: 2 })
-			}
-			return formatMoney(money, { symbol: "N", precision: 0 })
+
+		showSalesRecordModal(salesRecord) {
+			this.selectedSalesRecord = salesRecord
+			this.$bvModal.show("sales-record")
 		},
 	},
 }
@@ -159,7 +179,7 @@ export default {
 			<div class="row mt-4">
 				<div class="form-group col-12 col-lg-3">
 					<label class="font-weight-bold">
-						From
+						From:
 					</label>
 					<input type="date" class="form-control" v-model="fromDate" />
 				</div>
@@ -175,14 +195,19 @@ export default {
 						Status:
 					</label>
 					<select class="form-control" v-model="selectedStatus">
-						<option value="paid">Fully Paid</option>
-						<option value="discounted">Discounted</option>
-						<option value="complementary">Complementary</option>
-						<option value="pending">Pending</option>
+						<option value="">All</option>
+						<option value="owing">Owing</option>
+						<option value="paid">Paid</option>
+						<option value="overpaid">Overpaid</option>
 					</select>
 				</div>
 				<div class="col-12 col-lg-3 mt-1">
-					<StateButton :buttonState="filterBtn" class="px-5 mt-4" @clicked="filterSales"></StateButton>
+					<ManagedStateButton
+						main-title="Filter"
+						:state="filterBtnState"
+						class="px-5 mt-4"
+						@clicked="filterSales"
+					></ManagedStateButton>
 				</div>
 			</div>
 
@@ -221,8 +246,8 @@ export default {
 						</div>
 						<div class="row mb-3">
 							<h3 class="col-12 col-lg-7"
-								>Sales History from <span class="text-info">March 1st, 2020</span> to
-								<span class="text-info">{{ today }}</span></h3
+								>Sales History from <span class="text-info">{{ fromDate | humanDate }}</span> to
+								<span class="text-info">{{ toDate | humanDate }}</span></h3
 							>
 
 							<div class="col-12 col-lg-5 text-right">
@@ -249,39 +274,48 @@ export default {
 								:filter="filter"
 								:filter-included-fields="filterOn"
 							>
-								<template v-slot:head(totalDue)>
+								<template v-slot:head(total_amount)>
 									<span>Total Sales</span> <br />
-									<span class="text-info mt-1">(N2,475,000)</span>
+									<span class="text-info mt-1">({{ totalAmount | money }})</span>
 								</template>
 
-								<template v-slot:head(totalPaid)>
+								<template v-slot:head(total_paid)>
 									<span>Total Paid</span> <br />
-									<span class="text-secondary mt-1">({{ totalPaid }})</span>
+									<span class="text-secondary mt-1">({{ totalPaid | money }})</span>
 								</template>
 
-								<template v-slot:head(balanceDue)>
+								<template v-slot:head(total_due)>
 									<span>Total Balance Due</span> <br />
-									<span class="text-danger mt-1">({{ totalBalanceDue }})</span>
+									<span class="text-danger mt-1">({{ totalDue | money }})</span>
 								</template>
-								<template v-slot:head(forgivenDebt)>
+								<template v-slot:head(total_complementary)>
 									<span>Total Forgiven Debt</span> <br />
-									<span class="text-secondary mt-1">({{ totalForgivenDebt }})</span>
+									<span class="text-secondary mt-1">({{ totalComplementary | money }})</span>
 								</template>
 
 								<template v-slot:cell(SN)="row">
 									{{ row.index + 1 }}
 								</template>
-								<template v-slot:cell(totalDue)="row">
-									{{ row.item.totalDue | money }}
+								<template v-slot:cell(total_amount)="row">
+									{{ row.item.total_amount | money }}
 								</template>
-								<template v-slot:cell(totalPaid)="row">
-									{{ formatSaleItem(row.item.totalPaid) }}
+								<template v-slot:cell(updated_at)="row">
+									{{ row.item.updated_at | humanDate }}
 								</template>
-								<template v-slot:cell(balanceDue)="row">
-									<span class="text-danger">{{ formatSaleItem(row.item.balanceDue) }}</span>
+								<template v-slot:cell(created_at)="row">
+									{{ row.item.created_at | humanDate }}
 								</template>
-								<template v-slot:cell(forgivenDebt)="row">
-									{{ formatSaleItem(row.item.forgivenDebt) }}
+								<template v-slot:cell(customer_details)="row">
+									{{ row.item.customer_details.name | capitalize }}
+								</template>
+								<template v-slot:cell(total_due)="row">
+									<span class="text-danger">{{ row.item.total_due | money }}</span>
+								</template>
+								<template v-slot:cell(total_complementary)="row">
+									{{ row.item.total_complementary | money }}
+								</template>
+								<template v-slot:cell(total_paid)="row">
+									{{ row.item.total_paid | money }}
 								</template>
 
 								<template v-slot:cell(showDetails)="row">
@@ -290,16 +324,38 @@ export default {
 									</b-button>
 								</template>
 
-								<template v-slot:row-details="row">
-									<b-row class="mb-2">
-										<b-col sm="3" class="text-sm-right"><b>Customer Info:</b></b-col>
-										<b-col>{{ row.item.customerInfo }}</b-col>
-									</b-row>
+								<template v-slot:cell(actions)="row">
+									<b-button size="sm" variant="dark" @click="showSalesRecordModal(row.item)" class="mr-2">
+										Show Actions
+									</b-button>
+								</template>
 
-									<b-row class="mb-2">
-										<b-col sm="3" class="text-sm-right"><b>Order Details:</b></b-col>
-										<b-col>{{ row.item.details }}</b-col>
-									</b-row>
+								<template v-slot:row-details="row">
+									<div v-if="row.item.credit_authorized_by !== null">
+										<b-row class="mb-2">
+											<b-col cols="12" class="text-center"><span class="font-weight-bold">Credit Authorized By: </span> </b-col>
+										</b-row>
+										<b-row class="mb-2">
+											<b-col sm="3" class="text-sm-right"><b>Credit Authorized By:</b></b-col>
+											<b-col>{{ row.item.credit_authorized_by.name }}</b-col>
+										</b-row>
+
+										<b-row class="mb-2">
+											<b-col cols="12" class="text-center"><span class="font-weight-bold">Customer Details</span> </b-col>
+										</b-row>
+										<b-row class="mb-2">
+											<b-col sm="3" class="text-sm-right"><b>Customer Name:</b></b-col>
+											<b-col>{{ row.item.customer_details.name | capitalize }}</b-col>
+										</b-row>
+										<b-row class="mb-2">
+											<b-col sm="3" class="text-sm-right"><b>Customer Room No:</b></b-col>
+											<b-col>{{ row.item.customer_details.room }}</b-col>
+										</b-row>
+										<b-row class="mb-2">
+											<b-col sm="3" class="text-sm-right"><b>Customer Phone:</b></b-col>
+											<b-col>{{ row.item.customer_details.phone }}</b-col>
+										</b-row>
+									</div>
 								</template>
 							</b-table>
 						</div>
@@ -317,5 +373,10 @@ export default {
 				</div>
 			</div>
 		</div>
+		<b-modal id="sales-record" size="xl" hide-footer header-bg-variant="dark" title="Sales Record">
+			<FormBackground>
+				<CreditSaleRecord :record="selectedSalesRecord"></CreditSaleRecord>
+			</FormBackground>
+		</b-modal>
 	</Layout>
 </template>

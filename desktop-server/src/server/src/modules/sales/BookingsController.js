@@ -128,7 +128,7 @@ module.exports = {
       })
 
       // check that either the booking has been fully paid or a credit transaction has been recorded
-      if (sale.total_amount !== sale.total_paid && sale.credit_authorized_by == null) {
+      if (sale.total_amount !== sale.total_paid && sale.customer_details == null) {
         return res.status(400).json({ messages: ["you cannot close the booking without making full payment"] })
       }
 

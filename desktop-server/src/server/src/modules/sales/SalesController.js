@@ -19,7 +19,11 @@ async function getSaleDetails(sale) {
 
       // eslint-disable-next-line no-await-in-loop
       let recordDetails = await getSaleDetails(record)
-      details.elements.push(recordDetails)
+      if (_.isArray(recordDetails.elements)) {
+        details.elements.push(...recordDetails.elements)
+      } else {
+        details.elements.push(recordDetails)
+      }
     }
     return details
   }
@@ -154,7 +158,7 @@ async function updateSaleRecordWithTransaction(req, sale) {
   transaction = await SalesTransaction.query().insert({
     sales_id: sale.id,
     date: DateTime.local().toISODate(),
-    transaction_type: transaction.transaction_type,
+    transaction_type: transaction.transaction_type.toLowerCase(),
     amount: transaction.amount,
     registered_by: req.get("full_name")
   })
@@ -236,9 +240,21 @@ module.exports = {
 
   async getCreditSales(req, res) {
     try {
-      let sales = await Sale.query()
-        .where("status", "=", "owing")
+      let creditSalesQueryBuilder = Sale.query()
+        .where((builder) => {
+          builder.where("status", "=", "owing").orWhere("status", "=", "overpaid")
+        })
         .andWhere("active", "=", 1)
+
+      if (_.has(req, ["query", "start_date"])) {
+        creditSalesQueryBuilder.andWhere("created_at", ">=", req.query.start_date)
+      }
+
+      if (_.has(req, ["query", "end_date"])) {
+        creditSalesQueryBuilder.andWhere("created_at", "<=", req.query.end_date)
+      }
+
+      let sales = await creditSalesQueryBuilder.execute()
       let output = []
       for (let i = 0; i < sales.length; i++) {
         // eslint-disable-next-line no-await-in-loop
@@ -268,10 +284,6 @@ module.exports = {
         .findByIds(salesIDs)
         .throwIfNotFound()
 
-      await Sale.query()
-        .findByIds(salesIDs)
-        .patch({ active: false })
-
       let isCredit = true
 
       records.forEach((record) => {
@@ -283,6 +295,10 @@ module.exports = {
       if (isCredit === false) {
         return res.status(400).json({ messages: ["you can only merge credit transactions"] })
       }
+
+      await Sale.query()
+        .findByIds(salesIDs)
+        .patch({ active: false })
 
       for (let i = 0; i < records.length; i++) {
         newTotalAmount += records[i].total_amount
@@ -390,39 +406,42 @@ module.exports = {
       if (salesTransaction.transaction_type === "discount") {
         let newTotalComplementary = sale.total_complementary - salesTransaction.amount
         let newTotalDue = sale.total_amount - (newTotalComplementary + sale.total_paid)
-        await Sale.query()
-          .findById(sale.id)
-          .patch({
-            total_complementary: newTotalComplementary,
-            total_due: newTotalDue,
-            status: getStatus(newTotalDue)
-          })
+        let newSale = await Sale.query().patchAndFetchById(sale.id, {
+          total_complementary: newTotalComplementary,
+          total_due: newTotalDue,
+          status: getStatus(newTotalDue)
+        })
         let reversedSalesTransaction = await SalesTransaction.query().insert({
           sales_id: sale.id,
           transaction_type: "reverse-discount",
           amount: salesTransaction.amount,
           registered_by: req.get("full_name")
         })
-        return res.json(reversedSalesTransaction)
+        await SalesTransaction.query()
+          .findById(salesTransaction.id)
+          .patch({ active: false })
+        return res.json(newSale)
       }
 
       if (_.includes(["pos", "transfer", "cash"], salesTransaction.transaction_type)) {
         let newTotalPaid = sale.total_paid - salesTransaction.amount
         let newTotalDue = sale.total_amount - (newTotalPaid + sale.total_complementary)
-        await Sale.query()
-          .findById(sale.id)
-          .patch({
-            total_paid: newTotalPaid,
-            total_due: newTotalDue,
-            status: getStatus(newTotalDue)
-          })
+        let newSale = await Sale.query().patchAndFetchById(sale.id, {
+          total_paid: newTotalPaid,
+          total_due: newTotalDue,
+          status: getStatus(newTotalDue)
+        })
         let reversedSalesTransaction = await SalesTransaction.query().insert({
           sales_id: sale.id,
           transaction_type: `reverse-${salesTransaction.transaction_type.toLowerCase()}`,
           amount: salesTransaction.amount,
           registered_by: req.get("full_name")
         })
-        return res.json(reversedSalesTransaction)
+
+        await SalesTransaction.query()
+          .findById(salesTransaction.id)
+          .patch({ active: false })
+        return res.json(newSale)
       }
 
       return res.status(400).json({ messages: ["could not revert selected transaction"] })
@@ -435,6 +454,11 @@ module.exports = {
   },
 
   async getSalesTransactionsForSalesRecord(req, res) {
-    return res.json({ messages: ["hello world"] })
+    try {
+      let salesTransactions = await SalesTransaction.query().where("sales_id", "=", _.toNumber(req.params.id))
+      return res.json(salesTransactions)
+    } catch (error) {
+      return res.status(500).json({ messages: ["something went wrong, try again later"] })
+    }
   }
 }

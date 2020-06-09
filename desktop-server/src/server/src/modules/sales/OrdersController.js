@@ -18,6 +18,7 @@ module.exports = {
         .where("created_at", ">=", startDate)
         .andWhere("created_at", "<=", endDate)
         .withGraphFetched("order_items")
+        .withGraphFetched("sale")
 
       if (_.get(req, ["query", "status"]) != null) {
         orders = orders.filter((el) => {

@@ -8,6 +8,7 @@ exports.up = function(knex) {
       table.enum("status", ["pending", "fulfilled", "cancelled"])
       table.json("departments")
       table.json("placed_by")
+      table.string("destination")
       table.json("delivered_by").nullable()
       table.string("cancellation_remarks").nullable()
     })

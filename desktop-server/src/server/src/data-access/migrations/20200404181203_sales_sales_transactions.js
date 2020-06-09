@@ -37,6 +37,7 @@ exports.up = function(knex) {
       ])
       table.float("amount")
       table.string("registered_by")
+      table.boolean("active").defaultTo(true)
     })
     .then(() => {
       console.log("created sales_transactions")

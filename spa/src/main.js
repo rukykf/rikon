@@ -56,6 +56,10 @@ Vue.filter("capitalize", function(value) {
 })
 
 Vue.filter("money", function(value) {
+	if (value == null) {
+		return "nil"
+	}
+
 	if (value === 0) {
 		return formatMoney(value, { symbol: "N", precision: 2 })
 	}

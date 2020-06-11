@@ -3,7 +3,6 @@ import { DateTime, Interval } from "luxon"
 import _ from "lodash"
 import ManagedStateButton from "../../../../../components/managed-state-button"
 import SuccessFailureAlert from "../../../../../components/success-failure-alert"
-import ApiClient from "@src/ApiClient"
 import ErrorHandler from "@src/ErrorHandler"
 
 export default {
@@ -49,7 +48,7 @@ export default {
 		getReservations: async function() {
 			try {
 				let url = `api/hotel-rooms/${this.room.room.id}/reservations?status=open`
-				let response = await ApiClient.get(url)
+				let response = await this.$httpClient.get(url)
 				let reservations = response.data
 				reservations.forEach(function(e) {
 					if (DateTime.local().toISODate() >= DateTime.fromISO(e.start_date).toISODate()) {
@@ -79,7 +78,7 @@ export default {
 			try {
 				this.createNewReservationBtnState = "loading"
 				let url = `api/hotel-rooms/${this.room.room.id}/reservations`
-				await ApiClient.post(url, {
+				await this.$httpClient.post(url, {
 					start_date: this.newReservation.reservationStart,
 					end_date: this.newReservation.reservationEnd,
 					customer_details: {
@@ -101,7 +100,7 @@ export default {
 			try {
 				event.target.innerText = "Loading..."
 				let url = `api/reservations/${reservation.id}`
-				await ApiClient.patch(url, {
+				await this.$httpClient.patch(url, {
 					status: "cancelled",
 				})
 				this.success.push(`Successfully cancelled reservation for ${reservation.customer_details.name}`)

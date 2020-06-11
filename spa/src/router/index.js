@@ -48,17 +48,20 @@ router.beforeEach((routeTo, routeFrom, next) => {
 
 	// If auth is required and the user is logged in...
 	if (store.getters["auth/loggedIn"]) {
-		// Validate the local user token...
-		return store.dispatch("auth/validate").then((validUser) => {
-			// Then continue if the token still represents a valid user,
-			// otherwise redirect to login.
-			validUser ? next() : redirectToLogin()
-		})
+		let user = store.getters["auth/user"]
+
+		console.log(user)
+
+		if (routeTo.meta.permission == null || user.role.permissions.includes(routeTo.meta.permission)) {
+			return next()
+		} else {
+			return next({ name: "Logout" })
+		}
 	}
 
 	// If auth is required and the user is NOT currently logged in,
 	// redirect to login.
-	redirectToLogin()
+	return redirectToLogin()
 
 	function redirectToLogin() {
 		// Pass the original route to the login component

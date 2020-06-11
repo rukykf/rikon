@@ -1,7 +1,7 @@
 <script>
-import VuePerfectScrollbar from 'vue-perfect-scrollbar'
-import { authComputed } from '@state/helpers'
-import Appmenu from './app-menu'
+import VuePerfectScrollbar from "vue-perfect-scrollbar"
+import { authComputed } from "@state/helpers"
+import Appmenu from "./app-menu"
 
 /**
  * Left sidebar component - contains mainly the application menu
@@ -25,7 +25,7 @@ export default {
 		user: {
 			type: Object,
 			required: false,
-			default: () => ({}),
+			default: () => ({ role: {} }),
 		},
 	},
 	data() {
@@ -33,6 +33,7 @@ export default {
 			settings: {
 				minScrollbarLength: 60,
 			},
+			department: this.$store ? this.$store.state.auth.currentDepartment : {} || {},
 		}
 	},
 	computed: {
@@ -42,13 +43,13 @@ export default {
 		theme: function(newVal, oldVal) {
 			if (newVal !== oldVal) {
 				switch (newVal) {
-					case 'dark':
-						document.body.classList.add('left-side-menu-dark')
-						document.body.classList.remove('left-side-menu-condensed')
-						document.body.classList.remove('boxed-layout')
+					case "dark":
+						document.body.classList.add("left-side-menu-dark")
+						document.body.classList.remove("left-side-menu-condensed")
+						document.body.classList.remove("boxed-layout")
 						break
 					default:
-						document.body.classList.remove('left-side-menu-dark')
+						document.body.classList.remove("left-side-menu-dark")
 						break
 				}
 			}
@@ -56,13 +57,13 @@ export default {
 		type: function(newVal, oldVal) {
 			if (newVal !== oldVal) {
 				switch (newVal) {
-					case 'condensed':
-						document.body.classList.add('left-side-menu-condensed')
-						document.body.classList.remove('left-side-menu-dark')
-						document.body.classList.remove('boxed-layout')
+					case "condensed":
+						document.body.classList.add("left-side-menu-condensed")
+						document.body.classList.remove("left-side-menu-dark")
+						document.body.classList.remove("boxed-layout")
 						break
 					default:
-						document.body.classList.remove('left-side-menu-condensed')
+						document.body.classList.remove("left-side-menu-condensed")
 						break
 				}
 			}
@@ -70,14 +71,14 @@ export default {
 		width: function(newVal, oldVal) {
 			if (newVal !== oldVal) {
 				switch (newVal) {
-					case 'boxed':
-						document.body.classList.add('left-side-menu-condensed')
-						document.body.classList.remove('left-side-menu-dark')
-						document.body.classList.add('boxed-layout')
+					case "boxed":
+						document.body.classList.add("left-side-menu-condensed")
+						document.body.classList.remove("left-side-menu-dark")
+						document.body.classList.add("boxed-layout")
 						break
 					default:
-						document.body.classList.remove('left-side-menu-condensed')
-						document.body.classList.remove('boxed-layout')
+						document.body.classList.remove("left-side-menu-condensed")
+						document.body.classList.remove("boxed-layout")
 						break
 				}
 			}
@@ -90,20 +91,16 @@ export default {
 	<!-- ========== Left Sidebar Start ========== -->
 	<div class="left-side-menu">
 		<div class="media user-profile mt-2 mb-2">
-
 			<div class="media-body">
-				<h6 class="pro-user-name mt-0 mb-0">Rukky Kofi</h6>
-				<span class="pro-user-desc">Administrator</span>
+				<h6 class="pro-user-name mt-0 mb-0">{{ user.first_name }} {{ user.last_name }}</h6>
+				<span class="pro-user-desc">{{ user.role.name }}</span
+				><br />
+				<span class="pro-user-desc text-info">{{ department.name }}</span>
 			</div>
 		</div>
 
 		<div class="sidebar-content">
-			<VuePerfectScrollbar
-				v-if="!isCondensed"
-				v-once
-				class="slimscroll-menu"
-				:settings="settings"
-			>
+			<VuePerfectScrollbar v-if="!isCondensed" v-once class="slimscroll-menu" :settings="settings">
 				<div id="sidebar-menu">
 					<Appmenu />
 				</div>

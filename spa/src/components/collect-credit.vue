@@ -1,65 +1,132 @@
 <script>
+import ManagedStateButton from "./managed-state-button"
+import SuccessFailureAlert from "./success-failure-alert"
+import ErrorHandler from "@src/ErrorHandler"
+
 export default {
 	name: "collect-credit",
+	components: { SuccessFailureAlert, ManagedStateButton },
 	props: {
 		state: {
 			type: String,
 			default: "initialize", // possible values are ['loading', 'success', 'fail', 'try-again']
 		},
+
+		isStandalone: {
+			type: Boolean,
+			default: false,
+		},
+
 		roomNumberRequired: {
 			type: Boolean,
 			default: false,
 		},
+
 		phoneNumberRequired: {
 			type: Boolean,
 			default: false,
 		},
+
 		sellableType: {
 			type: String,
 			required: true,
 		},
+
 		sellableId: {
 			type: Number,
 			required: true,
 		},
+
+		customerName: {
+			type: String,
+			default: "",
+		},
+
+		customerRoom: {
+			type: Number,
+			default: 0,
+		},
+
+		customerPhone: {
+			type: String,
+			default: "",
+		},
 	},
 	data: function() {
 		return {
-			name: "",
-			phoneNumber: "",
-			roomNumber: "",
+			name: this.customerName,
+			errors: [],
+			success: [],
+			phoneNumber: this.customerPhone,
+			roomNumber: this.customerRoom,
+			authorizedBy: "",
 			nameValidation: null,
+			disabled: false,
+			submitBtnState: "initialize",
 			roomNumberValidation: null,
 			phoneNumberValidation: null,
+			authorizedByValidation: null,
 		}
 	},
+
 	computed: {
-		disabled: function() {
-			if (this.state === "success" || this.state === "fail") {
+		computedDisabled: function() {
+			if ((this.state === "success" || this.state === "fail") && this.isStandalone === false) {
 				return true
 			}
-			return false
+			return this.disabled
+		},
+
+		computedSubmitBtnState: function() {
+			if (this.isStandalone === false && this.submitBtnState !== "loading") {
+				return this.state
+			} else {
+				return this.submitBtnState
+			}
 		},
 	},
 
 	watch: {},
 
 	methods: {
-		validateAndSubmit: function() {
+		validateAndSubmit: async function() {
 			if (this.validate()) {
-				let creditInfo
-				creditInfo = {
-					customerName: this.name,
-					customerPhone: this.phoneNumber,
-					customerRoom: this.roomNumber,
+				try {
+					this.submitBtnState = "loading"
+					await this.$httpClient.post("api/sales", {
+						sellable_type: this.sellableType,
+						sellable_id: this.sellableId,
+						transaction_type: "credit",
+						transaction_details: {
+							credit_authorized_by: { name: this.authorizedBy },
+							customer_details: {
+								name: this.name,
+								phone: this.phoneNumber,
+								room: this.roomNumber,
+							},
+						},
+					})
+					this.success.push(`Successfully recorded debt for ${this.name}`)
+					this.submitBtnState = "success-try-again"
+					this.$emit("success")
+				} catch (error) {
+					let errors = ErrorHandler(error)
+					this.submitBtnState = "fail-try-again"
+					this.$emit("error", errors)
+					this.errors.push(...errors)
 				}
 				this.nameValidation = null
 				this.roomNumberValidation = null
 				this.phoneNumberValidation = null
-				this.$emit("clicked", creditInfo)
+				this.authorizedByValidation = null
 			}
 		},
 		validate: function() {
+			if (this.authorizedBy.length < 1) {
+				this.authorizedByValidation = "Enter the name of whoever is authorizing this dept"
+				return false
+			}
+
 			// name is always required
 			if (this.name.length < 1) {
 				this.nameValidation = "The customer's name is required"
@@ -86,7 +153,26 @@ export default {
 		<div class="col-12 payment-form pt-4 mt-2 mx-auto">
 			<div class="card ">
 				<div class="card-body">
+					<SuccessFailureAlert :errors="errors" :success="success"></SuccessFailureAlert>
+
 					<div class="pt-3">
+						<div class="form-group">
+							<label for="authorizedBy">
+								<h6>Enter the name of whoever authorized this debt: </h6>
+								<small v-if="authorizedByValidation !== null" class="text-danger">* {{ authorizedByValidation }}</small>
+							</label>
+
+							<input
+								type="text"
+								id="authorizedBy"
+								name="text"
+								:disabled="computedDisabled"
+								v-model="authorizedBy"
+								placeholder=""
+								class="form-control "
+							/>
+						</div>
+
 						<div class="form-group">
 							<label for="name">
 								<h6>Enter Customer Name: </h6>
@@ -97,10 +183,9 @@ export default {
 								type="text"
 								id="name"
 								name="text"
-								:disabled="disabled"
+								:disabled="computedDisabled"
 								v-model="name"
 								placeholder=""
-								required
 								class="form-control "
 							/>
 						</div>
@@ -115,7 +200,7 @@ export default {
 								type="number"
 								id="roomNumber"
 								name="number"
-								:disabled="disabled"
+								:disabled="computedDisabled"
 								v-model.number="roomNumber"
 								placeholder="e.g 103"
 								class="form-control "
@@ -132,7 +217,7 @@ export default {
 								type="text"
 								id="phoneNumber"
 								name="text"
-								:disabled="disabled"
+								:disabled="computedDisabled"
 								v-model="phoneNumber"
 								placeholder="e.g 08123456789"
 								class="form-control "
@@ -141,27 +226,12 @@ export default {
 					</div>
 
 					<p>
-						<button class="btn btn-primary" v-if="state === 'loading'">
-							<b-spinner variant="white" class="mx-5"></b-spinner>
-						</button>
-						<button class="btn btn-success" disabled v-else-if="state === 'success'">
-							<i class="uil-check mr-2"></i> Successful
-						</button>
-						<button class="btn btn-danger" disabled v-else-if="state === 'fail'">
-							<i class=" uil-times mr-2"></i> Failed to save
-						</button>
-						<button class="btn btn-danger" @click.stop.prevent="validateAndSubmit" v-else-if="state === 'try-again'">
-							<i class="uil-refresh mr-2"></i> Saving failed, try again
-						</button>
-						<button
-							v-else
-							type="button"
-							:disabled="disabled"
-							@click.stop.prevent="validateAndSubmit"
-							class="btn btn-primary px-4"
-						>
-							Submit
-						</button>
+						<ManagedStateButton
+							:state="computedSubmitBtnState"
+							main-title="Submit"
+							main-variant="primary"
+							@clicked="validateAndSubmit"
+						></ManagedStateButton>
 					</p>
 				</div>
 			</div>

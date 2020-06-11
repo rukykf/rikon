@@ -1,7 +1,9 @@
 import axios from "axios"
+import ApiClient from "@src/ApiClient"
 
 export const state = {
 	currentUser: getSavedState("auth.currentUser"),
+	currentDepartment: getSavedState("auth.currentDepartment"),
 }
 
 export const mutations = {
@@ -10,6 +12,11 @@ export const mutations = {
 		saveState("auth.currentUser", newValue)
 		setDefaultAuthHeaders(state)
 	},
+
+	SET_CURRENT_DEPARTMENT(state, newValue) {
+		state.currentDepartment = newValue
+		saveState("auth.currentDepartment", newValue)
+	},
 }
 
 export const getters = {
@@ -17,30 +24,35 @@ export const getters = {
 	loggedIn(state) {
 		return !!state.currentUser
 	},
+
+	user(state) {
+		return state.currentUser
+	},
 }
 
 export const actions = {
 	// This is automatically run in `src/state/store.js` when the app
 	// starts, along with any other actions named `init` in other modules.
-	init({ state, dispatch }) {
+	init({ commit, state, dispatch }) {
 		setDefaultAuthHeaders(state)
-		dispatch("validate")
 	},
 
 	// Logs in the current user.
-	logIn({ commit, dispatch, getters }, { username, password } = {}) {
-		if (getters.loggedIn) return dispatch("validate")
-
-		return axios.post("/api/session", { username, password }).then((response) => {
+	logIn({ commit, state, dispatch, getters }, { username, password, department } = {}) {
+		return ApiClient.post("/api/session", { username, password }).then((response) => {
 			const user = response.data
 			commit("SET_CURRENT_USER", user)
+			commit("SET_CURRENT_DEPARTMENT", department)
+			setDefaultAuthHeaders(state)
 			return user
 		})
 	},
 
 	// Logs out the current user.
-	logOut({ commit }) {
+	logOut({ commit, state }) {
 		commit("SET_CURRENT_USER", null)
+		commit("SET_CURRENT_DEPARTMENT", null)
+		setDefaultAuthHeaders(state)
 	},
 
 	// register the user
@@ -96,6 +108,16 @@ function saveState(key, state) {
 	window.localStorage.setItem(key, JSON.stringify(state))
 }
 
-function setDefaultAuthHeaders(state) {
-	axios.defaults.headers.common.Authorization = state.currentUser ? state.currentUser.token : ""
+async function setDefaultAuthHeaders(state) {
+	if (state.currentUser !== null) {
+		ApiClient.defaults.headers.common["full_name"] = `${state.currentUser.first_name} ${state.currentUser.last_name}`
+		ApiClient.defaults.headers.common["last_name"] = state.currentUser.last_name
+		ApiClient.defaults.headers.common["first_name"] = state.currentUser.first_name
+		ApiClient.defaults.headers.common["username"] = state.currentUser.username
+	} else {
+		ApiClient.defaults.headers.common["full_name"] = null
+		ApiClient.defaults.headers.common["last_name"] = null
+		ApiClient.defaults.headers.common["first_name"] = null
+		ApiClient.defaults.headers.common["username"] = null
+	}
 }

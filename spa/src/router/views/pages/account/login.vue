@@ -1,7 +1,11 @@
 <script>
 import Layout from "@layouts/default"
 import { authMethods } from "@state/helpers"
+import Multiselect from "vue-multiselect"
 import appConfig from "@src/app.config"
+import SuccessFailureAlert from "../../../../components/success-failure-alert"
+import ErrorHandler from "@src/ErrorHandler"
+import ManagedStateButton from "../../../../components/managed-state-button"
 
 /**
  * Login component
@@ -11,16 +15,22 @@ export default {
 		title: "Log in",
 		meta: [{ name: "description", content: `Log in to ${appConfig.title}` }],
 	},
-	components: { Layout },
+	components: { ManagedStateButton, SuccessFailureAlert, Layout, Multiselect },
 	data() {
 		return {
-			username: "admin",
-			password: "password",
+			username: null,
+			password: null,
+			department: null,
+			departments: [],
+			loginBtnState: "initialize",
 			authError: null,
+			errors: [],
+			success: [],
 			tryingToLogIn: false,
 			isAuthError: false,
 		}
 	},
+
 	computed: {
 		placeholders() {
 			return process.env.NODE_ENV === "production"
@@ -31,29 +41,71 @@ export default {
 				  }
 		},
 	},
+
+	mounted() {
+		this.getDepartmentsData()
+	},
+
 	methods: {
 		...authMethods,
 		// Try to log the user in with the username
 		// and password they provided.
 		tryToLogIn() {
-			this.tryingToLogIn = true
-			// Reset the authError if it existed.
-			this.authError = null
-			return this.logIn({
-				username: this.username,
-				password: this.password,
-			})
-				.then((token) => {
-					this.tryingToLogIn = false
-					this.isAuthError = false
-					// Redirect to the originally requested page, or to the home page
-					this.$router.push(this.$route.query.redirectFrom || { name: "Dashboard" })
+			if (this.isLoginFormValid()) {
+				this.loginBtnState = "loading"
+				return this.logIn({
+					username: this.username,
+					password: this.password,
+					department: this.department,
 				})
-				.catch((error) => {
-					this.tryingToLogIn = false
-					this.authError = error.response ? error.response.data.message : ""
-					this.isAuthError = true
-				})
+					.then((user) => {
+						this.loginBtnState = "success"
+						let home = this.getHomeRoute(user)
+						this.$router.push(this.$route.query.redirectFrom || { name: home })
+					})
+					.catch((error) => {
+						console.log(error)
+						this.loginBtnState = "fail-try-again"
+						let errors = ErrorHandler(error)
+						this.errors.push(...errors)
+					})
+			}
+		},
+
+		getHomeRoute(user) {
+			if (user.role.permissions.includes("can-view-dashboard")) {
+				return "Dashboard"
+			}
+
+			if (user.role.permissions.includes("can-view-hotel-reception-dashboard")) {
+				return "Bookings"
+			}
+
+			return "Sales Page"
+		},
+
+		async getDepartmentsData() {
+			try {
+				let response = await this.$httpClient.get("api/departments")
+				this.departments = response.data
+			} catch (error) {
+				let errors = ErrorHandler(error)
+				this.errors.push(...errors)
+			}
+		},
+
+		isLoginFormValid() {
+			if (this.department == null) {
+				this.errors.push("Select a department to log into")
+				return false
+			}
+
+			if (this.username == null || this.password == null) {
+				this.errors.push("Enter a valid username and password")
+				return false
+			}
+
+			return true
 		},
 	},
 }
@@ -81,10 +133,11 @@ export default {
 											Enter your username and password to access admin panel
 										</p>
 
-										<b-alert v-model="isAuthError" variant="danger" dismissible>{{ authError }}</b-alert>
+										<SuccessFailureAlert :errors="errors" :success="success"></SuccessFailureAlert>
 
-										<b-form class="authentication-form" @submit.prevent="tryToLogIn">
+										<b-form class="authentication-form">
 											<div class="form-group">
+												<label class="form-control-label">Username:</label>
 												<div class="input-group input-group-merge">
 													<div class="input-group-prepend">
 														<span class="input-group-text">
@@ -101,7 +154,7 @@ export default {
 												</div>
 											</div>
 											<div class="form-group mt-4">
-												<label class="form-control-label">Password</label>
+												<label class="form-control-label">Password:</label>
 												<div class="input-group input-group-merge">
 													<div class="input-group-prepend">
 														<span class="input-group-text">
@@ -118,10 +171,30 @@ export default {
 												</div>
 											</div>
 
+											<div class="form-group">
+												<label for="department">
+													<h6>Select Department: </h6>
+												</label>
+
+												<Multiselect
+													id="department"
+													:options="departments"
+													track-by="id"
+													label="name"
+													v-model="department"
+												></Multiselect>
+											</div>
+
 											<b-form-group id="button-group" class="mt-4 mb-1">
-												<b-button type="submit" variant="primary" class="btn-block">Log In</b-button>
+												<ManagedStateButton
+													main-title="Login"
+													class="btn btn-block"
+													:state="loginBtnState"
+													@clicked="tryToLogIn"
+												></ManagedStateButton>
 											</b-form-group>
 										</b-form>
+
 										<div class="py-3 text-center">
 											<span class="font-size-16 font-weight-bold">Contact the admin if you forgot your password</span>
 										</div>

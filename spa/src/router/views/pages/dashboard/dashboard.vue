@@ -308,9 +308,9 @@ export default {
 									<tr>
 										<th>Item Name</th>
 										<th>Total Quantity Ordered</th>
-										<th>Total Fulfilled Sales</th>
+										<th>Total Quantity Fulfilled</th>
 										<th>Sales <br /><span class="text-secondary">(for fulfilled orders)</span></th>
-										<th>Cancelled Orders</th>
+										<th>Total Quantity Cancelled</th>
 										<th>Lost Sales <br /><span class="text-secondary">(for cancelled orders)</span></th>
 									</tr>
 								</thead>

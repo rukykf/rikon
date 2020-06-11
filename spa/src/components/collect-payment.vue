@@ -1,6 +1,7 @@
 <script>
 import CollectCredit from "./collect-credit"
 import CollectCashPayment from "./collect-cash-payment"
+
 export default {
 	name: "collect-payment",
 	components: { CollectCashPayment, CollectCredit },
@@ -21,9 +22,9 @@ export default {
 			type: Number,
 			required: true,
 		},
-		disabled: {
-			type: Boolean,
-			default: false,
+		sellable: {
+			type: Object,
+			required: true,
 		},
 		requiredAmount: {
 			type: Number,
@@ -47,10 +48,21 @@ export default {
 			creditForm: false,
 		}
 	},
-	computed: {},
+	computed: {
+		disabled: function() {
+			if (this.state === "success" || this.state === "fail") {
+				return true
+			}
+			return false
+		},
+	},
 	methods: {
-		paymentSuccessful: function(paymentInfo) {},
-		paymentFailed: function(paymentInfo) {},
+		paymentSuccessful: function(paymentInfo) {
+			this.$emit("success")
+		},
+		paymentFailed: function(paymentInfo) {
+			this.$emit("error")
+		},
 	},
 }
 </script>
@@ -63,31 +75,47 @@ export default {
 				<div class="form-inline" v-if="takeCredit">
 					<b class="mr-2 font-weight-bold">Cash</b>
 					<b-form-checkbox :disabled="disabled" v-model="creditForm" name="check-button" switch>
-						<b class="font-weight-bold">Credit</b>
+						<b class="font-weight-bold">Debt</b>
 					</b-form-checkbox>
 				</div>
 
-				<CollectCredit
-					:state="state"
-					v-if="creditForm"
-					@clicked="collectCreditPayment"
-					:room-number-required="roomNumberRequired"
-					:phone-number-required="phoneNumberRequired"
-					:sellable-type="sellableType"
-					:sellable-id="sellableId"
-					@payment-successful="paymentSuccessful"
-					@payment-failed="paymentFailed"
-				></CollectCredit>
-				<CollectCashPayment
-					:sellable-id="sellableId"
-					:sellable-type="sellableType"
-					:required-amount="requiredAmount"
-					:exact-amount-required="exactAmountRequired"
-					:state="state"
-					v-else
-					@payment-successful="paymentSuccessful"
-					@payment-failed="paymentFailed"
-				></CollectCashPayment>
+				<div v-if="creditForm">
+					<CollectCredit
+						:state="state"
+						v-if="sellableType === 'booking'"
+						:room-number-required="roomNumberRequired"
+						:phone-number-required="phoneNumberRequired"
+						:sellable-type="sellableType"
+						:sellable-id="sellableId"
+						:customer-name="sellable.customer_details.name"
+						:customer-phone="sellable.customer_details.phone"
+						@success="paymentSuccessful"
+						@error="paymentFailed"
+					></CollectCredit>
+
+					<CollectCredit
+						:state="state"
+						v-else-if="sellableType === 'order'"
+						:room-number-required="roomNumberRequired"
+						:phone-number-required="phoneNumberRequired"
+						:sellable-type="sellableType"
+						:sellable-id="sellableId"
+						@success="paymentSuccessful"
+						@error="paymentFailed"
+					></CollectCredit>
+				</div>
+
+				<div v-else>
+					<CollectCashPayment
+						:sellable-id="sellableId"
+						:sellable-type="sellableType"
+						:required-amount="requiredAmount"
+						exact-amount-required
+						:state="state"
+						@success="paymentSuccessful"
+						@error="paymentFailed"
+					></CollectCashPayment>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -2,7 +2,6 @@
 import { DateTime, Interval } from "luxon"
 import ManagedStateButton from "../../../../../components/managed-state-button"
 import ErrorHandler from "@src/ErrorHandler"
-import ApiClient from "@src/ApiClient"
 import SuccessFailureAlert from "../../../../../components/success-failure-alert"
 
 export default {
@@ -45,7 +44,7 @@ export default {
 		getReservation: async function() {
 			try {
 				let url = `api/hotel-rooms/${this.room.room.id}/reservation`
-				let response = await ApiClient.get(url)
+				let response = await this.$httpClient.get(url)
 				this.reservation = response.data
 				if (
 					DateTime.local().toLocaleString(DateTime.TIME_SIMPLE) >= "12:00 PM" &&
@@ -66,7 +65,7 @@ export default {
 			try {
 				this.closeReservationBtnState = "loading"
 				let url = `api/reservations/${this.reservation.id}`
-				await ApiClient.patch(url, {
+				await this.$httpClient.patch(url, {
 					status: "closed",
 				})
 				this.success.push(`Successfully closed reservation for ${this.reservation.customer_details.name}`)

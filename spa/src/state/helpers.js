@@ -20,7 +20,7 @@ export const authMethods = mapActions("auth", ["logIn", "logOut", "register", "r
 
 export const layoutMethods = mapActions("layout", [
 	"changeLayoutType",
-	"changeLeftSidebarTheme",
+	"changeLeftSidebaTheme",
 	"changeLeftSidebarType",
 	"changeLayoutWidth",
 ])

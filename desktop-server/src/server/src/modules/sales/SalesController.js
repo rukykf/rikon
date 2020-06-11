@@ -362,7 +362,7 @@ module.exports = {
       }
 
       if (req.body.transaction_type === "credit") {
-        await Sale.query().patchAndFetchById(sale.id, {
+        sale = await Sale.query().patchAndFetchById(sale.id, {
           customer_details: req.body.transaction_details.customer_details,
           credit_authorized_by: req.body.transaction_details.credit_authorized_by
         })

@@ -4,7 +4,6 @@ import { DateTime } from "luxon"
 import appConfig from "@src/app.config"
 import Layout from "@layouts/main"
 import RoomPopUp from "./components/room-pop-up"
-import ApiClient from "@src/ApiClient"
 import SuccessFailureAlert from "../../../../components/success-failure-alert"
 
 /**
@@ -62,7 +61,7 @@ export default {
 		updateRoomsList: async function() {
 			try {
 				this.loading = true
-				let res = await ApiClient.get("api/hotel-rooms")
+				let res = await this.$httpClient.get("api/hotel-rooms")
 				this.rooms.all = res.data
 
 				this.rooms.reserved = this.rooms.all.filter((room) => room.room_status === "reserved")
@@ -178,10 +177,7 @@ export default {
 					</div>
 				</div>
 
-				<!--				<b-modal @hide="updateRoomsList" id="room-modal" size="xl" hide-footer header-bg-variant="dark" :title="roomTitle">-->
-				<!--					<RoomPopUp :room="selectedRoom"></RoomPopUp>-->
-				<!--				</b-modal>-->
-				<b-modal id="room-modal" size="xl" hide-footer header-bg-variant="dark" :title="roomTitle">
+				<b-modal @hide="updateRoomsList" id="room-modal" size="xl" hide-footer header-bg-variant="dark" :title="roomTitle">
 					<RoomPopUp :room="selectedRoom"></RoomPopUp>
 				</b-modal>
 			</b-jumbotron>

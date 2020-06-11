@@ -1,7 +1,6 @@
 <script>
 import CollectPayment from "@src/components/collect-payment"
 import ErrorHandler from "@src/ErrorHandler"
-import ApiClient from "@src/ApiClient"
 import SuccessFailureAlert from "../../../../../components/success-failure-alert"
 import { DateTime, Interval } from "luxon"
 import _ from "lodash"
@@ -18,9 +17,10 @@ export default {
 	},
 	data: function() {
 		return {
-			booking: { id: 0 },
+			booking: { id: 0, customer_details: {} },
 			errors: [],
 			success: [],
+			collectPaymentFormState: "initialize",
 			closeBookingBtnState: "initialize",
 		}
 	},
@@ -64,9 +64,8 @@ export default {
 		getBooking: async function() {
 			try {
 				let url = `api/hotel-rooms/${this.room.room.id}/booking`
-				let response = await ApiClient.get(url)
+				let response = await this.$httpClient.get(url)
 				this.booking = response.data
-				console.log(this.booking)
 			} catch (error) {
 				let errors = ErrorHandler(error)
 				this.errors.push(...errors)
@@ -94,17 +93,22 @@ export default {
 			try {
 				this.closeBookingBtnState = "loading"
 				let url = `api/bookings/${this.booking.id}`
-				await ApiClient.post(url)
+				await this.$httpClient.post(url)
 				this.success.push("Successfully closed booking")
 				this.closeBookingBtnState = "success"
+				this.collectPaymentFormState = "success"
 			} catch (error) {
 				let errors = ErrorHandler(error)
 				this.errors.push(...errors)
 				this.closeBookingBtnState = "fail-try-again"
 			}
 		},
-		saveBookingPayment: function() {
-			console.log("save booking payment")
+		paymentSucceessful: function() {
+			this.collectPaymentFormState = "success"
+		},
+
+		paymentFailed: function() {
+			this.collectPaymentFormState = "fail-try-again"
 		},
 	},
 }
@@ -120,6 +124,20 @@ export default {
 			<b-card-body class="text-left">
 				<table class="table table-responsive table-hover">
 					<tbody>
+						<tr>
+							<td class="font-weight-semibold">Room Number:</td>
+							<td> {{ room.room.room_no }}</td>
+						</tr>
+						<tr>
+							<td class="font-weight-semibold">Customer Name:</td>
+							<td> {{ booking.customer_details.name }}</td>
+						</tr>
+
+						<tr>
+							<td class="font-weight-semibold">Customer Phone:</td>
+							<td> {{ booking.customer_details.phone }}</td>
+						</tr>
+
 						<tr>
 							<td class="font-weight-semibold">Start Date:</td>
 							<td> {{ booking.start_date | humanDate }}</td>
@@ -172,11 +190,17 @@ export default {
 		</div>
 
 		<CollectPayment
-			:sellableID="booking.id"
+			v-if="booking.price_per_night != null"
+			:sellable-id="booking.id"
 			sellable-type="booking"
+			:sellable="booking"
+			:required-amount="totalDue"
+			exact-amount-required
 			take-credit
 			class="col-12 col-lg-5 ml-3"
-			@submit-payment="saveBookingPayment"
+			@success="paymentSucceessful"
+			@error="paymentFailed"
+			:state="collectPaymentFormState"
 		></CollectPayment>
 	</div>
 </template>

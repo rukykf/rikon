@@ -1,7 +1,10 @@
 module.exports = [
   "can-view-reports",
-  "can-fill-consumption-form-for-department",
-  "can-manage-configurations",
-  "can-view-summarized-reports",
-  "can-perform-audits"
+  "can-view-dashboard",
+  "can-view-configurations",
+  "can-view-create-user-configuration",
+  "can-view-create-sales-item-configuration",
+  "can-view-all-configurations",
+  "can-view-hotel-reception-dashboard",
+  "can-view-point-of-sales-page"
 ]

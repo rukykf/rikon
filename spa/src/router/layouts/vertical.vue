@@ -11,7 +11,7 @@ export default {
 		return {
 			isMenuCondensed: false,
 			isMobileMenuOpened: false,
-			user: this.$store ? this.$store.state.auth.currentUser : {} || {},
+			user: this.$store ? this.$store.state.auth.currentUser : { role: {} } || { role: {} },
 			layout: this.$store ? this.$store.state.layout.layoutType : null || null,
 			theme: this.$store ? this.$store.state.layout.leftSidebarTheme : null || null,
 			type: this.$store ? this.$store.state.layout.leftSidebarType : null || null,

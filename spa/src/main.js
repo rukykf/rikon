@@ -3,6 +3,7 @@ import App from "./app"
 import router from "@router"
 import store from "@state/store"
 import "@components/_globals"
+import axios from "axios"
 
 import BootstrapVue from "bootstrap-vue"
 import VueApexCharts from "vue-apexcharts"
@@ -94,3 +95,5 @@ if (process.env.VUE_APP_TEST === "e2e") {
 	// such as `cy.logIn()`.
 	window.__app__ = app
 }
+
+export default app

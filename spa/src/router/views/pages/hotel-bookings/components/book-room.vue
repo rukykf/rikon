@@ -2,7 +2,6 @@
 import ManagedStateButton from "../../../../../components/managed-state-button"
 import CollectCashPayment from "@src/components/collect-cash-payment"
 import SuccessFailureAlert from "../../../../../components/success-failure-alert"
-import ApiClient from "@src/ApiClient"
 import _ from "lodash"
 
 export default {
@@ -39,8 +38,7 @@ export default {
 			try {
 				this.bookRoomBtnState = "loading"
 				let url = `api/hotel-rooms/${this.room.room.id}/bookings`
-				console.log(url)
-				let response = await ApiClient.post(url, {
+				let response = await this.$httpClient.post(url, {
 					customer_details: this.bookingForm,
 				})
 				this.booking = response.data
@@ -65,8 +63,7 @@ export default {
 			try {
 				this.editCustomerDetailsBtnState = "loading"
 				let url = `api/bookings/${this.booking.id}`
-				console.log(url)
-				let response = await ApiClient.patch(url, {
+				let response = await this.$httpClient.patch(url, {
 					customer_details: this.bookingForm,
 				})
 				this.booking = response.data
@@ -74,7 +71,6 @@ export default {
 				this.success.push("Successfully Edited Customer Details")
 				this.$emit("room-booking-is-edited")
 			} catch (error) {
-				console.log(error)
 				if (_.get(error, ["response", "data", "messages"])) {
 					this.errors = error.response.data.messages
 				} else {
@@ -243,9 +239,10 @@ export default {
 				<CollectCashPayment
 					:state="collectCashPaymentState"
 					class="col-12 col-lg-6"
+					:required-amount="booking.amount_due"
 					@clicked="collectPayment"
-					sellable-type="'booking'"
-					:sellableId="room.room.id"
+					sellable-type="booking"
+					:sellableId="booking.id"
 				></CollectCashPayment>
 			</div>
 		</div>

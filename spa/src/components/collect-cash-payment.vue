@@ -1,6 +1,8 @@
 <script>
 import SuccessFailureAlert from "./success-failure-alert"
 import ManagedStateButton from "./managed-state-button"
+import ErrorHandler from "@src/ErrorHandler"
+
 export default {
 	name: "collect-cash-payment",
 	components: { ManagedStateButton, SuccessFailureAlert },
@@ -11,8 +13,14 @@ export default {
 		},
 		requiredAmount: {
 			type: Number,
-			default: 200.0,
+			default: 200,
 		},
+
+		isStandalone: {
+			type: Boolean,
+			default: false,
+		},
+
 		sellableType: {
 			type: String,
 			required: true,
@@ -34,36 +42,54 @@ export default {
 			paymentMethodValidation: null,
 			errors: [],
 			success: [],
+			disabled: false,
 			paymentBtnState: this.state,
 		}
 	},
 	computed: {
-		disabled: function() {
-			if (this.state === "success" || this.state === "fail") {
+		computedDisabled: function() {
+			if ((this.state === "success" || this.state === "fail") && this.isStandalone === false) {
 				return true
 			}
-			return false
+			return this.disabled
 		},
+
 		computedPaymentBtnState: function() {
-			return this.paymentBtnState
+			if (this.isStandalone === false && this.paymentBtnState !== "loading") {
+				return this.state
+			} else {
+				return this.paymentBtnState
+			}
 		},
 	},
 
 	watch: {},
 
 	methods: {
-		validateAndPay: function() {
-			if (!this.validate()) {
-				return
-			}
-
+		validateAndPay: async function() {
 			if (this.validate()) {
-				let paymentInfo = {
-					paymentMethod: this.paymentMethod,
-					amount: this.amount,
+				try {
+					this.paymentBtnState = "loading"
+					await this.$httpClient.post("api/sales", {
+						sellable_type: this.sellableType,
+						sellable_id: this.sellableId,
+						transaction_type: "cash",
+						transaction_details: {
+							transaction_type: this.paymentMethod.toLowerCase(),
+							amount: this.amount,
+						},
+					})
+					this.success.push(`Successfully paid ${this.amount} for this ${this.sellableType}`)
+					this.paymentBtnState = "success-try-again"
+					this.$emit("success")
+				} catch (error) {
+					let errors = ErrorHandler(error)
+					this.paymentBtnState = "fail-try-again"
+					this.$emit("error", errors)
+					this.errors.push(...errors)
 				}
 				this.amountValidation = null
-				this.$emit("clicked", paymentInfo)
+				this.paymentMethodValidation = null
 			}
 		},
 		validate: function() {
@@ -72,8 +98,8 @@ export default {
 				return false
 			}
 
-			if (this.amount < 1 || this.amount > this.requiredAmount) {
-				this.amountValidation = "Amount should be less than or equal to: " + this.requiredAmount
+			if (this.amount < 1 && this.requiredAmount > 0) {
+				this.amountValidation = "Amount should be greater than 1"
 				return false
 			}
 
@@ -99,20 +125,28 @@ export default {
 							<small v-if="paymentMethodValidation !== null" class="text-danger">* {{ paymentMethodValidation }}</small>
 							<h6 class="pb-2">Select payment method</h6>
 							<label class="radio-inline">
-								<input type="radio" name="optradio" :disabled="disabled" value="cash" v-model="paymentMethod" checked /> Cash
+								<input type="radio" name="optradio" :disabled="computedDisabled" value="cash" v-model="paymentMethod" checked />
+								Cash
 							</label>
 							<label class="radio-inline">
 								<input
 									type="radio"
 									name="optradio"
-									:disabled="disabled"
+									:disabled="computedDisabled"
 									value="transfer"
 									v-model="paymentMethod"
 									class="ml-5"
 								/>Transfer
 							</label>
 							<label class="radio-inline">
-								<input type="radio" name="optradio" :disabled="disabled" value="POS" v-model="paymentMethod" class="ml-5" />POS
+								<input
+									type="radio"
+									name="optradio"
+									:disabled="computedDisabled"
+									value="POS"
+									v-model="paymentMethod"
+									class="ml-5"
+								/>POS
 							</label>
 						</div>
 
@@ -126,7 +160,7 @@ export default {
 								type="number"
 								id="amount"
 								name="amount"
-								:disabled="disabled"
+								:disabled="computedDisabled"
 								v-model.number="amount"
 								placeholder="0.00"
 								required

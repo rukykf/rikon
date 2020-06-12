@@ -174,7 +174,9 @@ test("OrdersController.index returns list of orders created in last 90 days by d
   let startDate = DateTime.local()
     .minus({ days: 90 })
     .toISODate()
-  let endDate = DateTime.local().toISODate()
+  let endDate = DateTime.local()
+    .plus({ days: 1 })
+    .toISODate()
 
   expect(res.json).toHaveBeenCalledWith({
     start_date: startDate,
@@ -234,7 +236,9 @@ test("OrdersController.index successfully filters orders by status", async () =>
   let startDate = DateTime.local()
     .minus({ days: 90 })
     .toISODate()
-  let endDate = DateTime.local().toISODate()
+  let endDate = DateTime.local()
+    .plus({ days: 1 })
+    .toISODate()
 
   let req = { query: { status: "pending" } }
   let output = null
@@ -260,7 +264,9 @@ test("OrdersController.index successfully filters orders by department", async (
   let startDate = DateTime.local()
     .minus({ days: 90 })
     .toISODate()
-  let endDate = DateTime.local().toISODate()
+  let endDate = DateTime.local()
+    .plus({ days: 1 })
+    .toISODate()
 
   let req = { query: { department: "kitchen" } }
   let output = null
@@ -310,8 +316,6 @@ test("OrdersController.create returns the newly created order and its order item
   expect(res.json).toHaveBeenLastCalledWith(
     expect.objectContaining({
       amount: 27000,
-      created_at: DateTime.local().toISODate(),
-      updated_at: DateTime.local().toISODate(),
       status: "pending",
       departments: ["bar", "kitchen"]
     })

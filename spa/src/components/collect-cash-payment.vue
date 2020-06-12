@@ -70,7 +70,7 @@ export default {
 			if (this.validate()) {
 				try {
 					this.paymentBtnState = "loading"
-					await this.$httpClient.post("api/sales", {
+					let response = await this.$httpClient.post("api/sales", {
 						sellable_type: this.sellableType,
 						sellable_id: this.sellableId,
 						transaction_type: "cash",
@@ -81,7 +81,7 @@ export default {
 					})
 					this.success.push(`Successfully paid ${this.amount} for this ${this.sellableType}`)
 					this.paymentBtnState = "success-try-again"
-					this.$emit("success")
+					this.$emit("success", response.data)
 				} catch (error) {
 					let errors = ErrorHandler(error)
 					this.paymentBtnState = "fail-try-again"

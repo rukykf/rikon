@@ -93,7 +93,7 @@ export default {
 			if (this.validate()) {
 				try {
 					this.submitBtnState = "loading"
-					await this.$httpClient.post("api/sales", {
+					let response = await this.$httpClient.post("api/sales", {
 						sellable_type: this.sellableType,
 						sellable_id: this.sellableId,
 						transaction_type: "credit",
@@ -108,7 +108,7 @@ export default {
 					})
 					this.success.push(`Successfully recorded debt for ${this.name}`)
 					this.submitBtnState = "success-try-again"
-					this.$emit("success")
+					this.$emit("success", response.data)
 				} catch (error) {
 					let errors = ErrorHandler(error)
 					this.submitBtnState = "fail-try-again"
@@ -123,7 +123,7 @@ export default {
 		},
 		validate: function() {
 			if (this.authorizedBy.length < 1) {
-				this.authorizedByValidation = "Enter the name of whoever is authorizing this dept"
+				this.authorizedByValidation = "Enter the name of whoever is authorizing this debt"
 				return false
 			}
 
@@ -192,7 +192,7 @@ export default {
 
 						<div class="form-group">
 							<label for="roomNumber">
-								<h6>Enter Room Number: </h6>
+								<h6>Enter Room Number <span class="font-italic">(optional)</span>: </h6>
 								<small v-if="roomNumberValidation !== null" class="text-danger">* {{ roomNumberValidation }}</small>
 							</label>
 
@@ -209,7 +209,7 @@ export default {
 
 						<div class="form-group">
 							<label for="phoneNumber">
-								<h6>Enter Customer Phone Number: </h6>
+								<h6>Enter Customer Phone Number <span class="font-italic">(optional)</span>: </h6>
 								<small v-if="phoneNumberValidation !== null" class="text-danger">* {{ phoneNumberValidation }}</small>
 							</label>
 

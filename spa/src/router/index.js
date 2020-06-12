@@ -50,8 +50,6 @@ router.beforeEach((routeTo, routeFrom, next) => {
 	if (store.getters["auth/loggedIn"]) {
 		let user = store.getters["auth/user"]
 
-		console.log(user)
-
 		if (routeTo.meta.permission == null || user.role.permissions.includes(routeTo.meta.permission)) {
 			return next()
 		} else {

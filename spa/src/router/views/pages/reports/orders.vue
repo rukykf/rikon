@@ -250,7 +250,7 @@ export default {
 								</template>
 
 								<template v-slot:cell(created_at)="row">
-									{{ row.item.created_at | humanDate }}
+									{{ row.item.created_at | humanDate }} <span class="font-italic">{{ row.item.created_at | humanTime }}</span>
 								</template>
 
 								<template v-slot:head(sale)>

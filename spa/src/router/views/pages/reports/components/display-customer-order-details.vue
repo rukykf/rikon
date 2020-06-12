@@ -14,8 +14,18 @@ export default {
 	<div>
 		<b-row class="mb-2">
 			<b-col sm="3" class="text-sm-right"><b>Order Date:</b></b-col>
-			<b-col>{{ details.created_at | humanDate }}</b-col>
+			<b-col
+				>{{ details.created_at | humanDate }} <span class="font-italic">{{ details.created_at | humanTime }}</span></b-col
+			>
 		</b-row>
+
+		<b-row class="mb-2">
+			<b-col sm="3" class="text-sm-right"><b>Order Last Updated:</b></b-col>
+			<b-col
+				>{{ details.updated_at | humanDate }} <span class="font-italic">{{ details.updated_at | humanTime }}</span></b-col
+			>
+		</b-row>
+
 		<b-row class="mb-2">
 			<b-col sm="3" class="text-sm-right"><b>Order Amount:</b></b-col>
 			<b-col>{{ details.amount | money }}</b-col>

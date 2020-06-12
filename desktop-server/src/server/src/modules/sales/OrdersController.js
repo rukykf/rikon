@@ -12,7 +12,11 @@ module.exports = {
         : DateTime.local()
             .minus({ days: 90 })
             .toISODate()
-      let endDate = _.get(req, ["query", "end_date"]) ? req.query.end_date : DateTime.local().toISODate()
+      let endDate = _.get(req, ["query", "end_date"])
+        ? req.query.end_date
+        : DateTime.local()
+            .plus({ days: 1 })
+            .toISODate()
 
       let orders = await Order.query()
         .where("created_at", ">=", startDate)
@@ -70,12 +74,13 @@ module.exports = {
 
       let order = await Order.query().insertGraphAndFetch({
         amount: orderAmount,
-        created_at: DateTime.local().toISODate(),
-        updated_at: DateTime.local().toISODate(),
+        created_at: DateTime.local().toISO(),
+        updated_at: DateTime.local().toISO(),
         status: "pending",
         departments: departments,
         placed_by: { name: `${req.get("first_name")} ${req.get("last_name")}` },
         delivered_by: { name: _.get(req, ["body", "delivered_by"]) },
+        destination: _.get(req, ["body", "destination"]),
         order_items: orderItems
       })
       return res.json(order)
@@ -94,7 +99,8 @@ module.exports = {
         .patch({
           status: _.get(req, ["body", "status"]),
           cancellation_remarks: _.get(req, ["body", "cancellation_remarks"]),
-          updated_at: DateTime.local().toISODate()
+          updated_at: DateTime.local().toISO(),
+          delivered_by: _.get(req, ["body", "delivered_by"])
         })
         .throwIfNotFound()
       return res.json({ messages: ["successfully updated order status"] })

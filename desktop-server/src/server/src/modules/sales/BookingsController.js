@@ -121,11 +121,15 @@ module.exports = {
       let newTotalAmount = numberOfNights * booking.price_per_night
       let newTotalDue = newTotalAmount - (booking.sale.total_paid + booking.sale.total_complementary)
 
-      let sale = await Sale.query().patchAndFetchById(booking.sale.id, {
-        total_amount: newTotalAmount,
-        total_due: newTotalDue,
-        status: newTotalDue <= 0 ? "paid" : "owing"
-      })
+      await Sale.query()
+        .findById(booking.sale.id)
+        .patch({
+          total_amount: newTotalAmount,
+          total_due: newTotalDue,
+          status: newTotalDue <= 0 ? "paid" : "owing"
+        })
+
+      let sale = await Sale.query().findById(booking.sale.id)
 
       // check that either the booking has been fully paid or a credit transaction has been recorded
       if (sale.total_amount !== sale.total_paid && sale.customer_details == null) {

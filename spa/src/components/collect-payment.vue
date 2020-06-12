@@ -57,8 +57,8 @@ export default {
 		},
 	},
 	methods: {
-		paymentSuccessful: function(paymentInfo) {
-			this.$emit("success")
+		paymentSuccessful: function(updatedSaleInfo) {
+			this.$emit("success", updatedSaleInfo)
 		},
 		paymentFailed: function(paymentInfo) {
 			this.$emit("error")

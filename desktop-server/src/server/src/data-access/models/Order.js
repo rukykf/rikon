@@ -51,6 +51,7 @@ class Order extends Objection {
   static get jsonSchema() {
     return {
       type: "object",
+      required: ["placed_by", "departments", "status"],
       properties: {
         id: { type: "integer" },
         delivered_by: { type: "object" },

@@ -295,6 +295,7 @@ test("BookingsController.closeBooking successfully closes booking when passed va
     total_paid: 0,
     total_due: 4000,
     credit_authorized_by: { name: "some name" },
+    customer_details: { name: "another name" },
     status: "owing"
   })
   // re-open booking so that the test works

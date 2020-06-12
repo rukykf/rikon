@@ -5,6 +5,7 @@ const ReservationsController = require("../modules/sales/ReservationsController"
 const SalesController = require("../modules/sales/SalesController")
 const OrdersController = require("../modules/sales/OrdersController")
 const AnalyticsController = require("../modules/reports/AnalyticsController")
+const PointOfSaleController = require("../modules/sales/PointOfSaleController")
 
 let router = Router()
 
@@ -34,6 +35,10 @@ router.post("/sales/:id", SalesController.updateSalesRecordWithTransaction)
 router.post("/sales-transactions/:id", SalesController.revertSalesTransactionForSalesRecord)
 
 router.get("/orders", OrdersController.index)
+router.post("/orders", OrdersController.create)
+router.patch("/orders/:id", OrdersController.updateOrderStatus)
+
+router.get("/point-of-sales", PointOfSaleController.index)
 
 router.get("/analytics", AnalyticsController.getSalesAnalytics)
 

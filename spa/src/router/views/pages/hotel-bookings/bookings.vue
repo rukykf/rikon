@@ -111,7 +111,7 @@ export default {
 							:key="room.id"
 							v-for="room in rooms.available"
 							href="#"
-							class="text-center col-6 col-lg-3"
+							class="text-center col-12 col-sm-6 col-lg-3"
 							@click.stop.prevent="showRoomDetails(room)"
 						>
 							<b-card
@@ -135,7 +135,7 @@ export default {
 							:key="room.id"
 							v-for="room in rooms.reserved"
 							href="#"
-							class="text-center col-6 col-lg-3"
+							class="text-center col-12 col-sm-6 col-lg-3"
 							@click.stop.prevent="showRoomDetails(room)"
 						>
 							<b-card
@@ -159,7 +159,7 @@ export default {
 							:key="room.id"
 							v-for="room in rooms.booked"
 							href="#"
-							class="text-center col-6 col-lg-3"
+							class="text-center col-12 col-sm-6 col-lg-3"
 							@click.stop.prevent="showRoomDetails(room)"
 						>
 							<b-card

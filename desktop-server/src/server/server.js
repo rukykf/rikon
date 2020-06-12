@@ -34,4 +34,6 @@ app.get("/", (req, res) => res.redirect("http://localhost:3990/index.html"))
 app.post("/api/session", AuthenticationController.login)
 app.get("/api/session", async (req, res) => res.json(user))
 
-app.listen(port, "0.0.0.0", () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, "0.0.0.0", () =>
+  console.log(`Example app listening on port ${port}! with environment ${process.env.NODE_ENV}`)
+)

@@ -123,7 +123,7 @@ export default {
 					<div class="pt-3">
 						<div class="form-group ">
 							<small v-if="paymentMethodValidation !== null" class="text-danger">* {{ paymentMethodValidation }}</small>
-							<h6 class="pb-2">Select payment method</h6>
+							<h6 class="pb-2">Select payment method:</h6>
 							<label class="radio-inline">
 								<input type="radio" name="optradio" :disabled="computedDisabled" value="cash" v-model="paymentMethod" checked />
 								Cash

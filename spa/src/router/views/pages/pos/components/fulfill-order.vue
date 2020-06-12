@@ -60,6 +60,7 @@ export default {
 				return true
 			}
 
+			this.errors.push("You cannot fulfill this order without making full payment or recording a debt")
 			return false
 		},
 	},

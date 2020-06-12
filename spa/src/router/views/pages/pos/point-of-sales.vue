@@ -395,14 +395,14 @@ export default {
 						</table>
 					</div>
 					<div class="float-right">
-						<b-button variant="secondary" class="mx-3" @click.prevent.stop="showAddWaitressDetails(index)">
+						<b-button variant="secondary" class="mx-3 mb-1" @click.prevent.stop="showAddWaitressDetails(index)">
 							<span class="align-middle">Save Waiter/Waitress Details</span>
 						</b-button>
-						<b-button variant="primary" class="mx-3" @click.prevent.stop="showOrderFulfillmentModal(index)">
+						<b-button variant="primary" class="mx-3 mb-1" @click.prevent.stop="showOrderFulfillmentModal(index)">
 							<feather type="check" class="align-middle"></feather>
 							<span class="align-middle">Mark as Fulfilled</span>
 						</b-button>
-						<b-button variant="danger" @click.prevent.stop="showCancelOrderModal(index)">
+						<b-button variant="danger" class="mb-1" @click.prevent.stop="showCancelOrderModal(index)">
 							<feather type="x" class="align-middle"></feather>
 							<span class="align-middle">Cancel</span>
 						</b-button>

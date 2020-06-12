@@ -66,7 +66,7 @@ export default {
 			<small v-if="reasonForCancellationValidation !== null" class="text-danger"
 				>* {{ reasonForCancellationValidation }}</small
 			>
-			<h6 class="pb-2">Select Reason For Cancellation </h6>
+			<h6 class="pb-2">Select Reason For Cancellation:</h6>
 			<label class="radio-inline">
 				<input
 					type="radio"

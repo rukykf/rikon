@@ -1,6 +1,6 @@
 const dotenv = require("dotenv")
 
-dotenv.config({ path: "../.env" })
+dotenv.config()
 
 const path = require("path")
 const { app, BrowserWindow, Menu } = require("electron")
@@ -46,7 +46,7 @@ const createWindow = () => {
   Menu.setApplicationMenu(menu)
   // and load the index.html of the app.
   mainWindow.maximize()
-  mainWindow.loadURL("http://127.0.0.1:8080/")
+  mainWindow.loadURL("http://localhost:3990/")
 }
 
 // This method will be called when Electron has finished

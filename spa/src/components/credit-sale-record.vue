@@ -348,7 +348,7 @@ export default {
 				</div>
 			</div>
 			<div v-else>
-				<table class="table table-hover">
+				<table class="table table-hover table-responsive">
 					<thead>
 						<th>Date</th>
 						<th>Transaction Type</th>

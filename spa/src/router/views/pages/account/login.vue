@@ -21,7 +21,7 @@ export default {
 			username: null,
 			password: null,
 			department: null,
-			departments: [],
+			departments: [{ id: 1, name: "All Departments" }],
 			loginBtnState: "initialize",
 			authError: null,
 			errors: [],
@@ -87,7 +87,7 @@ export default {
 		async getDepartmentsData() {
 			try {
 				let response = await this.$httpClient.get("api/departments")
-				this.departments = response.data
+				this.departments.push(...response.data)
 			} catch (error) {
 				let errors = ErrorHandler(error)
 				this.errors.push(...errors)

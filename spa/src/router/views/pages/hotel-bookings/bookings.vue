@@ -73,7 +73,9 @@ export default {
 					this.numberOfExpiredReservations = this.rooms.reserved.length
 
 					if (this.numberOfExpiredReservations > 0) {
-						this.errors.push(`${this.numberOfExpiredReservations} reservations have expired. Close these reservations.`)
+						this.errors.push(
+							`${this.numberOfExpiredReservations} reservations are expiring today. Close these reservations when it's past 12:00 PM.`
+						)
 					}
 				}
 			} catch (error) {

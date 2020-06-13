@@ -45,6 +45,7 @@
     "lodash": "4.17.11",
     "luxon": "^1.22.0",
     "metismenujs": "^1.1.0",
+    "pdfmake": "^0.1.65",
     "v-click-outside": "^2.1.3",
     "v-mask": "^2.0.2",
     "vue": "^2.6.10",

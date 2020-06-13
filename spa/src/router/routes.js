@@ -232,6 +232,12 @@ const reportsRoutes = [
 				meta: { authRequired: true, permission: "can-view-reports" },
 				component: () => lazyLoadView(import("@views/pages/reports/orders")),
 			},
+			{
+				path: "rikon-letterhead",
+				name: "Generate Letterhead",
+				meta: { authRequired: true, permission: "can-view-reports" },
+				component: () => lazyLoadView(import("@views/pages/reports/rikon-letterhead-report")),
+			},
 		],
 	},
 ]

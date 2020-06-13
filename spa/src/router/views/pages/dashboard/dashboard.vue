@@ -312,6 +312,10 @@ export default {
 										<th>Sales <br /><span class="text-secondary">(for fulfilled orders)</span></th>
 										<th>Total Quantity Cancelled</th>
 										<th>Lost Sales <br /><span class="text-secondary">(for cancelled orders)</span></th>
+										<th
+											>Total Quantity <br />
+											for Currently Pending Orders</th
+										>
 									</tr>
 								</thead>
 								<tbody>
@@ -322,6 +326,9 @@ export default {
 										<td>{{ analytics.total_sales | money }}</td>
 										<td>{{ analytics.total_quantity_of_lost_sales }}</td>
 										<td>{{ analytics.total_lost_sales | money }}</td>
+										<td>{{
+											analytics.total_quantity_ordered - (analytics.total_quantity_sold + analytics.total_quantity_of_lost_sales)
+										}}</td>
 									</tr>
 								</tbody>
 							</table>

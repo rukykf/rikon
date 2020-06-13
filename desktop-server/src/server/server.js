@@ -1,14 +1,18 @@
-const express = require("express")
-const history = require("connect-history-api-fallback")
 const cors = require("cors")
 const path = require("path")
+
+if (process.env.NODE_ENV == null) {
+  const dotenv = require("dotenv")
+  dotenv.config({ path: path.join(__dirname, "../../.env") })
+}
+
+const express = require("express")
+const history = require("connect-history-api-fallback")
 const AuthenticationController = require("./src/modules/authentication/AuthenticationController")
 const ConfigurationRoutes = require("./src/routes/configuration-module")
 const salesRoutes = require("./src/routes/sales-module")
 const reportsRoutes = require("./src/routes/reports-module")
 const authenticationRoutes = require("./src/routes/authentication-module")
-
-const UsersController = require("./src/modules/configuration/UsersController")
 
 const app = express()
 const port = 3990

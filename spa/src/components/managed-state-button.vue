@@ -98,7 +98,9 @@ export default {
 	},
 	methods: {
 		clicked: function() {
-			this.$emit("clicked")
+			if (this.state !== "loading") {
+				this.$emit("clicked")
+			}
 		},
 	},
 }

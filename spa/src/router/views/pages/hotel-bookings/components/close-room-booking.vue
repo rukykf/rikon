@@ -5,10 +5,11 @@ import SuccessFailureAlert from "../../../../../components/success-failure-alert
 import { DateTime, Interval } from "luxon"
 import _ from "lodash"
 import ManagedStateButton from "@src/components/managed-state-button"
+import BookingForm from "./booking-form"
 
 export default {
 	name: "close-room-booking",
-	components: { SuccessFailureAlert, CollectPayment, ManagedStateButton },
+	components: { BookingForm, SuccessFailureAlert, CollectPayment, ManagedStateButton },
 	props: {
 		room: {
 			type: Object,
@@ -20,6 +21,7 @@ export default {
 			booking: { id: 0, customer_details: {} },
 			errors: [],
 			success: [],
+			editBookingFormState: "initialize",
 			collectPaymentFormState: "initialize",
 			closeBookingBtnState: "initialize",
 		}
@@ -103,6 +105,27 @@ export default {
 				this.closeBookingBtnState = "fail-try-again"
 			}
 		},
+		editGuestDetailsForBooking: async function(bookingForm) {
+			try {
+				this.editBookingFormState = "loading"
+				let url = `api/bookings/${this.booking.id}`
+				let response = await this.$httpClient.patch(url, {
+					customer_details: bookingForm,
+				})
+
+				this.booking.customer_details = response.data.customer_details
+				this.editBookingFormState = "initialize"
+				this.success.push("Successfully Edited Customer Details")
+				this.$emit("room-booking-is-edited")
+			} catch (error) {
+				if (_.get(error, ["response", "data", "messages"])) {
+					this.errors = error.response.data.messages
+				} else {
+					this.errors = ["Network error, contact management to resolve the issue"]
+				}
+				this.editBookingFormState = "fail-try-again"
+			}
+		},
 		paymentSucceessful: function() {
 			this.collectPaymentFormState = "success"
 		},
@@ -117,9 +140,18 @@ export default {
 <template>
 	<div class="row">
 		<SuccessFailureAlert :errors="errors" :success="success" class="col-12"></SuccessFailureAlert>
-		<div class="col-12 col-lg-6">
+		<div class="col-12 col-lg-4">
+			<h4>Edit Guest Details for this Booking</h4>
+			<BookingForm
+				:booking="booking"
+				:state="editBookingFormState"
+				@save-booking="editGuestDetailsForBooking"
+			></BookingForm>
+		</div>
+
+		<div class="col-lg-4 col-12">
 			<b-card-header>
-				Booking Details
+				<h4>Booking Details</h4>
 			</b-card-header>
 			<b-card-body class="text-left">
 				<table class="table table-responsive table-hover">
@@ -128,14 +160,10 @@ export default {
 							<td class="font-weight-semibold">Room Number:</td>
 							<td> {{ room.room.room_no }}</td>
 						</tr>
-						<tr>
-							<td class="font-weight-semibold">Customer Name:</td>
-							<td> {{ booking.customer_details.name }}</td>
-						</tr>
 
 						<tr>
-							<td class="font-weight-semibold">Customer Phone:</td>
-							<td> {{ booking.customer_details.phone }}</td>
+							<td class="font-weight-semibold">Guest Name:</td>
+							<td>{{ booking.customer_details.name }}</td>
 						</tr>
 
 						<tr>
@@ -143,7 +171,7 @@ export default {
 							<td> {{ booking.start_date | humanDate }}</td>
 						</tr>
 						<tr>
-							<td class="font-weight-semibold">End Date (i.e Today):</td>
+							<td class="font-weight-semibold">End Date (i.e if booking closes today):</td>
 							<td> {{ booking.end_date | humanDate }}</td>
 						</tr>
 						<tr>
@@ -151,8 +179,12 @@ export default {
 							<td> {{ booking.price_per_night | money }}</td>
 						</tr>
 						<tr>
-							<td class="font-weight-semibold">Number of Nights: </td>
+							<td class="font-weight-semibold text-success">Actual Number of Nights (calculated by the system): </td>
 							<td> {{ numberOfNights }} </td>
+						</tr>
+						<tr>
+							<td class="font-weight-semibold text-info">Guest's Intended Number of Nights:</td>
+							<td> {{ booking.customer_details.intendedNumberOfNights }}</td>
 						</tr>
 						<tr>
 							<td class="font-weight-semibold">Total Charge:</td>
@@ -173,6 +205,31 @@ export default {
 						<tr>
 							<td class="font-weight-semibold">Payment Status:</td>
 							<td> {{ paymentStatus }}</td>
+						</tr>
+
+						<tr>
+							<td class="font-weight-semibold">Guest Phone:</td>
+							<td> {{ booking.customer_details.phone }}</td>
+						</tr>
+						<tr>
+							<td class="font-weight-semibold">Guest Address:</td>
+							<td> {{ booking.customer_details.address }}</td>
+						</tr>
+						<tr>
+							<td class="font-weight-semibold">Guest Email Address:</td>
+							<td> {{ booking.customer_details.emailAddress }}</td>
+						</tr>
+						<tr>
+							<td class="font-weight-semibold">Guest Next of Kin:</td>
+							<td> {{ booking.customer_details.nextOfKin }}</td>
+						</tr>
+						<tr>
+							<td class="font-weight-semibold">Number of Guests:</td>
+							<td> {{ booking.customer_details.numberOfGuests }}</td>
+						</tr>
+						<tr>
+							<td class="font-weight-semibold">Nationality:</td>
+							<td> {{ booking.customer_details.nationality }}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -197,7 +254,7 @@ export default {
 			:required-amount="totalDue"
 			exact-amount-required
 			take-credit
-			class="col-12 col-lg-5 ml-3"
+			class="col-12 col-lg-4"
 			@success="paymentSucceessful"
 			@error="paymentFailed"
 			:state="collectPaymentFormState"

@@ -2,6 +2,7 @@
 import SuccessFailureAlert from "./success-failure-alert"
 import ManagedStateButton from "./managed-state-button"
 import ErrorHandler from "@src/ErrorHandler"
+import { formatMoney } from "accounting-js"
 
 export default {
 	name: "collect-cash-payment",
@@ -63,7 +64,11 @@ export default {
 		},
 	},
 
-	watch: {},
+	watch: {
+		requiredAmount: function(newVal, oldVal) {
+			this.amount = newVal
+		},
+	},
 
 	methods: {
 		validateAndPay: async function() {
@@ -79,7 +84,9 @@ export default {
 							amount: this.amount,
 						},
 					})
-					this.success.push(`Successfully paid ${this.amount} for this ${this.sellableType}`)
+					this.success.push(
+						`Successfully paid ${formatMoney(this.amount, { symbol: "N", precision: 0 })} for this ${this.sellableType}`
+					)
 					this.paymentBtnState = "success-try-again"
 					this.$emit("success", response.data)
 				} catch (error) {

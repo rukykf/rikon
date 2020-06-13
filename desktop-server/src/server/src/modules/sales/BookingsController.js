@@ -133,7 +133,9 @@ module.exports = {
 
       // check that either the booking has been fully paid or a credit transaction has been recorded
       if (sale.total_amount !== sale.total_paid && sale.customer_details == null) {
-        return res.status(400).json({ messages: ["you cannot close the booking without making full payment"] })
+        return res
+          .status(400)
+          .json({ messages: ["you cannot close the booking without making full payment or recording a debt"] })
       }
 
       // update the status of the booking to closed
@@ -178,7 +180,7 @@ module.exports = {
       return res.json(booking)
     } catch (error) {
       if (error instanceof NotFoundError) {
-        return res.status(400).json({ messages: ["invalid booing id"] })
+        return res.status(400).json({ messages: ["invalid booking id"] })
       }
 
       if (error instanceof ValidationError) {

@@ -1,12 +1,13 @@
 <script>
-import ManagedStateButton from "../../../../../components/managed-state-button"
 import CollectCashPayment from "@src/components/collect-cash-payment"
 import SuccessFailureAlert from "../../../../../components/success-failure-alert"
 import _ from "lodash"
+import BookingForm from "./booking-form"
+import ErrorHandler from "../../../../../ErrorHandler"
 
 export default {
 	name: "book-room",
-	components: { SuccessFailureAlert, ManagedStateButton, CollectCashPayment },
+	components: { BookingForm, SuccessFailureAlert, CollectCashPayment },
 	props: {
 		room: {
 			type: Object,
@@ -15,34 +16,50 @@ export default {
 	},
 	data: function() {
 		return {
-			bookRoomBtnState: "initialize",
-			editCustomerDetailsBtnState: "initialize",
+			bookRoomFormState: "initialize",
+			editCustomerDetailsFormState: "initialize",
 			booking: null,
-			bookingForm: {
-				name: "",
-				phone: "",
-			},
-			guestNameValidation: null,
-			guestPhoneValidation: null,
 			collectCashPaymentState: "initialize",
 			success: [],
 			errors: [],
 		}
 	},
-	methods: {
-		bookRoom: async function() {
-			if (!this.isBookingFormValid()) {
-				return
-			}
 
+	async mounted() {
+		try {
+			this.bookRoomFormState = "loading"
+			let url = `api/hotel-rooms/${this.room.room.id}/booking`
+			let response = await this.$httpClient.get(url)
+			if (response.data.customer_details != null) {
+				this.booking = response.data
+			}
+			this.bookRoomFormState = "initialize"
+		} catch (error) {
+			this.bookRoomFormState = "initialize"
+			let errors = ErrorHandler(error)
+			this.errors.push(...errors)
+		}
+	},
+
+	computed: {
+		amountDue() {
+			if (this.booking != null && this.booking.customer_details != null) {
+				return this.booking.price_per_night * this.booking.customer_details.intendedNumberOfNights
+			}
+			return 0
+		},
+	},
+
+	methods: {
+		bookRoom: async function(bookingForm) {
 			try {
-				this.bookRoomBtnState = "loading"
+				this.bookRoomFormState = "loading"
 				let url = `api/hotel-rooms/${this.room.room.id}/bookings`
 				let response = await this.$httpClient.post(url, {
-					customer_details: this.bookingForm,
+					customer_details: bookingForm,
 				})
 				this.booking = response.data
-				this.bookRoomBtnState = "success"
+				this.bookRoomFormState = "success"
 				this.success.push("Successfully Booked Room ".concat(this.room.room.room_no))
 				this.$emit("room-is-booked")
 			} catch (error) {
@@ -52,22 +69,19 @@ export default {
 				} else {
 					this.errors = ["Network error, contact management to resolve the issue"]
 				}
-				this.bookRoomBtnState = "fail-try-again"
+				this.bookRoomFormState = "fail-try-again"
 			}
 		},
-		editCustomerDetails: async function() {
-			if (!this.isBookingFormValid()) {
-				return
-			}
-
+		editCustomerDetails: async function(bookingForm) {
 			try {
-				this.editCustomerDetailsBtnState = "loading"
+				this.editCustomerDetailsFormState = "loading"
 				let url = `api/bookings/${this.booking.id}`
 				let response = await this.$httpClient.patch(url, {
-					customer_details: this.bookingForm,
+					customer_details: bookingForm,
 				})
-				this.booking = response.data
-				this.editCustomerDetailsBtnState = "initialize"
+
+				this.booking.customer_details = response.data.customer_details
+				this.editCustomerDetailsFormState = "initialize"
 				this.success.push("Successfully Edited Customer Details")
 				this.$emit("room-booking-is-edited")
 			} catch (error) {
@@ -76,35 +90,14 @@ export default {
 				} else {
 					this.errors = ["Network error, contact management to resolve the issue"]
 				}
-				this.editCustomerDetailsBtnState = "fail-try-again"
+				this.editCustomerDetailsFormState = "fail-try-again"
 			}
 		},
 
 		collectPayment: function(paymentDetails) {
-			this.collectCashPaymentState = "loading"
-			setTimeout(() => {
-				this.collectCashPaymentState = "success"
-			}, 800)
+			this.collectCashPaymentState = "success-try-again"
 		},
-		isBookingFormValid() {
-			if (this.bookingForm.name.length < 1) {
-				this.guestNameValidation = "The name of the guest is required"
-			} else {
-				this.guestNameValidation = null
-			}
-
-			if (this.bookingForm.phone.length !== 11) {
-				this.guestPhoneValidation = "The phone number of the guest is required and should be at least 11 characters long"
-			} else {
-				this.guestPhoneValidation = null
-			}
-
-			if (this.guestPhoneValidation !== null || this.guestNameValidation !== null) {
-				return false
-			} else {
-				return true
-			}
-		},
+		isBookingFormValid() {},
 	},
 }
 </script>
@@ -114,94 +107,22 @@ export default {
 		<SuccessFailureAlert :success="success" :errors="errors"></SuccessFailureAlert>
 
 		<div class="pt-3" v-if="booking === null">
-			<div class="form-group">
-				<label for="guestName">
-					<h6>Enter Guest Name: </h6>
-					<small v-if="guestNameValidation !== null" class="text-danger">* {{ guestNameValidation }}</small>
-				</label>
-
-				<input
-					type="text"
-					id="guestName"
-					name="guestName"
-					v-model="bookingForm.name"
-					placeholder=""
-					required
-					class="form-control"
-				/>
-			</div>
-
-			<div class="form-group">
-				<label for="guestName">
-					<h6>Enter Guest Phone Number: </h6>
-					<small v-if="guestPhoneValidation !== null" class="text-danger">* {{ guestPhoneValidation }}</small>
-				</label>
-
-				<input
-					type="text"
-					id="guestPhone"
-					name="guestPhone"
-					v-model="bookingForm.phone"
-					placeholder=""
-					required
-					class="form-control "
-				/>
-			</div>
-
-			<ManagedStateButton
-				:state="bookRoomBtnState"
-				mainTitle="Book Room"
-				@clicked="bookRoom"
-				mainVariant="dark"
-			></ManagedStateButton>
+			<BookingForm :state="bookRoomFormState" @save-booking="bookRoom"></BookingForm>
 		</div>
 
 		<div class="text-center">
 			<div v-if="booking !== null" class="row">
-				<div class="col-12 col-lg-6 mt-4">
+				<div class="col-12 col-lg-4 mt-4">
 					<div class="text-left mt-1 mb-4">
-						<h5>Edit Customer Details</h5>
-						<div class="form-group">
-							<label for="editGuestName">
-								<h6>Enter Guest Name: </h6>
-								<small v-if="guestNameValidation !== null" class="text-danger">* {{ guestNameValidation }}</small>
-							</label>
-
-							<input
-								type="text"
-								id="editGuestName"
-								name="guestName"
-								v-model="bookingForm.name"
-								placeholder=""
-								required
-								class="form-control"
-							/>
-						</div>
-
-						<div class="form-group">
-							<label for="editGuestPhone">
-								<h6>Enter Guest Phone Number: </h6>
-								<small v-if="guestPhoneValidation !== null" class="text-danger">* {{ guestPhoneValidation }}</small>
-							</label>
-
-							<input
-								type="text"
-								id="editGuestPhone"
-								name="guestPhone"
-								v-model="bookingForm.phone"
-								placeholder=""
-								required
-								class="form-control "
-							/>
-						</div>
-
-						<ManagedStateButton
-							:state="editCustomerDetailsBtnState"
-							mainTitle="Edit Customer Details"
-							@clicked="editCustomerDetails"
-							mainVariant="dark"
-						></ManagedStateButton>
+						<h5>Edit Booking Details</h5>
+						<BookingForm
+							:booking="booking"
+							:state="editCustomerDetailsFormState"
+							@save-booking="editCustomerDetails"
+						></BookingForm>
 					</div>
+				</div>
+				<div class="col-12 col-lg-4 mt-4">
 					<b-card-header>
 						Booking Details
 					</b-card-header>
@@ -225,12 +146,36 @@ export default {
 									<td> {{ room.room.room_type.name.toUpperCase() }} {{ room.room.room_no }}</td>
 								</tr>
 								<tr>
-									<td class="font-weight-semibold">Customer Name:</td>
+									<td class="font-weight-semibold">Guest Name:</td>
 									<td>{{ booking.customer_details.name }}</td>
 								</tr>
 								<tr>
-									<td class="font-weight-semibold">Customer Phone:</td>
+									<td class="font-weight-semibold">Guest Phone:</td>
 									<td> {{ booking.customer_details.phone }}</td>
+								</tr>
+								<tr>
+									<td class="font-weight-semibold">Guest Address:</td>
+									<td> {{ booking.customer_details.address }}</td>
+								</tr>
+								<tr>
+									<td class="font-weight-semibold">Guest Email Address:</td>
+									<td> {{ booking.customer_details.emailAddress }}</td>
+								</tr>
+								<tr>
+									<td class="font-weight-semibold">Guest Next of Kin:</td>
+									<td> {{ booking.customer_details.nextOfKin }}</td>
+								</tr>
+								<tr>
+									<td class="font-weight-semibold">Number of Guests:</td>
+									<td> {{ booking.customer_details.numberOfGuests }}</td>
+								</tr>
+								<tr>
+									<td class="font-weight-semibold">Intended Number of Nights:</td>
+									<td> {{ booking.customer_details.intendedNumberOfNights }}</td>
+								</tr>
+								<tr>
+									<td class="font-weight-semibold">Nationality:</td>
+									<td> {{ booking.customer_details.nationality }}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -238,9 +183,9 @@ export default {
 				</div>
 				<CollectCashPayment
 					:state="collectCashPaymentState"
-					class="col-12 col-lg-6"
-					:required-amount="booking.amount_due"
-					@clicked="collectPayment"
+					class="col-12 col-lg-4"
+					:required-amount="amountDue"
+					@success="collectPayment"
 					sellable-type="booking"
 					:sellableId="booking.id"
 				></CollectCashPayment>

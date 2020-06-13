@@ -7,6 +7,7 @@ import ErrorHandler from "@src/ErrorHandler"
 import JsonExcel from "vue-json-excel"
 import ManagedStateButton from "../../../../components/managed-state-button"
 import _ from "lodash"
+import DisplayCustomerBookingDetails from "./components/display-customer-booking-details"
 
 /**
  * Starter component
@@ -17,6 +18,7 @@ export default {
 		meta: [{ name: "description", content: appConfig.description }],
 	},
 	components: {
+		DisplayCustomerBookingDetails,
 		ManagedStateButton,
 		SuccessFailureAlert,
 		Layout,
@@ -277,7 +279,7 @@ export default {
 
 								<template v-slot:cell(show_details)="row">
 									<b-button size="sm" variant="dark" @click="row.toggleDetails" class="mr-2">
-										{{ row.detailsShowing ? "Hide" : "Show" }} Guest Details
+										{{ row.detailsShowing ? "Hide" : "Show" }} Booking Details
 									</b-button>
 								</template>
 
@@ -304,14 +306,15 @@ export default {
 								</template>
 
 								<template v-slot:row-details="row">
-									<b-row class="mb-2">
-										<b-col sm="3" class="text-sm-right"><b>Guest Name:</b></b-col>
-										<b-col>{{ row.item.customer_details.name }}</b-col>
-									</b-row>
-									<b-row class="mb-2">
-										<b-col sm="3" class="text-sm-right"><b>Guest Phone:</b></b-col>
-										<b-col>{{ row.item.customer_details.phone }}</b-col>
-									</b-row>
+									<DisplayCustomerBookingDetails :details="row.item"></DisplayCustomerBookingDetails>
+									<!--									<b-row class="mb-2">-->
+									<!--										<b-col sm="3" class="text-sm-right"><b>Guest Name:</b></b-col>-->
+									<!--										<b-col>{{ row.item.customer_details.name }}</b-col>-->
+									<!--									</b-row>-->
+									<!--									<b-row class="mb-2">-->
+									<!--										<b-col sm="3" class="text-sm-right"><b>Guest Phone:</b></b-col>-->
+									<!--										<b-col>{{ row.item.customer_details.phone }}</b-col>-->
+									<!--									</b-row>-->
 								</template>
 
 								<template v-slot:cell(end_date)="row">

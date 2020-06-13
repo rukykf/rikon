@@ -365,11 +365,10 @@ export default {
 							<td>
 								<a
 									v-if="
-										record.credit_authorized_by !== null &&
-											(salesTransaction.transaction_type === 'cash' ||
-												salesTransaction.transaction_type === 'pos' ||
-												salesTransaction.transaction_type === 'transfer' ||
-												salesTransaction.transaction_type === 'discount') &&
+										(salesTransaction.transaction_type === 'cash' ||
+											salesTransaction.transaction_type === 'pos' ||
+											salesTransaction.transaction_type === 'transfer' ||
+											salesTransaction.transaction_type === 'discount') &&
 											salesTransaction.active === 1
 									"
 									class="badge badge-dark"

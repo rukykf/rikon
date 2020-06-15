@@ -26,7 +26,7 @@ export default {
 		</b-row>
 		<b-row class="mb-2">
 			<b-col sm="3" class="text-sm-right"><b>Booking Started:</b></b-col>
-			<b-col>{{ details.start_date | humanDate }}</b-col>
+			<b-col>{{ details.start_date | humanDate }} at {{ details.created_at | humanTime }}</b-col>
 		</b-row>
 		<b-row class="mb-2">
 			<b-col sm="3" class="text-sm-right"><b>Booking Ended:</b></b-col>

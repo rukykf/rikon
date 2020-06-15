@@ -307,10 +307,10 @@ export default {
 								<thead>
 									<tr>
 										<th>Item Name</th>
-										<th>Total Quantity Ordered</th>
-										<th>Total Quantity Fulfilled</th>
+										<th>Total Quantity <br /><span class="text-secondary">(for all orders)</span></th>
+										<th>Total Quantity <br /><span class="text-secondary">(for fulfilled orders)</span></th>
 										<th>Sales <br /><span class="text-secondary">(for fulfilled orders)</span></th>
-										<th>Total Quantity Cancelled</th>
+										<th>Total Quantity <br /><span class="text-secondary">(for cancelled orders)</span></th>
 										<th>Lost Sales <br /><span class="text-secondary">(for cancelled orders)</span></th>
 										<th
 											>Total Quantity <br />

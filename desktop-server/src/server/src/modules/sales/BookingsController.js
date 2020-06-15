@@ -13,7 +13,11 @@ module.exports = {
         : DateTime.local()
             .minus({ days: 90 })
             .toISODate()
-      let endDate = _.get(req, ["query", "end_date"]) ? req.query.end_date : DateTime.local().toISODate()
+      let endDate = _.get(req, ["query", "end_date"])
+        ? req.query.end_date
+        : DateTime.local()
+            .plus({ days: 1 })
+            .toISODate()
 
       let bookingsQueryBuilder = Booking.query()
         .where("created_at", ">=", startDate)
@@ -113,7 +117,9 @@ module.exports = {
       }
 
       if (booking.sale == null) {
-        return res.status(400).json({ messages: ["you cannot close the booking without making full payment"] })
+        return res
+          .status(400)
+          .json({ messages: ["you cannot close the booking without making full payment or recording a debt"] })
       }
 
       // update the amount due for this booking in its sale record

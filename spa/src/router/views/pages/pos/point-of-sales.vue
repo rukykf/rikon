@@ -352,6 +352,7 @@ export default {
 					<div class="table-responsive">
 						<table class="table table-borderless">
 							<thead>
+								<th>S/N</th>
 								<th>Date/Time</th>
 								<th>Items</th>
 								<th>Order Total</th>
@@ -362,6 +363,7 @@ export default {
 							</thead>
 							<tbody>
 								<tr>
+									<td>{{ index + 1 }}</td>
 									<td
 										>{{ order.created_at | humanDate }}
 										<span class="font-italic ml-1">{{ order.created_at | humanTime }}</span></td

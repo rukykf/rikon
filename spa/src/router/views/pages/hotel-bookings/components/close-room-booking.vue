@@ -68,6 +68,10 @@ export default {
 				let url = `api/hotel-rooms/${this.room.room.id}/booking`
 				let response = await this.$httpClient.get(url)
 				this.booking = response.data
+				if (this.booking === "") {
+					this.booking = null
+					this.success.push("this booking has already been closed")
+				}
 			} catch (error) {
 				let errors = ErrorHandler(error)
 				this.errors.push(...errors)
@@ -138,126 +142,133 @@ export default {
 </script>
 
 <template>
-	<div class="row">
+	<div class="">
 		<SuccessFailureAlert :errors="errors" :success="success" class="col-12"></SuccessFailureAlert>
-		<div class="col-12 col-lg-4">
-			<h4>Edit Guest Details for this Booking</h4>
-			<BookingForm
-				:booking="booking"
-				:state="editBookingFormState"
-				@save-booking="editGuestDetailsForBooking"
-			></BookingForm>
-		</div>
 
-		<div class="col-lg-4 col-12">
-			<b-card-header>
-				<h4>Booking Details</h4>
-			</b-card-header>
-			<b-card-body class="text-left">
-				<table class="table table-responsive table-hover">
-					<tbody>
-						<tr>
-							<td class="font-weight-semibold">Room Number:</td>
-							<td> {{ room.room.room_no }}</td>
-						</tr>
+		<div v-if="booking !== null">
+			<div class="row">
+				<div class="col-12 col-lg-4">
+					<h4>Edit Guest Details for this Booking</h4>
+					<BookingForm
+						:booking="booking"
+						:state="editBookingFormState"
+						@save-booking="editGuestDetailsForBooking"
+					></BookingForm>
+				</div>
 
-						<tr>
-							<td class="font-weight-semibold">Guest Name:</td>
-							<td>{{ booking.customer_details.name }}</td>
-						</tr>
+				<div class="col-lg-4 col-12">
+					<b-card-header>
+						<h4>Booking Details</h4>
+					</b-card-header>
+					<b-card-body class="text-left">
+						<table class="table table-responsive table-hover">
+							<tbody>
+								<tr>
+									<td class="font-weight-semibold">Room Number:</td>
+									<td> {{ room.room.room_no }}</td>
+								</tr>
 
-						<tr>
-							<td class="font-weight-semibold">Start Date:</td>
-							<td> {{ booking.start_date | humanDate }}</td>
-						</tr>
-						<tr>
-							<td class="font-weight-semibold">End Date (i.e if booking closes today):</td>
-							<td> {{ booking.end_date | humanDate }}</td>
-						</tr>
-						<tr>
-							<td class="font-weight-semibold">Price per Night:</td>
-							<td> {{ booking.price_per_night | money }}</td>
-						</tr>
-						<tr>
-							<td class="font-weight-semibold text-success">Actual Number of Nights (calculated by the system): </td>
-							<td> {{ numberOfNights }} </td>
-						</tr>
-						<tr>
-							<td class="font-weight-semibold text-info">Guest's Intended Number of Nights:</td>
-							<td> {{ booking.customer_details.intendedNumberOfNights }}</td>
-						</tr>
-						<tr>
-							<td class="font-weight-semibold">Total Charge:</td>
-							<td> {{ totalCharge | money }} </td>
-						</tr>
-						<tr>
-							<td class="font-weight-semibold">Amount Paid:</td>
-							<td> {{ totalPaid | money }}</td>
-						</tr>
-						<tr>
-							<td class="font-weight-semibold">Total Discount:</td>
-							<td> {{ totalDiscount | money }}</td>
-						</tr>
-						<tr>
-							<td class="font-weight-semibold">Balance Due:</td>
-							<td> {{ totalDue | money }}</td>
-						</tr>
-						<tr>
-							<td class="font-weight-semibold">Payment Status:</td>
-							<td> {{ paymentStatus }}</td>
-						</tr>
+								<tr>
+									<td class="font-weight-semibold">Guest Name:</td>
+									<td>{{ booking.customer_details.name }}</td>
+								</tr>
 
-						<tr>
-							<td class="font-weight-semibold">Guest Phone:</td>
-							<td> {{ booking.customer_details.phone }}</td>
-						</tr>
-						<tr>
-							<td class="font-weight-semibold">Guest Address:</td>
-							<td> {{ booking.customer_details.address }}</td>
-						</tr>
-						<tr>
-							<td class="font-weight-semibold">Guest Email Address:</td>
-							<td> {{ booking.customer_details.emailAddress }}</td>
-						</tr>
-						<tr>
-							<td class="font-weight-semibold">Guest Next of Kin:</td>
-							<td> {{ booking.customer_details.nextOfKin }}</td>
-						</tr>
-						<tr>
-							<td class="font-weight-semibold">Number of Guests:</td>
-							<td> {{ booking.customer_details.numberOfGuests }}</td>
-						</tr>
-						<tr>
-							<td class="font-weight-semibold">Nationality:</td>
-							<td> {{ booking.customer_details.nationality }}</td>
-						</tr>
-					</tbody>
-				</table>
-			</b-card-body>
-			<div class="row text-center">
-				<div class="col-12">
-					<ManagedStateButton
-						:state="closeBookingBtnState"
-						mainTitle="Close Booking"
-						mainVariant="dark"
-						@clicked="closeBooking"
-					></ManagedStateButton>
+								<tr>
+									<td class="font-weight-semibold">Start Date / Time:</td>
+									<td> {{ booking.start_date | humanDate }} at {{ booking.created_at | humanTime }}</td>
+								</tr>
+								<tr>
+									<td class="font-weight-semibold">End Date (i.e if booking closes today):</td>
+									<td> {{ booking.end_date | humanDate }}</td>
+								</tr>
+								<tr>
+									<td class="font-weight-semibold">Price per Night:</td>
+									<td> {{ booking.price_per_night | money }}</td>
+								</tr>
+								<tr>
+									<td class="font-weight-semibold text-success">Actual Number of Nights (calculated by the system): </td>
+									<td> {{ numberOfNights }} </td>
+								</tr>
+								<tr>
+									<td class="font-weight-semibold text-info">Guest's Intended Number of Nights:</td>
+									<td> {{ booking.customer_details.intendedNumberOfNights }}</td>
+								</tr>
+								<tr>
+									<td class="font-weight-semibold">Total Charge:</td>
+									<td> {{ totalCharge | money }} </td>
+								</tr>
+								<tr>
+									<td class="font-weight-semibold">Amount Paid:</td>
+									<td> {{ totalPaid | money }}</td>
+								</tr>
+								<tr>
+									<td class="font-weight-semibold">Total Discount:</td>
+									<td> {{ totalDiscount | money }}</td>
+								</tr>
+								<tr>
+									<td class="font-weight-semibold">Balance Due:</td>
+									<td> {{ totalDue | money }}</td>
+								</tr>
+								<tr>
+									<td class="font-weight-semibold">Payment Status:</td>
+									<td> {{ paymentStatus }}</td>
+								</tr>
+
+								<tr>
+									<td class="font-weight-semibold">Guest Phone:</td>
+									<td> {{ booking.customer_details.phone }}</td>
+								</tr>
+								<tr>
+									<td class="font-weight-semibold">Guest Address:</td>
+									<td> {{ booking.customer_details.address }}</td>
+								</tr>
+								<tr>
+									<td class="font-weight-semibold">Guest Email Address:</td>
+									<td> {{ booking.customer_details.emailAddress }}</td>
+								</tr>
+								<tr>
+									<td class="font-weight-semibold">Guest Next of Kin:</td>
+									<td> {{ booking.customer_details.nextOfKin }}</td>
+								</tr>
+								<tr>
+									<td class="font-weight-semibold">Number of Guests:</td>
+									<td> {{ booking.customer_details.numberOfGuests }}</td>
+								</tr>
+								<tr>
+									<td class="font-weight-semibold">Nationality:</td>
+									<td> {{ booking.customer_details.nationality }}</td>
+								</tr>
+							</tbody>
+						</table>
+					</b-card-body>
+				</div>
+
+				<div class="col-12 col-lg-4">
+					<div class="row text-center">
+						<CollectPayment
+							v-if="booking.price_per_night != null"
+							:sellable-id="booking.id"
+							sellable-type="booking"
+							:sellable="booking"
+							:required-amount="totalDue"
+							exact-amount-required
+							take-credit
+							class="col-12"
+							@success="paymentSucceessful"
+							@error="paymentFailed"
+							:state="collectPaymentFormState"
+						></CollectPayment>
+						<div class="col-12 mt-3">
+							<ManagedStateButton
+								:state="closeBookingBtnState"
+								mainTitle="Close Booking"
+								mainVariant="dark"
+								@clicked="closeBooking"
+							></ManagedStateButton>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
-
-		<CollectPayment
-			v-if="booking.price_per_night != null"
-			:sellable-id="booking.id"
-			sellable-type="booking"
-			:sellable="booking"
-			:required-amount="totalDue"
-			exact-amount-required
-			take-credit
-			class="col-12 col-lg-4"
-			@success="paymentSucceessful"
-			@error="paymentFailed"
-			:state="collectPaymentFormState"
-		></CollectPayment>
 	</div>
 </template>

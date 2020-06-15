@@ -130,7 +130,7 @@ export default {
 						<table class="table table-responsive table-hover">
 							<tbody>
 								<tr>
-									<td class="font-weight-semibold">Start Date:</td>
+									<td class="font-weight-semibold">Booking Date:</td>
 									<td> {{ booking.start_date | humanDate }}</td>
 								</tr>
 								<tr>

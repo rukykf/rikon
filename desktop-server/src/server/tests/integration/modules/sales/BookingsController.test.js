@@ -312,7 +312,9 @@ test("BookingsController.closeBooking returns error message when booking is not 
   let res = { json: jest.fn(), status: jest.fn() }
   res.status.mockReturnThis()
   await BookingsController.closeBooking(req, res)
-  expect(res.json).toHaveBeenLastCalledWith({ messages: ["you cannot close the booking without making full payment"] })
+  expect(res.json).toHaveBeenLastCalledWith({
+    messages: ["you cannot close the booking without making full payment or recording a debt"]
+  })
   expect(res.status).toHaveBeenLastCalledWith(400)
 
   let saleForOpenBooking = await Sale.query().insert({
@@ -328,6 +330,8 @@ test("BookingsController.closeBooking returns error message when booking is not 
   req = { params: { id: bookings[2].id } }
   res.status.mockReturnThis()
   await BookingsController.closeBooking(req, res)
-  expect(res.json).toHaveBeenLastCalledWith({ messages: ["you cannot close the booking without making full payment"] })
+  expect(res.json).toHaveBeenLastCalledWith({
+    messages: ["you cannot close the booking without making full payment or recording a debt"]
+  })
   expect(res.status).toHaveBeenLastCalledWith(400)
 })

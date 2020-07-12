@@ -25,7 +25,7 @@ const user = {
   token: "valid-token-for-admin"
 }
 //
-app.use(express.static(path.join(__dirname, "dist")))
+app.use(express.static(path.join(__dirname, "assets")))
 app.use(cors())
 app.use(express.json())
 app.use("/api", ConfigurationRoutes)

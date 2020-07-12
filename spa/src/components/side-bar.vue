@@ -92,7 +92,7 @@ export default {
 	<div class="left-side-menu">
 		<div class="media user-profile mt-2 mb-2">
 			<div class="media-body">
-				<h6 class="pro-user-name mt-0 mb-0">{{ user.first_name }} {{ user.last_name }}</h6>
+				<h6 class="pro-user-name mt-0 mb-0">{{ user.first_name.toUpperCase() }} {{ user.last_name.toUpperCase() }}</h6>
 				<span class="pro-user-desc">{{ user.role.name }}</span
 				><br />
 				<span class="pro-user-desc text-info">{{ department.name }}</span>

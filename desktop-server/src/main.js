@@ -3,10 +3,10 @@ const dotenv = require("dotenv")
 const path = require("path")
 
 dotenv.config({ path: path.join(__dirname, "../.env") })
-const { app, BrowserWindow, Menu } = require("electron")
+const { app, BrowserWindow, Menu, ipcMain } = require("electron")
 const server = require("./server/server")
 const db = require("./server/src/data-access/db-setup")
-const { runDBMigrations, setupAdminUser } = require("./setup-rikon-app")
+const { runDBMigrations, setupAdminUser, isServerSetup } = require("./setup-rikon-app")
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -18,7 +18,10 @@ const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 1800,
-    height: 1200
+    height: 1200,
+    webPreferences: {
+      nodeIntegration: true
+    }
   })
 
   const menu = Menu.buildFromTemplate([
@@ -46,7 +49,17 @@ const createWindow = () => {
   Menu.setApplicationMenu(menu)
   // and load the index.html of the app.
   mainWindow.maximize()
-  mainWindow.loadURL("http://localhost:3990/")
+  isServerSetup().then((loadRikonServer) => {
+    if (loadRikonServer) {
+      mainWindow.loadURL("http://localhost:3990/")
+    } else {
+      mainWindow.loadFile(path.join(__dirname, "server-config/config.html"))
+    }
+  })
+
+  ipcMain.on("configure-admin-user", (event, adminUserData) => {
+    setupAdminUser(adminUserData).then(mainWindow.loadURL("http://localhost:3990/"))
+  })
 }
 
 // This method will be called when Electron has finished

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Setup Rikon Server!</title>
+
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+
+</head>
+<body class="container container-fluid">
+
+<h4 class="mt-5 text-info">Setup Rikon Hotel Administrator Information: </h4>
+
+<div class="card mt-5">
+
+    <div class="card-body" id="setupForm">
+        <div>
+            <div class="form-group">
+                <label for="adminFirstName">Administrator First Name:</label>
+                <input type="text" name="adminFirstName" id="adminFirstName" v-model="adminFirstName" class="form-control"/>
+                <small class="text-danger" v-if="adminFirstNameError">*{{ adminFirstNameError }}</small>
+            </div>
+            <div class="form-group">
+                <label for="adminLastName">Administrator Last Name:</label>
+                <input type="text" name="adminLastName" id="adminLastName" v-model="adminLastName" class="form-control"/>
+                <small class="text-danger" v-if="adminLastNameError">*{{ adminLastNameError }}</small>
+            </div>
+            <div class="form-group">
+                <label for="adminUsername">Administrator Username:</label>
+                <input type="text" name="adminUsername" id="adminUsername" v-model="adminUsername" class="form-control"/>
+                <small class="text-danger" v-if="adminUsernameError">*{{ adminUsernameError }}</small>
+            </div>
+            <div class="form-group">
+                <label for="adminPassword">Administrator Password:</label>
+                <input type="text" name="adminPassword" id="adminPassword" v-model="adminPassword" class="form-control"/>
+                <small class="text-danger" v-if="adminPasswordError">*{{ adminPasswordError }}</small>
+            </div>
+            <div class="form-group">
+               <button class="btn btn-dark" @click.stop.prevent="validateAndSubmit">{{ submitBtnText }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/vue.js"></script>
+<script>
+
+  const { ipcRenderer } = require('electron')
+
+  document.addEventListener("DOMContentLoaded", () => {
+    let app = new Vue({
+      el: "#setupForm",
+      data: {
+        message: "Hello World From Vue",
+        adminPassword: "",
+        adminUsername: "",
+        adminFirstName: "",
+        adminLastName: "",
+        adminFirstNameError: null,
+        adminLastNameError: null,
+        adminUsernameError: null,
+        adminPasswordError: null,
+        submitBtnText: "Submit",
+      },
+      methods: {
+       validateAndSubmit(){
+           if(this.isFormValid()){
+             this.submitBtnText = "Loading..."
+             let adminUserData = {
+               firstName: this.adminFirstName,
+               lastName: this.adminLastName,
+               username: this.adminUsername,
+               password: this.adminPassword
+             }
+             ipcRenderer.send('configure-admin-user', adminUserData)
+           }
+       },
+       isFormValid(){
+         let isValid = true
+         if(this.adminPassword.length < 1){
+           this.adminPasswordError = "Password is required"
+           isValid = false
+         }else{
+           this.adminPasswordError = null
+         }
+
+         if(this.adminUsername.length < 1){
+           this.adminUsernameError = "Username is required"
+           isValid = false
+         }else{
+           this.adminUsernameError = null
+         }
+
+         if(this.adminLastName.length < 1){
+           this.adminLastNameError = "Last Name is required"
+           isValid = false
+         }else{
+           this.adminLastNameError = null
+         }
+
+         if(this.adminFirstName.length < 1){
+           this.adminFirstNameError = "First Name is required"
+           isValid = false
+         }else{
+           this.adminFirstNameError = null
+         }
+
+         return isValid
+       }
+      }
+    });
+  })
+
+
+</script>
+</body>
+</html>

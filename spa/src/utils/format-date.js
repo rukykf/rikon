@@ -4,6 +4,6 @@ import parseDate from "date-fns/parse"
 import format from "date-fns/format"
 
 export default function formatDate(date) {
- date = parseDate(date)
- return format(date, "MMM Do, YYYY")
+  date = parseDate(date)
+  return format(date, "MMM Do, YYYY")
 }

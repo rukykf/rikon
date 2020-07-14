@@ -24,7 +24,7 @@ const user = {
   email: "support@coderthemes.com",
   token: "valid-token-for-admin"
 }
-//
+
 app.use(express.static(path.join(__dirname, "assets")))
 app.use(cors())
 app.use(express.json())
@@ -33,7 +33,10 @@ app.use("/api", salesRoutes)
 app.use("/api", reportsRoutes)
 app.use("/api", authenticationRoutes)
 
-// app.use(history())
+if (process.env.NODE_ENV === "production") {
+  app.use(history())
+}
+
 app.get("/", (req, res) => res.redirect("http://localhost:3990/index.html"))
 app.post("/api/session", AuthenticationController.login)
 app.get("/api/session", async (req, res) => res.json(user))

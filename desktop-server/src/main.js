@@ -53,7 +53,7 @@ const createWindow = () => {
     if (loadRikonServer) {
       mainWindow.loadURL("http://localhost:3990/")
     } else {
-      mainWindow.loadFile(path.join(__dirname, "server-config/config.html"))
+      mainWindow.loadFile(path.join(__dirname, "../../server-config/config.html"))
     }
   })
 

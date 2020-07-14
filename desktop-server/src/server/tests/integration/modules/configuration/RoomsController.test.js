@@ -45,7 +45,7 @@ test("RoomsController.create returns newly created room when passed valid data",
 test("RoomsController.create returns error message when passed invalid json schema", async () => {
   let req = {
     body: {
-      room_no: 80,
+      room_no: -1,
       room_type_id: newRoomType.id
     }
   }
@@ -102,7 +102,7 @@ test("RoomsController.edit returns error message when passed invalid json schema
   let req = {
     params: { id: room.id },
     body: {
-      room_no: 20
+      room_no: 0
     }
   }
   let res = { json: jest.fn(), status: jest.fn() }

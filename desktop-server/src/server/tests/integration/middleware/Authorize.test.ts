@@ -1,5 +1,4 @@
 const Authorize = require("../../../src/middleware/Authorize")
-let RoutePermissions = require("../../../src/routes/route-permissions")
 let User = require("../../../src/data-access/models/User")
 
 jest.mock("../../../src/routes/route-permissions", () => {

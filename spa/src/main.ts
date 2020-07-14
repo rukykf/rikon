@@ -1,9 +1,8 @@
 import Vue from "vue"
-import App from "./app"
-import router from "@router"
-import store from "@state/store"
+import App from "./app.vue"
+import router from "./router"
+import store from "./state/store"
 import "@components/_globals"
-import axios from "axios"
 
 import BootstrapVue from "bootstrap-vue"
 import VueApexCharts from "vue-apexcharts"
@@ -31,6 +30,7 @@ Vue.config.productionTip = process.env.NODE_ENV === "production"
 // If running inside Cypress...
 if (process.env.VUE_APP_TEST === "e2e") {
 	// Ensure tests fail when Vue emits an error.
+	// @ts-ignore
 	Vue.config.errorHandler = window.Cypress.cy.onUncaughtException
 }
 
@@ -82,9 +82,10 @@ Vue.filter("humanTime", function(value) {
 	return date.toLocaleString(DateTime.TIME_SIMPLE)
 })
 
+// @ts-ignore
 const app = new Vue({
 	router,
-	store,
+	store, //@ts-ignore
 	render: (h) => h(App),
 }).$mount("#app")
 
@@ -93,6 +94,7 @@ if (process.env.VUE_APP_TEST === "e2e") {
 	// Attach the app to the window, which can be useful
 	// for manually setting state in Cypress commands
 	// such as `cy.logIn()`.
+	// @ts-ignore
 	window.__app__ = app
 }
 

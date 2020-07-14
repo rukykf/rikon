@@ -46,7 +46,7 @@ class Room extends Objection {
       required: ["room_no", "room_type_id"],
       properties: {
         id: { type: "integer" },
-        room_no: { type: "integer", minimum: 100 },
+        room_no: { type: "integer", minimum: 1 },
         room_type_id: { type: "integer" }
       }
     }

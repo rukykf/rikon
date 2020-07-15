@@ -45,7 +45,7 @@
         newOrder: {
           salesItems: [],
           orderItems: [],
-          destination: "Dining Hall/Garden",
+          destination: "Dining Hall",
           total: null,
         },
       }
@@ -119,7 +119,7 @@
 
           response = await this.$httpClient.get("api/rooms")
           let rooms = response.data
-          this.destinations = ["Dining Hall/Garden", "Bar"]
+          this.destinations = ["Dining Hall", "Garden", "Bar"]
           rooms.forEach((room) => {
             this.destinations.push(`Room ${room.room_no}`)
           })
@@ -179,17 +179,27 @@
         this.$bvModal.show("waitress-details-modal")
       },
 
-      addItemToNewOrder: function(index) {
+      addItemToNewOrder: function(id) {
         this.success = []
         this.errors = []
-        let item = this.itemsForSale[index]
+        let item = this.itemsForSale[id]
+        this.itemsForSale.forEach((el) => {
+          if (el.id === id) {
+            item = el
+          }
+        })
 
-        if (!this.newOrder.salesItems.includes(item)) {
-          this.newOrder.salesItems.push(item)
+        let isAdditionValid = true
+        this.newOrder.orderItems.forEach((el) => {
+          if (el.id === item.id) {
+            isAdditionValid = false
+          }
+        })
+
+        if (isAdditionValid) {
           this.newOrder.orderItems.push({
             name: item.name,
             id: item.id,
-            originalItemIndex: this.newOrder.salesItems.length - 1,
             quantity: 1,
             sales_item_id: item.id,
             price_per_unit: item.price_per_unit,
@@ -217,7 +227,6 @@
 
       removeItemFromNewOrder: function(index) {
         let item = this.newOrder.orderItems[index]
-        this.newOrder.salesItems.splice(item.originalItemIndex, 1)
         this.newOrder.orderItems.splice(index, 1)
       },
     },
@@ -333,7 +342,7 @@
           <a
             :key="index"
             v-for="(item, index) in filteredItemsList"
-            @click.stop.prevent="addItemToNewOrder(index)"
+            @click.stop.prevent="addItemToNewOrder(item.id)"
             href="#"
             class="text-center col-6 col-lg-3"
           >

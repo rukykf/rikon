@@ -8,6 +8,7 @@
   import DisplayCustomerOrderDetails from "./components/display-customer-order-details"
   import ErrorHandler from "@src/ErrorHandler"
   import _ from "lodash"
+  import Multiselect from "vue-multiselect"
 
   export default {
     page: {
@@ -20,10 +21,13 @@
       SuccessFailureAlert,
       Layout,
       JsonExcel,
+      Multiselect,
     },
     data() {
       return {
         orders: [],
+        departments: [],
+        selectedDepartment: null,
         orderFields: [
           { key: "SN", label: "S/N", sortable: false, sortDirection: "desc" },
           { key: "created_at", label: "Order Placed On", sortable: true, sortDirection: "desc" },
@@ -91,6 +95,7 @@
 
     mounted: function() {
       this.getOrdersData()
+      this.getDepartmentsData()
     },
 
     methods: {
@@ -128,6 +133,10 @@
             url += `&status=${this.selectedStatus}`
           }
 
+          if (this.selectedDepartment !== null && this.selectedDepartment.id !== "xxx") {
+            url += `&department=${this.selectedDepartment.name}`
+          }
+
           let response = await this.$httpClient.get(url)
           this.orders = response.data.orders
           this.loading = false
@@ -135,6 +144,17 @@
         } catch (error) {
           this.loading = false
           this.filterBtnState = "fail-try-again"
+          let errors = ErrorHandler(error)
+          this.errors.push(...errors)
+        }
+      },
+
+      getDepartmentsData: async function() {
+        try {
+          let response = await this.$httpClient.get("api/departments")
+          this.departments = [{ id: "xxx", name: "all" }]
+          this.departments.push(...response.data)
+        } catch (error) {
           let errors = ErrorHandler(error)
           this.errors.push(...errors)
         }
@@ -148,20 +168,28 @@
     <div class="mt-4">
       <SuccessFailureAlert :errors="errors" :success="success"></SuccessFailureAlert>
       <div class="row mt-4">
-        <div class="form-group col-12 col-lg-3">
+        <div class="form-group col-12 col-lg-2">
           <label class="font-weight-bold">
             From:
           </label>
           <input type="date" class="form-control" v-model="fromDate" />
         </div>
 
-        <div class="form-group col-12 col-lg-3">
+        <div class="form-group col-12 col-lg-2">
           <label class="font-weight-bold">
             To:
           </label>
           <input type="date" class="form-control" v-model="toDate" />
         </div>
+
         <div class="form-group col-12 col-lg-3">
+          <label class="font-weight-bold">
+            Department:
+          </label>
+          <Multiselect id="department" :options="departments" track-by="id" label="name" v-model="selectedDepartment">
+          </Multiselect>
+        </div>
+        <div class="form-group col-12 col-lg-2">
           <label class="font-weight-bold">
             Status:
           </label>

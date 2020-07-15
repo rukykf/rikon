@@ -242,7 +242,7 @@ module.exports = {
     try {
       let creditSalesQueryBuilder = Sale.query()
         .where((builder) => {
-          builder.where("status", "=", "owing").orWhere("status", "=", "overpaid")
+          builder.where("status", "=", "owing")
         })
         .andWhere("active", "=", 1)
 

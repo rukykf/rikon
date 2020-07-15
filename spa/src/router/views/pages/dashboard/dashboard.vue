@@ -28,6 +28,7 @@
       return {
         fromDate: DateTime.local().toISODate(),
         toDate: DateTime.local().toISODate(),
+        pollAnalyticsIntervalId: null,
         errors: [],
         success: [],
         loading: false,
@@ -95,6 +96,16 @@
 
     mounted() {
       this.getAnalyticsData()
+      // Refresh the analytics every 6 minutes
+      this.pollAnalyticsIntervalId = setInterval(() => {
+        this.fromDate = DateTime.local().toISODate()
+        this.toDate = DateTime.local().toISODate()
+        this.getAnalyticsData()
+      }, 360000)
+    },
+
+    beforeDestroy() {
+      clearInterval(this.pollAnalyticsIntervalId)
     },
 
     methods: {
@@ -216,8 +227,18 @@
           <h3>Analytics Overview</h3>
         </div>
 
-        <div v-for="stat of analyticsData.statCards" :key="stat.mainTitle" class="col-12 col-md-6 col-xl-3">
-          <StatChart :main-title="stat.mainTitle" :value="stat.value" :isMoney="stat.isMoney" />
+        <div
+          v-for="stat of analyticsData.statCards"
+          :key="stat.mainTitle"
+          :class="stat.mainTitle.toLowerCase() !== 'separator' ? 'col-12 col-md-6 col-xl-3' : 'col-12'"
+        >
+          <StatChart
+            v-if="stat.mainTitle.toLowerCase() !== 'separator'"
+            :main-title="stat.mainTitle"
+            :value="stat.value"
+            :isMoney="stat.isMoney"
+          />
+          <h4 v-else>{{ stat.value }}</h4>
         </div>
       </div>
 

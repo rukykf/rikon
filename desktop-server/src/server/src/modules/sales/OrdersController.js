@@ -12,11 +12,11 @@ module.exports = {
         : DateTime.local()
             .minus({ days: 90 })
             .toISODate()
-      let endDate = _.get(req, ["query", "end_date"])
-        ? req.query.end_date
-        : DateTime.local()
-            .plus({ days: 1 })
-            .toISODate()
+      let endDate = _.get(req, ["query", "end_date"]) ? req.query.end_date : DateTime.local().toISODate()
+
+      endDate = DateTime.fromISO(endDate)
+        .plus({ days: 1 })
+        .toISODate()
 
       let orders = await Order.query()
         .where("created_at", ">=", startDate)

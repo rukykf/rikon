@@ -19,8 +19,16 @@ module.exports = {
     try {
       let startDateISO = _.hasIn(req, ["query", "start_date"]) ? req.query.start_date : DateTime.local().toISODate()
       let endDateISO = _.hasIn(req, ["query", "end_date"]) ? req.query.end_date : DateTime.local().toISODate()
+      endDateISO = DateTime.fromISO(endDateISO)
+        .plus({ days: 2 })
+        .toISODate()
 
       let salesAnalyticsData = { statCards: [] }
+
+      salesAnalyticsData.statCards.push({
+        mainTitle: "separator",
+        value: "Sales & Credit"
+      })
 
       salesAnalyticsData.total_sales = await Sale.query()
         .where("created_at", ">=", startDateISO)
@@ -39,9 +47,14 @@ module.exports = {
         .andWhere("active", "=", 1)
         .sum("total_due as credit")
       salesAnalyticsData.statCards.push({
-        mainTitle: "Total Credit Owed",
+        mainTitle: "Total Credit Sales (Debt)",
         isMoney: true,
         value: salesAnalyticsData.total_credit[0].credit
+      })
+
+      salesAnalyticsData.statCards.push({
+        mainTitle: "separator",
+        value: "Payment Breakdown"
       })
 
       salesAnalyticsData.total_cash_sales = await SalesTransaction.query()
@@ -80,6 +93,20 @@ module.exports = {
         value: salesAnalyticsData.total_transfer_sales[0].amount
       })
 
+      salesAnalyticsData.statCards.push({
+        mainTitle: "Total Payment Received",
+        isMoney: true,
+        value:
+          salesAnalyticsData.total_transfer_sales[0].amount +
+          salesAnalyticsData.total_cash_sales[0].amount +
+          salesAnalyticsData.total_pos_sales[0].amount
+      })
+
+      salesAnalyticsData.statCards.push({
+        mainTitle: "separator",
+        value: "Sales Breakdown (Bookings & Orders)"
+      })
+
       salesAnalyticsData.total_booking_sales = await Sale.query()
         .where("created_at", ">=", startDateISO)
         .andWhere("created_at", "<=", endDateISO)
@@ -90,6 +117,23 @@ module.exports = {
         mainTitle: "Total Sales from Bookings",
         isMoney: true,
         value: salesAnalyticsData.total_booking_sales[0].amount
+      })
+
+      salesAnalyticsData.total_order_sales = await Sale.query()
+        .where("created_at", ">=", startDateISO)
+        .andWhere("created_at", "<=", endDateISO)
+        .andWhere("sellable_type", "=", "order")
+        .whereNull("merged_records")
+        .sum("total_amount as amount")
+      salesAnalyticsData.statCards.push({
+        mainTitle: "Total Sales from Orders",
+        isMoney: true,
+        value: salesAnalyticsData.total_order_sales[0].amount
+      })
+
+      salesAnalyticsData.statCards.push({
+        mainTitle: "separator",
+        value: "Bookings Breakdown"
       })
 
       salesAnalyticsData.total_bookings = await Booking.query()
@@ -135,16 +179,9 @@ module.exports = {
         value: salesAnalyticsData.total_cancelled_bookings
       })
 
-      salesAnalyticsData.total_order_sales = await Sale.query()
-        .where("created_at", ">=", startDateISO)
-        .andWhere("created_at", "<=", endDateISO)
-        .andWhere("sellable_type", "=", "order")
-        .whereNull("merged_records")
-        .sum("total_amount as amount")
       salesAnalyticsData.statCards.push({
-        mainTitle: "Total Sales from Orders",
-        isMoney: true,
-        value: salesAnalyticsData.total_order_sales[0].amount
+        mainTitle: "separator",
+        value: "Orders Breakdown"
       })
 
       salesAnalyticsData.total_pending_orders = await Order.query()
@@ -178,6 +215,11 @@ module.exports = {
         mainTitle: "Total Cancelled Orders",
         isMoney: false,
         value: salesAnalyticsData.total_cancelled_orders
+      })
+
+      salesAnalyticsData.statCards.push({
+        mainTitle: "separator",
+        value: "Discounts & Complementary"
       })
 
       salesAnalyticsData.total_discount = await SalesTransaction.query()

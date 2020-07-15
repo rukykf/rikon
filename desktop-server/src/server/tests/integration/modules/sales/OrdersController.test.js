@@ -202,10 +202,10 @@ test("OrdersController.index successfully filters orders by date", async () => {
   await populateOrdersTable()
   // get orders for 2 days ago
   let startDate = DateTime.local()
-    .minus({ days: 2 })
+    .minus({ days: 3 })
     .toISODate()
   let endDate = DateTime.local()
-    .minus({ days: 1 })
+    .minus({ days: 2 })
     .toISODate()
   let req = {
     query: {
@@ -222,7 +222,9 @@ test("OrdersController.index successfully filters orders by date", async () => {
   await OrdersController.index(req, res)
   expect(res.json).toHaveBeenLastCalledWith({
     start_date: startDate,
-    end_date: endDate,
+    end_date: DateTime.fromISO(endDate)
+      .plus({ days: 1 })
+      .toISODate(),
     orders: expect.arrayContaining([
       expect.objectContaining(barCancelledOrder),
       expect.objectContaining(kitchenCancelledOrder)

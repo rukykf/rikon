@@ -1,4 +1,3 @@
-const { DateTime, Interval } = require("luxon")
 const faker = require("faker")
 const { fulfilledOrders } = require("./departments-sales-items-orders")
 const { closedBookings, openBookings } = require("./rooms-bookings-reservations-types")
@@ -258,3 +257,4 @@ salesBookings.forEach((booking) => {
 
 module.exports.sales = sales
 module.exports.salesTransactions = salesTransactions
+module.exports.salesCount = salesCount

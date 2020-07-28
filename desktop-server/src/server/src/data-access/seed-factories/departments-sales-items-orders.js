@@ -146,7 +146,8 @@ function generateCancelledOrders(num) {
         name: "Hehe Smiley"
       }),
       cancellation_remarks: "Service Delay",
-      destination: "Bar/Garden"
+      destination: "Bar/Garden",
+      active: 1
     }
     let department = faker.random.arrayElement(["kitchen", "bar", "mixed"])
     if (department === "kitchen") {
@@ -183,7 +184,8 @@ function generateFulfilledOrders(num) {
       destination: "Bar/Garden",
       delivered_by: JSON.stringify({
         name: "Hehe Smiley"
-      })
+      }),
+      active: 1
     }
     let department = faker.random.arrayElement(["kitchen", "bar", "mixed"])
     if (department === "kitchen") {
@@ -220,7 +222,8 @@ function generatePendingOrders(num) {
       destination: "Bar/Garden",
       delivered_by: JSON.stringify({
         name: "Hehe Smiley"
-      })
+      }),
+      active: 1
     }
     let department = faker.random.arrayElement(["kitchen", "bar", "mixed"])
     if (department === "kitchen") {
@@ -239,6 +242,94 @@ function generatePendingOrders(num) {
   }
 }
 
+function generateOrdersWithHistory(num) {
+  for (let i = 0; i < num; i++) {
+    let numDays = faker.random.arrayElement([0, 1, 2])
+
+    let orderHistoryIds = generateInactiveOrder(faker.random.arrayElement([3, 5, 2]))
+
+    let newOrder = {
+      id: ordersCount,
+      created_at: DateTime.local()
+        .minus({ days: numDays })
+        .toISODate(),
+      updated_at: DateTime.local()
+        .minus({ days: numDays })
+        .toISODate(),
+      status: "fulfilled",
+      placed_by: JSON.stringify({
+        name: "Order with History"
+      }),
+      destination: "Bar/Garden",
+      delivered_by: JSON.stringify({
+        name: "History"
+      }),
+      old_order_ids: JSON.stringify(orderHistoryIds),
+      docket_serial_no: "88888",
+      active: 1
+    }
+
+    let department = faker.random.arrayElement(["kitchen", "bar", "mixed"])
+    if (department === "kitchen") {
+      newOrder.departments = JSON.stringify(["kitchen"])
+      newOrder.amount = generateKitchenOrderItems(newOrder)
+    } else if (department === "bar") {
+      newOrder.departments = JSON.stringify(["bar"])
+      newOrder.amount = generateBarOrderItems(newOrder)
+    } else {
+      newOrder.departments = JSON.stringify(["kitchen", "bar"])
+      newOrder.amount = generateMixedOrderItems(newOrder)
+    }
+
+    ordersCount += 1
+    fulfilledOrders.push(newOrder)
+  }
+}
+
+function generateInactiveOrder(num) {
+  let inactiveOrderIds = []
+
+  for (let i = 0; i < num; i++) {
+    let numDays = faker.random.arrayElement([0, 1, 2])
+    let newOrder = {
+      id: ordersCount,
+      created_at: DateTime.local()
+        .minus({ days: numDays })
+        .toISODate(),
+      updated_at: DateTime.local()
+        .minus({ days: numDays })
+        .toISODate(),
+      status: "pending",
+      placed_by: JSON.stringify({
+        name: "Joker Haha"
+      }),
+      destination: "Bar/Garden",
+      delivered_by: JSON.stringify({
+        name: "Hehe Smiley"
+      }),
+      active: 0,
+      docket_serial_no: "88888"
+    }
+    let department = faker.random.arrayElement(["kitchen", "bar", "mixed"])
+    if (department === "kitchen") {
+      newOrder.departments = JSON.stringify(["kitchen"])
+      newOrder.amount = generateKitchenOrderItems(newOrder)
+    } else if (department === "bar") {
+      newOrder.departments = JSON.stringify(["bar"])
+      newOrder.amount = generateBarOrderItems(newOrder)
+    } else {
+      newOrder.departments = JSON.stringify(["kitchen", "bar"])
+      newOrder.amount = generateMixedOrderItems(newOrder)
+    }
+
+    ordersCount += 1
+    inactiveOrderIds.push(newOrder.id)
+    pendingOrders.push(newOrder)
+  }
+  return inactiveOrderIds
+}
+
+generateOrdersWithHistory(120)
 generateCancelledOrders(50)
 generateFulfilledOrders(400)
 generatePendingOrders(20)

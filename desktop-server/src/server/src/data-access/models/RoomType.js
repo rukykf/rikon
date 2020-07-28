@@ -11,12 +11,12 @@ class RoomType extends Objection {
     const Room = require("./Room")
 
     return {
-      room: {
+      rooms: {
         relation: Objection.HasManyRelation,
         modelClass: Room,
         join: {
           from: "room_types.id",
-          to: "room.room_type_id"
+          to: "rooms.room_type_id"
         }
       }
     }
@@ -39,4 +39,5 @@ class RoomType extends Objection {
     return json
   }
 }
+
 module.exports = RoomType

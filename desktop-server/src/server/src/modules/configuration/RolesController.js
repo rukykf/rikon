@@ -105,7 +105,7 @@ module.exports = {
         .findById(_.toNumber(req.params.id))
         .patch({ active: false, deleted_at: DateTime.local().toSeconds() })
         .throwIfNotFound()
-      return res.json({ message: "successfully deleted selected role" })
+      return res.json({ messages: ["successfully deleted selected role"] })
     } catch (error) {
       if (error instanceof NotFoundError) {
         return res.status(400).json({ messages: ["could not delete selected role"] })

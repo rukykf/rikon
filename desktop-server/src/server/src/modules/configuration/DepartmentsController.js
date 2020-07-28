@@ -87,10 +87,10 @@ module.exports = {
   async delete(req, res) {
     try {
       let numDeletedRows = await Department.query()
-        .findById(req.params.id)
+        .findById(_.toNumber(req.params.id))
         .throwIfNotFound()
         .patch({ active: false, deleted_at: DateTime.local().toSeconds() })
-      return res.json({ message: "successfully deleted selected department" })
+      return res.json({ messages: ["successfully deleted selected department"] })
     } catch (error) {
       if (error instanceof NotFoundError) {
         return res.status(400).json({ messages: ["could not delete selected department"] })

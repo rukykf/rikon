@@ -233,6 +233,7 @@ salesBookings.forEach((booking) => {
 })
 
 let openBookingSaleType = "full-payment"
+
 function getOpenBookingSaleType() {
   if (openBookingSaleType === "full-payment") {
     openBookingSaleType = "partial-payment-complementary"

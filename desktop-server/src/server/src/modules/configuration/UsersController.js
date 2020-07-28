@@ -103,7 +103,7 @@ module.exports = {
         .findById(_.toNumber(req.params.id))
         .patch({ active: false, deleted_at: DateTime.local().toSeconds() })
         .throwIfNotFound()
-      return res.json({ message: "successfully deleted selected user" })
+      return res.json({ messages: ["successfully deleted selected user"] })
     } catch (error) {
       if (error instanceof NotFoundError) {
         return res.status(400).json({ messages: ["could not delete the selected user"] })

@@ -92,4 +92,5 @@ class Booking extends Objection {
     super.$beforeUpdate(opt, queryContext)
   }
 }
+
 module.exports = Booking

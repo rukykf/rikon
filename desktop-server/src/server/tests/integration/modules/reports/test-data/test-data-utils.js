@@ -4,6 +4,8 @@ const SalesItem = require("../../../../../src/data-access/models/SalesItem")
 const Sale = require("../../../../../src/data-access/models/Sale")
 const Department = require("../../../../../src/data-access/models/Department")
 const OrderItem = require("../../../../../src/data-access/models/OrderItem")
+const Booking = require("../../../../../src/data-access/models/Booking")
+const SalesTransaction = require("../../../../../src/data-access/models/SalesTransaction")
 
 module.exports = {
   async populateMonthlySales() {
@@ -147,6 +149,58 @@ module.exports = {
     await populateOldOrderForDepartments(["bar", "kitchen"], "cancelled")
 
     return departments
+  },
+
+  async populateDepartmentsBookingsAndOrders() {
+    // populate booking sales
+    let cashBooking = await populateBooking(4000)
+    await populateSaleAndSalesTransactions("booking", cashBooking.id, 4000, "cash")
+
+    let transferBooking = await populateBooking(3000)
+    await populateSaleAndSalesTransactions("booking", transferBooking.id, 3000, "transfer")
+
+    let posBooking = await populateBooking(5000)
+    await populateSaleAndSalesTransactions("booking", posBooking.id, 5000, "pos")
+
+    // populate kitchen order sales
+    let kitchenCashOrder = await populateOrderForDepartments(["kitchen"], "fulfilled")
+    await populateSaleAndSalesTransactions("order", kitchenCashOrder.id, 4000, "cash")
+
+    let kitchenTransferOrder = await populateOrderForDepartments(["kitchen"], "fulfilled")
+    await populateSaleAndSalesTransactions("order", kitchenTransferOrder.id, 3000, "transfer")
+
+    let kitchenPOSOrder = await populateOrderForDepartments(["kitchen"], "fulfilled")
+    await populateSaleAndSalesTransactions("order", kitchenPOSOrder.id, 5000, "pos")
+
+    // populate bar order sales
+    let barCashOrder = await populateOrderForDepartments(["bar"], "fulfilled")
+    await populateSaleAndSalesTransactions("order", barCashOrder.id, 4000, "cash")
+
+    let barTransferOrder = await populateOrderForDepartments(["bar"], "fulfilled")
+    await populateSaleAndSalesTransactions("order", barTransferOrder.id, 3000, "transfer")
+
+    let barPOSOrder = await populateOrderForDepartments(["bar"], "fulfilled")
+    await populateSaleAndSalesTransactions("order", barPOSOrder.id, 5000, "pos")
+
+    // another set of transactions for the order to see if the query is considering cancelled orders
+    barCashOrder = await populateOrderForDepartments(["bar"], "cancelled")
+    await populateSaleAndSalesTransactions("order", barCashOrder.id, 4000, "cash")
+
+    barTransferOrder = await populateOrderForDepartments(["bar"], "cancelled")
+    await populateSaleAndSalesTransactions("order", barTransferOrder.id, 3000, "transfer")
+
+    barPOSOrder = await populateOrderForDepartments(["bar"], "cancelled")
+    await populateSaleAndSalesTransactions("order", barPOSOrder.id, 5000, "pos")
+
+    // another set of transactions for the order to see if the query is considering cancelled orders
+    barCashOrder = await populateOrderForDepartments(["bar"], "pending")
+    await populateSaleAndSalesTransactions("order", barCashOrder.id, 4000, "cash")
+
+    barTransferOrder = await populateOrderForDepartments(["bar"], "pending")
+    await populateSaleAndSalesTransactions("order", barTransferOrder.id, 3000, "transfer")
+
+    barPOSOrder = await populateOrderForDepartments(["bar"], "pending")
+    await populateSaleAndSalesTransactions("order", barPOSOrder.id, 5000, "pos")
   }
 }
 
@@ -223,4 +277,60 @@ async function populateOldOrderForDepartments(departments, orderStatus) {
     placed_by: { name: "some name" }
   })
   return order
+}
+
+async function populateSaleAndSalesTransactions(sellableType, sellableId, amount, paymentMethod) {
+  let sale = await Sale.query().insert({
+    total_amount: amount,
+    total_paid: amount,
+    total_complementary: 0,
+    total_due: 0,
+    sellable_id: sellableId,
+    sellable_type: sellableType,
+    status: "paid"
+  })
+
+  await SalesTransaction.query().insert({
+    sales_id: sale.id,
+    date: DateTime.local().toISODate(),
+    transaction_type: paymentMethod,
+    amount: amount,
+    registered_by: "name"
+  })
+
+  // an inactive transaction to check that the queries are only working on active sales transactions
+  await SalesTransaction.query().insert({
+    sales_id: sale.id,
+    date: DateTime.local().toISODate(),
+    transaction_type: paymentMethod,
+    amount: amount,
+    active: false,
+    registered_by: "name"
+  })
+}
+
+async function populateBooking(amount) {
+  let booking = await Booking.query().insert({
+    created_at: DateTime.local().toISODate(),
+    updated_at: DateTime.local().toISODate(),
+    start_date: DateTime.local().toISODate(),
+    end_date: DateTime.local().toISODate(),
+    price_per_night: amount,
+    room_id: 3,
+    customer_details: { name: "some name" },
+    status: "closed"
+  })
+  return booking
+}
+
+async function populateDebtSale(sellableType, sellableId, amount) {
+  let sale = await Sale.query().insert({
+    total_amount: amount,
+    total_paid: 0,
+    total_complementary: 0,
+    total_due: amount,
+    sellable_id: sellableId,
+    sellable_type: sellableType,
+    status: "owing"
+  })
 }

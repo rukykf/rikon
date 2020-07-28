@@ -75,7 +75,7 @@
         <div class="form-inline" v-if="takeCredit">
           <b class="mr-2 font-weight-bold">Cash</b>
           <b-form-checkbox :disabled="disabled" v-model="creditForm" name="check-button" switch>
-            <b class="font-weight-bold">Debt</b>
+            <b class="font-weight-bold">Debt / Discount</b>
           </b-form-checkbox>
         </div>
 

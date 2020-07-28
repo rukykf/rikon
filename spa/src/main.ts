@@ -17,11 +17,13 @@ import { formatMoney } from "accounting-js"
 import { DateTime } from "luxon"
 import ApiClient from "./ApiClient"
 
+
 Vue.use(VueFeather)
 Vue.use(flatPickr)
 
 Vue.use(VueRouter)
 Vue.use(vco)
+
 Vue.prototype.$httpClient = ApiClient
 
 // Don't warn about using the dev version of Vue in development.

@@ -4,6 +4,7 @@ const { NotFoundError, ValidationError } = require("objection")
 const Booking = require("../../data-access/models/Booking")
 const Room = require("../../data-access/models/Room")
 const Sale = require("../../data-access/models/Sale")
+const logger = require("../../utils/Logger")
 
 module.exports = {
   async index(req, res) {
@@ -24,6 +25,7 @@ module.exports = {
         .andWhere("created_at", "<=", endDate)
         .withGraphFetched("room")
         .withGraphFetched("sale")
+        .orderBy("created_at", "desc")
 
       if (_.get(req, ["query", "status"]) != null) {
         bookingsQueryBuilder.where("status", "=", req.query.status)
@@ -62,6 +64,7 @@ module.exports = {
       })
       return res.json(booking)
     } catch (error) {
+      logger.logRequestError(req, error, "Failed to create booking for this room, error details below")
       if (error instanceof NotFoundError) {
         return res.status(400).json({ messages: ["invalid room id"] })
       }
@@ -150,6 +153,7 @@ module.exports = {
       })
       return res.json(booking)
     } catch (error) {
+      logger.logRequestError(req, error, "could not close booking for this room")
       if (error instanceof NotFoundError) {
         return res.status(400).json({ messages: ["invalid booking id"] })
       }
@@ -167,6 +171,7 @@ module.exports = {
         .throwIfNotFound()
       return res.json({ messages: ["successfully cancelled booking"] })
     } catch (error) {
+      logger.logRequestError(req, error, "Failed to cancel booking for this room, error details below")
       if (error instanceof NotFoundError) {
         return res.status(400).json({ messages: ["invalid booing id"] })
       }
@@ -185,6 +190,7 @@ module.exports = {
         .throwIfNotFound()
       return res.json(booking)
     } catch (error) {
+      logger.logRequestError(req, error, "could not update customer details for this booking")
       if (error instanceof NotFoundError) {
         return res.status(400).json({ messages: ["invalid booking id"] })
       }

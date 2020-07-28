@@ -8,6 +8,8 @@ class Sale extends Objection {
 
   static get relationMappings() {
     const SalesTransaction = require("./SalesTransaction")
+    const ManagementListTransaction = require("./ManagementListTransaction")
+
     return {
       sales_transactions: {
         relation: Objection.HasManyRelation,
@@ -15,6 +17,15 @@ class Sale extends Objection {
         join: {
           from: "sales.id",
           to: "sales_transactions.sales_id"
+        }
+      },
+
+      management_lists_transactions: {
+        relation: Objection.HasOneRelation,
+        modelClass: ManagementListTransaction,
+        join: {
+          from: "sales.id",
+          to: "management_lists_transactions.sales_id"
         }
       }
     }
@@ -50,10 +61,10 @@ class Sale extends Objection {
 
   $beforeInsert(queryContext) {
     if (this.created_at == null) {
-      this.created_at = DateTime.local().toISODate()
+      this.created_at = DateTime.local().toISO()
     }
 
-    this.updated_at = DateTime.local().toISODate()
+    this.updated_at = DateTime.local().toISO()
     super.$beforeInsert(queryContext)
   }
 
@@ -62,4 +73,5 @@ class Sale extends Objection {
     super.$beforeUpdate(opt, queryContext)
   }
 }
+
 module.exports = Sale

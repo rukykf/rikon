@@ -64,4 +64,5 @@ class SalesItem extends Objection {
     return json
   }
 }
+
 module.exports = SalesItem

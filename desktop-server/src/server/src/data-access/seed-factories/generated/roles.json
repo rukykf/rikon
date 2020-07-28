@@ -1,1 +1,17 @@
-[{"id":1,"name":"administrator","permissions":"{\"permissions\":[\"can-view-reports\",\"can-create-configuration\"]}"},{"id":2,"name":"accountant","permissions":"{\"permissions\":[\"can-view-reports\",\"can-create-configuration\"]}"},{"id":3,"name":"receptionist","permissions":"{\"permissions\":[\"can-view-reports\",\"can-create-configuration\"]}"}]
+[
+  {
+    "id": 1,
+    "name": "administrator",
+    "permissions": "{\"permissions\":[\"can-view-reports\",\"can-create-configuration\"]}"
+  },
+  {
+    "id": 2,
+    "name": "accountant",
+    "permissions": "{\"permissions\":[\"can-view-reports\",\"can-create-configuration\"]}"
+  },
+  {
+    "id": 3,
+    "name": "receptionist",
+    "permissions": "{\"permissions\":[\"can-view-reports\",\"can-create-configuration\"]}"
+  }
+]

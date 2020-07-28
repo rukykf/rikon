@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="40069bab-3be6-4a35-843d-299215ed68b7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/desktop-server/src/server/src/data-access/migrations/20200402182603_users_roles.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop-server/.eslintrc.json" beforeDir="false" afterPath="$PROJECT_DIR$/desktop-server/.eslintrc.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop-server/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/desktop-server/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop-server/src/server/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/desktop-server/src/server/server.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop-server/src/server/src/data-access/db-config.js" beforeDir="false" afterPath="$PROJECT_DIR$/desktop-server/src/server/src/data-access/db-config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop-server/src/server/src/data-access/knexfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/desktop-server/src/server/src/data-access/knexfile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop-server/src/server/src/data-access/migrations/20200402182603_users.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop-server/src/server/src/data-access/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/desktop-server/src/server/src/data-access/models/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop-server/src/server/src/data-access/seeds/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/desktop-server/src/server/src/data-access/seeds/users.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/desktop-server/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/desktop-server/yarn.lock" afterDir="false" />
-    </list>
+    <list default="true" id="40069bab-3be6-4a35-843d-299215ed68b7" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,6 +36,7 @@
       <option name="presentableId" value="Default" />
       <updated>1586535232898</updated>
       <workItem from="1586535235325" duration="14000" />
+      <workItem from="1594871214672" duration="23000" />
     </task>
     <servers />
   </component>

@@ -57,7 +57,8 @@ class Order extends Objection {
         delivered_by: { type: "object" },
         placed_by: { type: "object" },
         departments: { type: "array" },
-        status: { type: "string", enum: ["pending", "fulfilled", "cancelled"] }
+        status: { type: "string", enum: ["pending", "fulfilled", "cancelled"] },
+        old_order_ids: { type: "array" }
       }
     }
   }

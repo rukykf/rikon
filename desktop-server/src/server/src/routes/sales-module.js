@@ -36,7 +36,8 @@ router.post("/sales-transactions/:id", SalesController.revertSalesTransactionFor
 
 router.get("/orders", OrdersController.index)
 router.post("/orders", OrdersController.create)
-router.patch("/orders/:id", OrdersController.updateOrderStatus)
+router.patch("/orders/:id", OrdersController.updateOrderDetails)
+router.put("/orders/:id", OrdersController.modifyOrder)
 
 router.get("/point-of-sales", PointOfSaleController.index)
 

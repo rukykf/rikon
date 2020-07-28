@@ -46,6 +46,7 @@ afterAll(async () => {
 })
 
 async function populateSales() {
+  // Requests to the index order by date so... just keep that in mind
   let sales = []
 
   // one old fully paid sale
@@ -158,10 +159,10 @@ test("SalesController.index returns list of active sales in the past 90 days by 
   }
   await SalesController.index(req, res)
   expect(output.length).toEqual(4)
-  expect(output[0]).toMatchObject(sales[1])
-  expect(output[1]).toMatchObject(sales[2])
-  expect(output[2]).toMatchObject(sales[3])
-  expect(output[3]).toMatchObject(sales[4])
+  expect(output[0]).toMatchObject(sales[3])
+  expect(output[1]).toMatchObject(sales[4])
+  expect(output[2]).toMatchObject(sales[2])
+  expect(output[3]).toMatchObject(sales[1])
 })
 
 test("SalesController.index successfully filters list of sales by date", async () => {
@@ -216,9 +217,9 @@ test("SalesController.getCreditSales successfully returns list of credit sales",
   }
   await SalesController.getCreditSales(req, res)
   expect(output.length).toEqual(3)
-  expect(output[0]).toMatchObject(sales[2])
-  expect(output[1]).toMatchObject(sales[3])
-  expect(output[2]).toMatchObject(sales[4])
+  expect(output[0]).toMatchObject(sales[3])
+  expect(output[1]).toMatchObject(sales[4])
+  expect(output[2]).toMatchObject(sales[2])
 })
 
 test("SalesController.mergeSalesRecords returns newly merged sale when passed valid sales IDs", async () => {

@@ -153,7 +153,7 @@ test("RolesController.delete returns success message when passed valid id", asyn
   let req = { params: { id: role.id } }
   let res = { json: jest.fn() }
   await RolesController.delete(req, res)
-  expect(res.json).toHaveBeenCalledWith({ message: "successfully deleted selected role" })
+  expect(res.json).toHaveBeenCalledWith({ messages: ["successfully deleted selected role"] })
 })
 
 test("RolesController.delete returns error message when passed invalid id", async () => {

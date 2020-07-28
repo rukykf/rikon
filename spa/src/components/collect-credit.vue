@@ -61,11 +61,13 @@
         roomNumber: this.customerRoom,
         authorizedBy: "",
         nameValidation: null,
+        additionalDetails: null,
         disabled: false,
         submitBtnState: "initialize",
         roomNumberValidation: null,
         phoneNumberValidation: null,
         authorizedByValidation: null,
+        additionalDetailsValidation: null,
       }
     },
 
@@ -103,6 +105,7 @@
                   name: this.name,
                   phone: this.phoneNumber,
                   room: this.roomNumber,
+                  additionalDetails: this.additionalDetails,
                 },
               },
             })
@@ -158,7 +161,7 @@
           <div class="pt-3">
             <div class="form-group">
               <label for="authorizedBy">
-                <h6>Enter the name of whoever authorized this debt: </h6>
+                <h6>Enter the name of whoever authorized this debt / discount: </h6>
                 <small v-if="authorizedByValidation !== null" class="text-danger">* {{ authorizedByValidation }}</small>
               </label>
 
@@ -168,6 +171,25 @@
                 name="text"
                 :disabled="computedDisabled"
                 v-model="authorizedBy"
+                placeholder=""
+                class="form-control "
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="additionalDetails">
+                <h6>Additional Details (optional): </h6>
+                <small v-if="additionalDetailsValidation !== null" class="text-danger"
+                  >* {{ additionalDetailsValidation }}</small
+                >
+              </label>
+
+              <input
+                type="text"
+                id="additionalDetails"
+                name="text"
+                :disabled="computedDisabled"
+                v-model="additionalDetails"
                 placeholder=""
                 class="form-control "
               />

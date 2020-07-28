@@ -1,7 +1,6 @@
 module.exports = {
   verbose: false,
-  transform: {
-    "^.+\\.ts?$": "ts-jest"
-  },
-  testMatch: ["<rootDir>/src/server/tests/**/*.test.js", "<rootDir>/src/server/tests/**/*.test.ts"]
+  testMatch: ["<rootDir>/src/server/tests/**/*.test.js"],
+  setupFilesAfterEnv: ["./jest.setup.js"],
+  collectCoverage: true
 }

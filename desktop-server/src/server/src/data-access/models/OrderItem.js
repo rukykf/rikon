@@ -29,4 +29,5 @@ class OrderItem extends Objection {
     }
   }
 }
+
 module.exports = OrderItem

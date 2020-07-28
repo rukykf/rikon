@@ -9,6 +9,7 @@
   import ErrorHandler from "@src/ErrorHandler"
   import _ from "lodash"
   import Multiselect from "vue-multiselect"
+  import DateTimeSelector from "../../../../components/date-time-selector"
 
   export default {
     page: {
@@ -16,6 +17,7 @@
       meta: [{ name: "description", content: appConfig.description }],
     },
     components: {
+      DateTimeSelector,
       DisplayCustomerOrderDetails,
       ManagedStateButton,
       SuccessFailureAlert,
@@ -26,6 +28,7 @@
     data() {
       return {
         orders: [],
+        filteredOrders: [],
         departments: [],
         selectedDepartment: null,
         orderFields: [
@@ -76,7 +79,7 @@
 
       totalPaid: function() {
         let sum = 0
-        this.orders.forEach((order) => {
+        this.filteredOrders.forEach((order) => {
           if (_.has(order, ["sale", "total_paid"])) {
             sum += order.sale.total_paid
           }
@@ -86,7 +89,7 @@
 
       totalAmount: function() {
         let sum = 0
-        this.orders.forEach((order) => {
+        this.filteredOrders.forEach((order) => {
           sum += order.amount
         })
         return sum
@@ -105,19 +108,18 @@
         }
       },
 
+      updateFilteredOrdersWithFilteredList: function(filteredList, filteredListLength) {
+        this.filteredOrders = filteredList
+      },
+
       isFilterByDateValid: function() {
         if (this.toDate === null || this.fromDate === null) {
           this.errors.push("Please select a FROM and TO date")
           return false
         }
 
-        if (DateTime.fromISO(this.toDate) >= DateTime.local()) {
-          this.errors.push("You cannot get results for a day after today")
-          return false
-        }
-
         if (DateTime.fromISO(this.fromDate) > DateTime.fromISO(this.toDate)) {
-          this.errors.push("The FROM date must be a day before the TO date")
+          this.errors.push("The FROM date must be a day before or the same as the TO date")
           return false
         }
         return true
@@ -139,6 +141,7 @@
 
           let response = await this.$httpClient.get(url)
           this.orders = response.data.orders
+          this.filteredOrders = _.cloneDeep(this.orders)
           this.loading = false
           this.filterBtnState = "initialize"
         } catch (error) {
@@ -167,21 +170,11 @@
   <Layout>
     <div class="mt-4">
       <SuccessFailureAlert :errors="errors" :success="success"></SuccessFailureAlert>
+      <div class="row mt-4"> </div>
       <div class="row mt-4">
-        <div class="form-group col-12 col-lg-2">
-          <label class="font-weight-bold">
-            From:
-          </label>
-          <input type="date" class="form-control" v-model="fromDate" />
+        <div class="form-group col-12 col-lg-4">
+          <DateTimeSelector></DateTimeSelector>
         </div>
-
-        <div class="form-group col-12 col-lg-2">
-          <label class="font-weight-bold">
-            To:
-          </label>
-          <input type="date" class="form-control" v-model="toDate" />
-        </div>
-
         <div class="form-group col-12 col-lg-3">
           <label class="font-weight-bold">
             Department:
@@ -272,6 +265,7 @@
                 :sort-desc.sync="sortDesc"
                 :filter="filter"
                 :filter-included-fields="filterOn"
+                @filtered="updateFilteredOrdersWithFilteredList"
               >
                 <template v-slot:cell(SN)="row">
                   {{ row.index + 1 }}

@@ -29,6 +29,17 @@ class Room extends Objection {
           to: "bookings.room_id"
         }
       },
+      currentBooking: {
+        relation: Objection.HasOneRelation,
+        modelClass: Booking,
+        filter(builder) {
+          builder.where("status", "open")
+        },
+        join: {
+          from: "rooms.id",
+          to: "bookings.room_id"
+        }
+      },
       reservations: {
         relation: Objection.HasManyRelation,
         modelClass: Reservation,
@@ -58,4 +69,5 @@ class Room extends Objection {
     return json
   }
 }
+
 module.exports = Room

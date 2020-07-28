@@ -138,8 +138,8 @@ test("BookingsController.index returns list of bookings created in last 90 days 
 
   await BookingsController.index(req, res)
   expect(output.length).toEqual(2)
-  expect(output[0]).toMatchObject(bookings[1])
-  expect(output[1]).toMatchObject(bookings[2])
+  expect(output[0]).toMatchObject(bookings[2])
+  expect(output[1]).toMatchObject(bookings[1])
 })
 
 test("BookingsController.index successfully filters bookings by date", async () => {

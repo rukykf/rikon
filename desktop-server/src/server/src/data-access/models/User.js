@@ -41,4 +41,5 @@ class User extends Objection {
     return json
   }
 }
+
 module.exports = User

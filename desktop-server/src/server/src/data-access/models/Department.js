@@ -24,4 +24,5 @@ class Department extends Objection {
     return _.pick(json, ["id", "name"])
   }
 }
+
 module.exports = Department

@@ -69,6 +69,7 @@
           this.record.total_due = updatedSalesRecord.total_due
           this.record.total_complementary = updatedSalesRecord.total_complementary
           this.record.total_paid = updatedSalesRecord.total_paid
+          this.record.status = updatedSalesRecord.status
           this.success.push("Transaction reverted successfully")
           this.getTransactionHistory()
         } catch (error) {
@@ -114,6 +115,7 @@
           this.success.push(`Successfully added payment of ${this.newTransaction.amount} to this record`)
           this.record.total_due = newSalesRecord.data.total_due
           this.record.total_paid = newSalesRecord.data.total_paid
+          this.record.status = newSalesRecord.data.status
           this.clearTransactionForm()
         } catch (error) {
           this.newTransactionBtnState = "fail-try-again"
@@ -139,6 +141,7 @@
           this.success.push(`Successfully added complementary of ${this.newTransaction.amount} to this record`)
           this.record.total_complementary = newSalesRecord.data.total_complementary
           this.record.total_due = newSalesRecord.data.total_due
+          this.record.status = newSalesRecord.data.status
           this.clearTransactionForm()
         } catch (error) {
           this.newTransactionBtnState = "fail-try-again"
@@ -165,6 +168,7 @@
           this.success.push(`Successfully added discount of ${this.newTransaction.amount} to this record`)
           this.record.total_complementary = newSalesRecord.data.total_complementary
           this.record.total_due = newSalesRecord.data.total_due
+          this.record.status = newSalesRecord.data.status
           this.clearTransactionForm()
         } catch (error) {
           this.newTransactionBtnState = "fail-try-again"
@@ -242,6 +246,11 @@
             <b-col sm="3" class="text-sm-right"><b>Credit Authorized By: </b></b-col>
             <b-col>{{ record.credit_authorized_by.name }}</b-col>
           </b-row>
+
+          <b-row class="mb-2">
+            <b-col sm="3" class="text-sm-right"><b>Additional Details:</b></b-col>
+            <b-col>{{ record.customer_details.additionalDetails }}</b-col>
+          </b-row>
         </div>
 
         <b-row class="mb-2">
@@ -270,7 +279,7 @@
         </b-row>
       </div>
 
-      <div class="row mt-3" v-if="record.customer_details !== null">
+      <div class="row mt-3" v-if="record.status !== 'paid'">
         <div class="col-12 text-left">
           <button class="btn btn-primary mt-1" @click.stop.prevent="displayTransactionForm('payment')"
             >Add Payment

@@ -30,5 +30,5 @@ module.exports = {
       : // Proxy API endpoints a local mock API.
         { before: require("./tests/mock-api") }),
   },
-  outputDir: "../desktop-server/build/src/server/assets",
+  outputDir: "../desktop-server/src/server/assets",
 }

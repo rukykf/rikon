@@ -134,7 +134,7 @@ test("RoomsController.delete returns success message when passed valid id", asyn
   let req = { params: { id: room.id } }
   let res = { json: jest.fn() }
   await RoomsController.delete(req, res)
-  expect(res.json).toHaveBeenCalledWith({ message: "successfully deleted selected room type" })
+  expect(res.json).toHaveBeenCalledWith({ messages: ["successfully deleted selected room type"] })
 })
 
 test("RoomsController.delete returns error message when passed invalid id", async () => {

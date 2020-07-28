@@ -1,58 +1,58 @@
 [
- {
-  "id": 1,
-  "name": "Coca Cola",
-  "unit": "bottle",
-  "price_per_unit": 700,
-  "department": "bar"
- },
- {
-  "id": 2,
-  "name": "Heineken",
-  "unit": "bottle",
-  "price_per_unit": 1200,
-  "department": "bar"
- },
- {
-  "id": 3,
-  "name": "Hollandia",
-  "unit": "bottle",
-  "price_per_unit": 800,
-  "department": "bar"
- },
- {
-  "id": 4,
-  "name": "Fanta",
-  "unit": "bottle",
-  "price_per_unit": 800,
-  "department": "bar"
- },
- {
-  "id": 5,
-  "name": "White Rice",
-  "unit": "portion",
-  "price_per_unit": 1000,
-  "department": "kitchen"
- },
- {
-  "id": 6,
-  "name": "Fried Rice",
-  "unit": "portion",
-  "price_per_unit": 1000,
-  "department": "kitchen"
- },
- {
-  "id": 7,
-  "name": "Turkey",
-  "unit": "portion",
-  "price_per_unit": 1000,
-  "department": "kitchen"
- },
- {
-  "id": 8,
-  "name": "Eba",
-  "unit": "portion",
-  "price_per_unit": 350,
-  "department": "kitchen"
- }
+  {
+    "id": 1,
+    "name": "Coca Cola",
+    "unit": "bottle",
+    "price_per_unit": 700,
+    "department": "bar"
+  },
+  {
+    "id": 2,
+    "name": "Heineken",
+    "unit": "bottle",
+    "price_per_unit": 1200,
+    "department": "bar"
+  },
+  {
+    "id": 3,
+    "name": "Hollandia",
+    "unit": "bottle",
+    "price_per_unit": 800,
+    "department": "bar"
+  },
+  {
+    "id": 4,
+    "name": "Fanta",
+    "unit": "bottle",
+    "price_per_unit": 800,
+    "department": "bar"
+  },
+  {
+    "id": 5,
+    "name": "White Rice",
+    "unit": "portion",
+    "price_per_unit": 1000,
+    "department": "kitchen"
+  },
+  {
+    "id": 6,
+    "name": "Fried Rice",
+    "unit": "portion",
+    "price_per_unit": 1000,
+    "department": "kitchen"
+  },
+  {
+    "id": 7,
+    "name": "Turkey",
+    "unit": "portion",
+    "price_per_unit": 1000,
+    "department": "kitchen"
+  },
+  {
+    "id": 8,
+    "name": "Eba",
+    "unit": "portion",
+    "price_per_unit": 350,
+    "department": "kitchen"
+  }
 ]

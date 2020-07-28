@@ -19,9 +19,6 @@ module.exports = {
     try {
       let startDateISO = _.hasIn(req, ["query", "start_date"]) ? req.query.start_date : DateTime.local().toISODate()
       let endDateISO = _.hasIn(req, ["query", "end_date"]) ? req.query.end_date : DateTime.local().toISODate()
-      endDateISO = DateTime.fromISO(endDateISO)
-        .plus({ days: 2 })
-        .toISODate()
 
       let salesAnalyticsData = { statCards: [] }
 

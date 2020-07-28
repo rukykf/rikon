@@ -98,7 +98,7 @@ module.exports = {
         .findById(_.toNumber(req.params.id))
         .patch({ active: false, deleted_at: DateTime.local().toSeconds() })
         .throwIfNotFound()
-      return res.json({ message: "successfully deleted the selected sales item" })
+      return res.json({ messages: ["successfully deleted the selected sales item"] })
     } catch (error) {
       if (error instanceof NotFoundError) {
         return res.status(400).json({ messages: ["could not delete selected sales item"] })

@@ -115,7 +115,7 @@ test("DepartmentsController.delete returns success message whe passed valid id",
   let res = { json: jest.fn() }
 
   await DepartmentsController.delete(req, res)
-  expect(res.json).toHaveBeenCalledWith({ message: "successfully deleted selected department" })
+  expect(res.json).toHaveBeenCalledWith({ messages: ["successfully deleted selected department"] })
 })
 
 test("DepartmentsController.delete returns error message when passed invalid id", async () => {

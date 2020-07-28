@@ -152,7 +152,7 @@ test("SalesItemsController.delete returns success message when passed valid id",
   let req = { params: { id: salesItem.id } }
   let res = { json: jest.fn() }
   await SalesItemsController.delete(req, res)
-  expect(res.json).toHaveBeenCalledWith({ message: "successfully deleted the selected sales item" })
+  expect(res.json).toHaveBeenCalledWith({ messages: ["successfully deleted the selected sales item"] })
 })
 
 test("SalesItemsController.delete returns error messaged when passed invalid id", async () => {

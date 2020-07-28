@@ -5,7 +5,279 @@ const Booking = require("../../data-access/models/Booking")
 const Sale = require("../../data-access/models/Sale")
 const Order = require("../../data-access/models/Order")
 const SalesTransaction = require("../../data-access/models/SalesTransaction")
+const logger = require("../../utils/Logger")
 
+module.exports = {
+  async index(req, res) {
+    try {
+      let startDate = _.get(req, ["query", "start_date"])
+        ? req.query.start_date
+        : DateTime.local()
+            .minus({ days: 90 })
+            .toISODate()
+      let endDate = _.get(req, ["query", "end_date"]) ? req.query.end_date : DateTime.local().toISODate()
+
+      let salesQueryBuilder = Sale.query()
+        .where("active", "=", 1)
+        .andWhere("created_at", ">=", startDate)
+        .andWhere("created_at", "<=", endDate)
+        .withGraphFetched("sales_transactions")
+        .orderBy("created_at", "desc")
+
+      if (_.get(req, ["query", "status"]) != null) {
+        salesQueryBuilder.where("status", "=", req.query.status)
+      }
+
+      if (_.get(req, ["query", "sellable_type"]) != null) {
+        salesQueryBuilder.where("sellable_type", "=", req.query.sellable_type)
+      }
+
+      let sales = await salesQueryBuilder
+      let output = []
+      for (let i = 0; i < sales.length; i++) {
+        // eslint-disable-next-line no-await-in-loop
+        sales[i].details = await getSaleDetails(sales[i])
+        output.push(sales[i])
+      }
+      return res.json(output)
+    } catch (error) {
+      return res.status(500).json({ messages: ["something went wrong, try again later"] })
+    }
+  },
+
+  async getCreditSales(req, res) {
+    try {
+      let creditSalesQueryBuilder = Sale.query()
+        .where((builder) => {
+          builder.where("status", "=", "owing")
+        })
+        .andWhere("active", "=", 1)
+        .orderBy("created_at", "desc")
+
+      if (_.has(req, ["query", "start_date"])) {
+        creditSalesQueryBuilder.andWhere("created_at", ">=", req.query.start_date)
+      }
+
+      if (_.has(req, ["query", "end_date"])) {
+        creditSalesQueryBuilder.andWhere("created_at", "<=", req.query.end_date)
+      }
+
+      let sales = await creditSalesQueryBuilder.execute()
+      let output = []
+      for (let i = 0; i < sales.length; i++) {
+        // eslint-disable-next-line no-await-in-loop
+        sales[i].details = await getSaleDetails(sales[i])
+        output.push(sales[i])
+      }
+      return res.json(output)
+    } catch (error) {
+      return res.status(500).json({ messages: ["something went wrong, try again later"] })
+    }
+  },
+
+  async mergeSalesRecords(req, res) {
+    try {
+      let salesIDs = _.get(req, ["body", "ids_for_merge"])
+
+      if (salesIDs.length === 0) {
+        return res.json({ messages: ["merge completed successfully"] })
+      }
+
+      let newTotalAmount = 0
+      let newTotalPaid = 0
+      let newTotalComplementary = 0
+      let newTotalDue = 0
+
+      let records = await Sale.query()
+        .findByIds(salesIDs)
+        .throwIfNotFound()
+
+      let isCredit = true
+
+      records.forEach((record) => {
+        if (record.credit_authorized_by == null || record.customer_details == null) {
+          isCredit = false
+        }
+      })
+
+      if (isCredit === false) {
+        return res.status(400).json({ messages: ["you can only merge credit transactions"] })
+      }
+
+      await Sale.query()
+        .findByIds(salesIDs)
+        .patch({ active: false })
+
+      for (let i = 0; i < records.length; i++) {
+        newTotalAmount += records[i].total_amount
+        newTotalPaid += records[i].total_paid
+        newTotalComplementary += records[i].total_complementary
+        newTotalDue += records[i].total_due
+      }
+      let newSalesRecord = await Sale.query().insert({
+        total_amount: newTotalAmount,
+        total_paid: newTotalPaid,
+        total_complementary: newTotalComplementary,
+        total_due: newTotalDue,
+        sellable_id: records[0].sellable_id,
+        sellable_type: records[0].sellable_type,
+        status: newTotalDue <= 0 ? "paid" : "owing",
+        customer_details: records[0].customer_details,
+        credit_authorized_by: records[0].credit_authorized_by,
+        merged_records: salesIDs
+      })
+
+      return res.json(newSalesRecord)
+    } catch (error) {
+      logger.logRequestError(req, error, "could not merge sales")
+
+      if (error instanceof NotFoundError) {
+        return res.status(400).json({ messages: ["invalid record id"] })
+      }
+
+      return res.status(500).json({ messages: ["something went wrong, try again later"] })
+    }
+  },
+
+  /**
+   * Expecting the body of the request to contain:
+   *
+   * sellable_type
+   * sellable_id
+   * transaction_type (cash or credit)
+   * transaction_details
+   *
+   * @param req
+   * @param res
+   */
+  async updateSalesRecordWithTransactionForSellable(req, res) {
+    try {
+      // Ensure all required variables are present in the request
+      let validationErrorMessages = isValidTransactionRequest(req)
+      if (validationErrorMessages.length !== 0) {
+        return res.status(400).json({ messages: validationErrorMessages })
+      }
+
+      let sale = await Sale.query()
+        .where("sellable_id", "=", req.body.sellable_id)
+        .andWhere("sellable_type", "=", req.body.sellable_type)
+        .first()
+
+      if (sale == null) {
+        sale = await createSaleForSellable(req)
+      }
+
+      if (req.body.transaction_type !== "credit") {
+        sale = await updateSaleRecordWithTransaction(req, sale)
+      }
+
+      if (req.body.transaction_type === "credit") {
+        sale = await Sale.query().patchAndFetchById(sale.id, {
+          customer_details: req.body.transaction_details.customer_details,
+          credit_authorized_by: req.body.transaction_details.credit_authorized_by
+        })
+      }
+
+      return res.json(sale)
+    } catch (error) {
+      logger.logRequestError(req, error, "could not update sales record")
+      if (error instanceof NotFoundError) {
+        return res.status(400).json({ messages: ["invalid sellable_id"] })
+      }
+
+      if (error instanceof ValidationError) {
+        return res.status(400).json({ messages: ["invalid transaction data"] })
+      }
+
+      return res.status(500).json({ messages: ["something went wrong, please try again later"] })
+    }
+  },
+
+  async updateSalesRecordWithTransaction(req, res) {
+    try {
+      let sale = await Sale.query().findById(_.toNumber(req.params.id))
+      sale = await updateSaleRecordWithTransaction(req, sale)
+      return res.json(sale)
+    } catch (error) {
+      logger.logRequestError(req, error, "could not update sales record with transaction")
+      return res.status(500).json({ messages: ["something went wrong, please try again later"] })
+    }
+  },
+
+  async revertSalesTransactionForSalesRecord(req, res) {
+    try {
+      let salesTransaction = await SalesTransaction.query()
+        .findById(_.toNumber(req.params.id))
+        .throwIfNotFound()
+      if (salesTransaction.transaction_type === "complementary") {
+        return res.status(400).json({ messages: ["you cannot reverse a complementary transaction"] })
+      }
+
+      let sale = await Sale.query().findById(salesTransaction.sales_id)
+
+      if (salesTransaction.transaction_type === "discount") {
+        let newTotalComplementary = sale.total_complementary - salesTransaction.amount
+        let newTotalDue = sale.total_amount - (newTotalComplementary + sale.total_paid)
+        let newSale = await Sale.query().patchAndFetchById(sale.id, {
+          total_complementary: newTotalComplementary,
+          total_due: newTotalDue,
+          status: getStatus(newTotalDue)
+        })
+        let reversedSalesTransaction = await SalesTransaction.query().insert({
+          sales_id: sale.id,
+          transaction_type: "reverse-discount",
+          amount: salesTransaction.amount,
+          registered_by: req.get("full_name")
+        })
+        await SalesTransaction.query()
+          .findById(salesTransaction.id)
+          .patch({ active: false })
+        return res.json(newSale)
+      }
+
+      if (_.includes(["pos", "transfer", "cash"], salesTransaction.transaction_type)) {
+        let newTotalPaid = sale.total_paid - salesTransaction.amount
+        let newTotalDue = sale.total_amount - (newTotalPaid + sale.total_complementary)
+        let newSale = await Sale.query().patchAndFetchById(sale.id, {
+          total_paid: newTotalPaid,
+          total_due: newTotalDue,
+          status: getStatus(newTotalDue)
+        })
+        let reversedSalesTransaction = await SalesTransaction.query().insert({
+          sales_id: sale.id,
+          transaction_type: `reverse-${salesTransaction.transaction_type.toLowerCase()}`,
+          amount: salesTransaction.amount,
+          registered_by: req.get("full_name")
+        })
+
+        await SalesTransaction.query()
+          .findById(salesTransaction.id)
+          .patch({ active: false })
+        return res.json(newSale)
+      }
+
+      return res.status(400).json({ messages: ["could not revert selected transaction"] })
+    } catch (error) {
+      logger.logRequestError(req, error, "could not revert sales-transaction")
+
+      if (error instanceof NotFoundError) {
+        return res.status(400).json({ messages: ["could not find selected transaction"] })
+      }
+      return res.status(500).json({ messages: ["something went wrong, try again later"] })
+    }
+  },
+
+  async getSalesTransactionsForSalesRecord(req, res) {
+    try {
+      let salesTransactions = await SalesTransaction.query().where("sales_id", "=", _.toNumber(req.params.id))
+      return res.json(salesTransactions)
+    } catch (error) {
+      return res.status(500).json({ messages: ["something went wrong, try again later"] })
+    }
+  }
+}
+
+// private methods
 async function getSaleDetails(sale) {
   let details = { type: "order", elements: null }
 
@@ -199,266 +471,4 @@ async function updateSaleRecordWithTransaction(req, sale) {
   }
 
   return updatedSale
-}
-
-module.exports = {
-  async index(req, res) {
-    try {
-      let startDate = _.get(req, ["query", "start_date"])
-        ? req.query.start_date
-        : DateTime.local()
-            .minus({ days: 90 })
-            .toISODate()
-      let endDate = _.get(req, ["query", "end_date"]) ? req.query.end_date : DateTime.local().toISODate()
-
-      let salesQueryBuilder = Sale.query()
-        .where("active", "=", 1)
-        .andWhere("created_at", ">=", startDate)
-        .andWhere("created_at", "<=", endDate)
-        .withGraphFetched("sales_transactions")
-
-      if (_.get(req, ["query", "status"]) != null) {
-        salesQueryBuilder.where("status", "=", req.query.status)
-      }
-
-      if (_.get(req, ["query", "sellable_type"]) != null) {
-        salesQueryBuilder.where("sellable_type", "=", req.query.sellable_type)
-      }
-
-      let sales = await salesQueryBuilder
-      let output = []
-      for (let i = 0; i < sales.length; i++) {
-        // eslint-disable-next-line no-await-in-loop
-        sales[i].details = await getSaleDetails(sales[i])
-        output.push(sales[i])
-      }
-      return res.json(output)
-    } catch (error) {
-      return res.status(500).json({ messages: ["something went wrong, try again later"] })
-    }
-  },
-
-  async getCreditSales(req, res) {
-    try {
-      let creditSalesQueryBuilder = Sale.query()
-        .where((builder) => {
-          builder.where("status", "=", "owing")
-        })
-        .andWhere("active", "=", 1)
-
-      if (_.has(req, ["query", "start_date"])) {
-        creditSalesQueryBuilder.andWhere("created_at", ">=", req.query.start_date)
-      }
-
-      if (_.has(req, ["query", "end_date"])) {
-        creditSalesQueryBuilder.andWhere("created_at", "<=", req.query.end_date)
-      }
-
-      let sales = await creditSalesQueryBuilder.execute()
-      let output = []
-      for (let i = 0; i < sales.length; i++) {
-        // eslint-disable-next-line no-await-in-loop
-        sales[i].details = await getSaleDetails(sales[i])
-        output.push(sales[i])
-      }
-      return res.json(output)
-    } catch (error) {
-      return res.status(500).json({ messages: ["something went wrong, try again later"] })
-    }
-  },
-
-  async mergeSalesRecords(req, res) {
-    try {
-      let salesIDs = _.get(req, ["body", "ids_for_merge"])
-
-      if (salesIDs.length === 0) {
-        return res.json({ messages: ["merge completed successfully"] })
-      }
-
-      let newTotalAmount = 0
-      let newTotalPaid = 0
-      let newTotalComplementary = 0
-      let newTotalDue = 0
-
-      let records = await Sale.query()
-        .findByIds(salesIDs)
-        .throwIfNotFound()
-
-      let isCredit = true
-
-      records.forEach((record) => {
-        if (record.credit_authorized_by == null || record.customer_details == null) {
-          isCredit = false
-        }
-      })
-
-      if (isCredit === false) {
-        return res.status(400).json({ messages: ["you can only merge credit transactions"] })
-      }
-
-      await Sale.query()
-        .findByIds(salesIDs)
-        .patch({ active: false })
-
-      for (let i = 0; i < records.length; i++) {
-        newTotalAmount += records[i].total_amount
-        newTotalPaid += records[i].total_paid
-        newTotalComplementary += records[i].total_complementary
-        newTotalDue += records[i].total_due
-      }
-      let newSalesRecord = await Sale.query().insert({
-        total_amount: newTotalAmount,
-        total_paid: newTotalPaid,
-        total_complementary: newTotalComplementary,
-        total_due: newTotalDue,
-        sellable_id: records[0].sellable_id,
-        sellable_type: records[0].sellable_type,
-        status: newTotalDue <= 0 ? "paid" : "owing",
-        customer_details: records[0].customer_details,
-        credit_authorized_by: records[0].credit_authorized_by,
-        merged_records: salesIDs
-      })
-
-      return res.json(newSalesRecord)
-    } catch (error) {
-      if (error instanceof NotFoundError) {
-        return res.status(400).json({ messages: ["invalid record id"] })
-      }
-
-      return res.status(500).json({ messages: ["something went wrong, try again later"] })
-    }
-  },
-
-  /**
-   * Expecting the body of the request to contain:
-   *
-   * sellable_type
-   * sellable_id
-   * transaction_type (cash or credit)
-   * transaction_details
-   *
-   * @param req
-   * @param res
-   */
-  async updateSalesRecordWithTransactionForSellable(req, res) {
-    try {
-      // Ensure all required variables are present in the request
-      let validationErrorMessages = isValidTransactionRequest(req)
-      if (validationErrorMessages.length !== 0) {
-        return res.status(400).json({ messages: validationErrorMessages })
-      }
-
-      let sale = await Sale.query()
-        .where("sellable_id", "=", req.body.sellable_id)
-        .andWhere("sellable_type", "=", req.body.sellable_type)
-        .first()
-
-      if (sale == null) {
-        sale = await createSaleForSellable(req)
-      }
-
-      if (req.body.transaction_type !== "credit") {
-        sale = await updateSaleRecordWithTransaction(req, sale)
-      }
-
-      if (req.body.transaction_type === "credit") {
-        sale = await Sale.query().patchAndFetchById(sale.id, {
-          customer_details: req.body.transaction_details.customer_details,
-          credit_authorized_by: req.body.transaction_details.credit_authorized_by
-        })
-      }
-
-      return res.json(sale)
-    } catch (error) {
-      if (error instanceof NotFoundError) {
-        return res.status(400).json({ messages: ["invalid sellable_id"] })
-      }
-
-      if (error instanceof ValidationError) {
-        return res.status(400).json({ messages: ["invalid transaction data"] })
-      }
-
-      return res.status(500).json({ messages: ["something went wrong, please try again later"] })
-    }
-  },
-
-  async updateSalesRecordWithTransaction(req, res) {
-    try {
-      let sale = await Sale.query().findById(_.toNumber(req.params.id))
-      sale = await updateSaleRecordWithTransaction(req, sale)
-      return res.json(sale)
-    } catch (error) {
-      return res.status(500).json({ messages: ["something went wrong, please try again later"] })
-    }
-  },
-
-  async revertSalesTransactionForSalesRecord(req, res) {
-    try {
-      let salesTransaction = await SalesTransaction.query()
-        .findById(_.toNumber(req.params.id))
-        .throwIfNotFound()
-      if (salesTransaction.transaction_type === "complementary") {
-        return res.status(400).json({ messages: ["you cannot reverse a complementary transaction"] })
-      }
-
-      let sale = await Sale.query().findById(salesTransaction.sales_id)
-
-      if (salesTransaction.transaction_type === "discount") {
-        let newTotalComplementary = sale.total_complementary - salesTransaction.amount
-        let newTotalDue = sale.total_amount - (newTotalComplementary + sale.total_paid)
-        let newSale = await Sale.query().patchAndFetchById(sale.id, {
-          total_complementary: newTotalComplementary,
-          total_due: newTotalDue,
-          status: getStatus(newTotalDue)
-        })
-        let reversedSalesTransaction = await SalesTransaction.query().insert({
-          sales_id: sale.id,
-          transaction_type: "reverse-discount",
-          amount: salesTransaction.amount,
-          registered_by: req.get("full_name")
-        })
-        await SalesTransaction.query()
-          .findById(salesTransaction.id)
-          .patch({ active: false })
-        return res.json(newSale)
-      }
-
-      if (_.includes(["pos", "transfer", "cash"], salesTransaction.transaction_type)) {
-        let newTotalPaid = sale.total_paid - salesTransaction.amount
-        let newTotalDue = sale.total_amount - (newTotalPaid + sale.total_complementary)
-        let newSale = await Sale.query().patchAndFetchById(sale.id, {
-          total_paid: newTotalPaid,
-          total_due: newTotalDue,
-          status: getStatus(newTotalDue)
-        })
-        let reversedSalesTransaction = await SalesTransaction.query().insert({
-          sales_id: sale.id,
-          transaction_type: `reverse-${salesTransaction.transaction_type.toLowerCase()}`,
-          amount: salesTransaction.amount,
-          registered_by: req.get("full_name")
-        })
-
-        await SalesTransaction.query()
-          .findById(salesTransaction.id)
-          .patch({ active: false })
-        return res.json(newSale)
-      }
-
-      return res.status(400).json({ messages: ["could not revert selected transaction"] })
-    } catch (error) {
-      if (error instanceof NotFoundError) {
-        return res.status(400).json({ messages: ["could not find selected transaction"] })
-      }
-      return res.status(500).json({ messages: ["something went wrong, try again later"] })
-    }
-  },
-
-  async getSalesTransactionsForSalesRecord(req, res) {
-    try {
-      let salesTransactions = await SalesTransaction.query().where("sales_id", "=", _.toNumber(req.params.id))
-      return res.json(salesTransactions)
-    } catch (error) {
-      return res.status(500).json({ messages: ["something went wrong, try again later"] })
-    }
-  }
 }

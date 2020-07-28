@@ -3,6 +3,11 @@ const _ = require("lodash")
 const { ValidationError, NotFoundError } = require("objection")
 const Order = require("../../data-access/models/Order")
 const SalesItem = require("../../data-access/models/SalesItem")
+const CreateOrderRequestModel = require("./RequestModels/CreateOrderRequestModel")
+const ModifyOrderRequestModel = require("./RequestModels/ModifyOrderRequestModel")
+const ValidationException = require("../Exceptions/ValidationException")
+const UpdateOrderDetailsRequestModel = require("./RequestModels/UpdateOrderDetailsRequestModel")
+const logger = require("../../utils/Logger")
 
 module.exports = {
   async index(req, res) {
@@ -14,15 +19,12 @@ module.exports = {
             .toISODate()
       let endDate = _.get(req, ["query", "end_date"]) ? req.query.end_date : DateTime.local().toISODate()
 
-      endDate = DateTime.fromISO(endDate)
-        .plus({ days: 1 })
-        .toISODate()
-
       let orders = await Order.query()
         .where("created_at", ">=", startDate)
         .andWhere("created_at", "<=", endDate)
         .withGraphFetched("order_items")
         .withGraphFetched("sale")
+        .orderBy("created_at", "desc")
 
       if (_.get(req, ["query", "status"]) != null) {
         orders = orders.filter((el) => {
@@ -44,67 +46,33 @@ module.exports = {
 
   async create(req, res) {
     try {
-      let orderItems = []
-      let orderAmount = 0
-      let departments = []
-
-      // eslint-disable-next-line no-restricted-syntax
-      for (let item of _.get(req, ["body", "item_details"])) {
-        // eslint-disable-next-line no-await-in-loop
-        let salesItem = await SalesItem.query()
-          .findById(_.toNumber(item.sales_item_id))
-          .withGraphFetched("department")
-          .throwIfNotFound()
-
-        let amount = _.toNumber(item.quantity) * salesItem.price_per_unit
-        orderAmount += amount
-        orderItems.push({
-          amount: amount,
-          sales_item_id: salesItem.id,
-          quantity: item.quantity,
-          unit: salesItem.unit,
-          name: salesItem.name,
-          date: DateTime.local().toISODate(),
-          price_per_unit: salesItem.price_per_unit
-        })
-        if (salesItem.department && !departments.includes(salesItem.department.name)) {
-          departments.push(salesItem.department.name)
-        }
-      }
-
-      let order = await Order.query().insertGraphAndFetch({
-        amount: orderAmount,
-        created_at: DateTime.local().toISO(),
-        updated_at: DateTime.local().toISO(),
-        status: "pending",
-        departments: departments,
-        placed_by: { name: `${req.get("first_name")} ${req.get("last_name")}` },
-        delivered_by: { name: _.get(req, ["body", "delivered_by"]) },
-        destination: _.get(req, ["body", "destination"]),
-        order_items: orderItems
-      })
+      let createOrderRequest = new CreateOrderRequestModel(req)
+      let order = await createOrder(createOrderRequest)
       return res.json(order)
     } catch (error) {
+      logger.logRequestError(req, error, "Error creating order... see below for error details")
+      if (error instanceof ValidationException) {
+        return res.status(400).json(error.messages)
+      }
+
       return res.status(400).json({ messages: ["error: could not create order"] })
     }
   },
 
-  async updateOrderStatus(req, res) {
+  async updateOrderDetails(req, res) {
     try {
-      if (_.get(req, ["body", "status"]) === "cancelled" && _.get(req, ["body", "cancellation_remarks"]) == null) {
+      let orderDetailsForUpdate = new UpdateOrderDetailsRequestModel(req)
+
+      if (orderDetailsForUpdate.status === "cancelled" && orderDetailsForUpdate.cancellation_remarks == null) {
         return res.status(400).json({ messages: ["you need to provide a reason for cancellation"] })
       }
       let order = await Order.query()
         .findById(_.toNumber(req.params.id))
-        .patch({
-          status: _.get(req, ["body", "status"]),
-          cancellation_remarks: _.get(req, ["body", "cancellation_remarks"]),
-          updated_at: DateTime.local().toISO(),
-          delivered_by: _.get(req, ["body", "delivered_by"])
-        })
+        .patch(orderDetailsForUpdate)
         .throwIfNotFound()
       return res.json({ messages: ["successfully updated order status"] })
     } catch (error) {
+      logger.logRequestError(req, error, "Could not update order status, see error details below")
       if (error instanceof ValidationError) {
         return res.status(400).json({ messages: ["invalid order status"] })
       }
@@ -131,5 +99,87 @@ module.exports = {
       }
       return res.status(500).json({ messages: ["something went wrong, try again later"] })
     }
+  },
+
+  /**
+   * You technically cannot modify an order. What happens here is that you create a new order and add the old order
+   * to the history of that new order
+   *
+   * @param req
+   * @param res
+   * @returns {Promise<*>}
+   */
+  async modifyOrder(req, res) {
+    try {
+      let modifyOrderRequest = new ModifyOrderRequestModel(req)
+      await Order.query().patchAndFetchById(modifyOrderRequest.oldOrderId, {
+        active: false
+      })
+
+      let oldOrder = await Order.query().findById(modifyOrderRequest.oldOrderId)
+
+      let newOrder = await createOrder(modifyOrderRequest.newOrderRequest)
+      let oldOrderIds = oldOrder.old_order_ids != null ? oldOrder.old_order_ids : []
+      oldOrderIds.push(oldOrder.id)
+
+      await Order.query()
+        .findById(newOrder.id)
+        .patch({
+          old_order_ids: oldOrderIds
+        })
+
+      return res.json(newOrder)
+    } catch (error) {
+      logger.logRequestError(req, error, "Could not update the order, see error details below")
+      if (error instanceof ValidationException) {
+        return res.status(400).json(error.messages)
+      }
+
+      return res.status(400).json({ messages: ["error: could not modify order"] })
+    }
   }
+}
+
+// private methods
+async function createOrder(createOrderRequest) {
+  let orderItems = []
+  let orderAmount = 0
+  let departments = []
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (let item of createOrderRequest.itemDetails) {
+    // eslint-disable-next-line no-await-in-loop
+    let salesItem = await SalesItem.query()
+      .findById(_.toNumber(item.sales_item_id))
+      .withGraphFetched("department")
+      .throwIfNotFound()
+
+    let amount = _.toNumber(item.quantity) * salesItem.price_per_unit
+    orderAmount += amount
+    orderItems.push({
+      amount: amount,
+      sales_item_id: salesItem.id,
+      quantity: item.quantity,
+      unit: salesItem.unit,
+      name: salesItem.name,
+      date: DateTime.local().toISODate(),
+      price_per_unit: salesItem.price_per_unit
+    })
+    if (salesItem.department && !departments.includes(salesItem.department.name)) {
+      departments.push(salesItem.department.name)
+    }
+  }
+
+  let order = await Order.query().insertGraphAndFetch({
+    amount: orderAmount,
+    created_at: DateTime.local().toISO(),
+    updated_at: DateTime.local().toISO(),
+    status: "pending",
+    departments: departments,
+    placed_by: createOrderRequest.placedBy,
+    delivered_by: createOrderRequest.deliveredBy,
+    destination: createOrderRequest.destination,
+    order_items: orderItems
+  })
+  return order
 }

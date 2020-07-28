@@ -162,7 +162,7 @@ test("UsersController.delete returns success message when passed valid user id",
   let req = { params: { id: user.id }, body: { username: null } }
   let res = { json: jest.fn() }
   await UsersController.delete(req, res)
-  expect(res.json).toHaveBeenCalledWith({ message: "successfully deleted selected user" })
+  expect(res.json).toHaveBeenCalledWith({ messages: ["successfully deleted selected user"] })
 })
 
 test("UsersController.delete returns error message when passed invalid user id", async () => {

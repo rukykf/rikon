@@ -5,7 +5,6 @@ const Order = require("../../../../src/data-access/models/Order")
 const SalesItem = require("../../../../src/data-access/models/SalesItem")
 const Department = require("../../../../src/data-access/models/Department")
 
-let testData = []
 let oldOrder = null
 let kitchenPendingOrder = null
 let barPendingOrder = null
@@ -123,6 +122,7 @@ async function populateOrdersTable() {
 }
 
 async function populateSalesItemsTable() {
+  salesItems = []
   await Department.query().delete()
   await SalesItem.query().delete()
 
@@ -174,9 +174,7 @@ test("OrdersController.index returns list of orders created in last 90 days by d
   let startDate = DateTime.local()
     .minus({ days: 90 })
     .toISODate()
-  let endDate = DateTime.local()
-    .plus({ days: 1 })
-    .toISODate()
+  let endDate = DateTime.local().toISODate()
 
   expect(res.json).toHaveBeenCalledWith({
     start_date: startDate,
@@ -222,9 +220,7 @@ test("OrdersController.index successfully filters orders by date", async () => {
   await OrdersController.index(req, res)
   expect(res.json).toHaveBeenLastCalledWith({
     start_date: startDate,
-    end_date: DateTime.fromISO(endDate)
-      .plus({ days: 1 })
-      .toISODate(),
+    end_date: endDate,
     orders: expect.arrayContaining([
       expect.objectContaining(barCancelledOrder),
       expect.objectContaining(kitchenCancelledOrder)
@@ -238,9 +234,7 @@ test("OrdersController.index successfully filters orders by status", async () =>
   let startDate = DateTime.local()
     .minus({ days: 90 })
     .toISODate()
-  let endDate = DateTime.local()
-    .plus({ days: 1 })
-    .toISODate()
+  let endDate = DateTime.local().toISODate()
 
   let req = { query: { status: "pending" } }
   let output = null
@@ -266,9 +260,7 @@ test("OrdersController.index successfully filters orders by department", async (
   let startDate = DateTime.local()
     .minus({ days: 90 })
     .toISODate()
-  let endDate = DateTime.local()
-    .plus({ days: 1 })
-    .toISODate()
+  let endDate = DateTime.local().toISODate()
 
   let req = { query: { department: "kitchen" } }
   let output = null
@@ -349,7 +341,7 @@ test("OrdersController.create returns error message when passed invalid data", a
   expect(res.json).toHaveBeenLastCalledWith({ messages: ["error: could not create order"] })
 })
 
-test("OrdersController.updateOrderStatus successfully updates order status with valid status", async () => {
+test("OrdersController.updateOrderDetails successfully updates order status with valid status", async () => {
   let order = await Order.query().insert({
     amount: 9000,
     created_at: DateTime.local().toISODate(),
@@ -364,18 +356,18 @@ test("OrdersController.updateOrderStatus successfully updates order status with 
     body: { status: "fulfilled" }
   }
   let res = { json: jest.fn() }
-  await OrdersController.updateOrderStatus(req, res)
+  await OrdersController.updateOrderDetails(req, res)
   expect(res.json).toHaveBeenLastCalledWith({ messages: ["successfully updated order status"] })
 })
 
-test("OrdersController.updateOrderStatus returns error message when passed invalid order status and id", async () => {
+test("OrdersController.updateOrderDetails returns error message when passed invalid order status and id", async () => {
   let req = {
     params: { id: 3 },
     body: { status: "fulfilled" }
   }
   let res = { json: jest.fn(), status: jest.fn() }
   res.status.mockReturnThis()
-  await OrdersController.updateOrderStatus(req, res)
+  await OrdersController.updateOrderDetails(req, res)
   expect(res.json).toHaveBeenLastCalledWith({ messages: ["could not update the selected order"] })
   expect(res.status).toHaveBeenLastCalledWith(400)
 
@@ -394,12 +386,12 @@ test("OrdersController.updateOrderStatus returns error message when passed inval
     body: { status: "an-invalid-status" }
   }
 
-  await OrdersController.updateOrderStatus(req, res)
+  await OrdersController.updateOrderDetails(req, res)
   expect(res.json).toHaveBeenLastCalledWith({ messages: ["invalid order status"] })
   expect(res.status).toHaveBeenLastCalledWith(400)
 })
 
-test("OrdersController.updateOrderStatus returns error message when passed invalid cancellation_remarks", async () => {
+test("OrdersController.updateOrderDetails returns error message when passed invalid cancellation_remarks", async () => {
   let order = await Order.query().insert({
     amount: 9000,
     created_at: DateTime.local().toISODate(),
@@ -417,7 +409,7 @@ test("OrdersController.updateOrderStatus returns error message when passed inval
   let res = { status: jest.fn(), json: jest.fn() }
   res.status.mockReturnThis()
 
-  await OrdersController.updateOrderStatus(req, res)
+  await OrdersController.updateOrderDetails(req, res)
   expect(res.json).toHaveBeenLastCalledWith({ messages: ["you need to provide a reason for cancellation"] })
   expect(res.status).toHaveBeenLastCalledWith(400)
 })
@@ -448,4 +440,41 @@ test("OrdersController.show returns error message when passed invalid order id",
   await OrdersController.show(req, res)
   expect(res.json).toHaveBeenLastCalledWith({ messages: ["could not find selected order"] })
   expect(res.status).toHaveBeenLastCalledWith(400)
+})
+
+test("OrdersController.modifyOrder returns the modified order after adding the order history", async () => {
+  await populateSalesItemsTable()
+  let order = await Order.query().insert({
+    amount: 2000,
+    created_at: DateTime.local().toISO(),
+    updated_at: DateTime.local().toISO(),
+    status: "pending",
+    departments: ["kitchen"],
+    placed_by: { name: "some name" },
+    destination: "Bar",
+    delivered_by: { name: "delivered_by" }
+  })
+
+  let req = {
+    get: jest.fn(),
+    params: { id: order.id },
+    body: {
+      delivered_by: "Rikon Waiter",
+      item_details: [
+        { sales_item_id: salesItems[0].id, quantity: 1 },
+        { sales_item_id: salesItems[1].id, quantity: 1 }
+      ]
+    }
+  }
+  req.get.mockReturnValue("authenticated user")
+  let response = null
+  let res = {
+    json: jest.fn((arg) => {
+      response = arg
+    })
+  }
+
+  await OrdersController.modifyOrder(req, res)
+  expect(response.amount).toEqual(8000)
+  expect(response.placed_by).toEqual({ name: "authenticated user authenticated user" })
 })

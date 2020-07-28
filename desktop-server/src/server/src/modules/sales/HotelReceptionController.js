@@ -3,23 +3,6 @@ const Room = require("../../data-access/models/Room")
 const Reservation = require("../../data-access/models/Reservation")
 const Booking = require("../../data-access/models/Booking")
 
-async function getCurrentReservationForRoom(room) {
-  let reservation = await Reservation.query()
-    .where("room_id", "=", room.id)
-    .andWhere("start_date", "=", DateTime.local().toISODate())
-    .andWhere("status", "=", "open")
-    .first()
-  return reservation
-}
-
-async function getCurrentBookingForRoom(room) {
-  let booking = await Booking.query()
-    .where("room_id", "=", room.id)
-    .andWhere("status", "=", "open")
-    .first()
-  return booking
-}
-
 module.exports = {
   async getAllRooms(req, res) {
     try {
@@ -115,4 +98,21 @@ module.exports = {
       return res.status(500).json({ messages: ["something went wrong, try again later"] })
     }
   }
+}
+
+async function getCurrentReservationForRoom(room) {
+  let reservation = await Reservation.query()
+    .where("room_id", "=", room.id)
+    .andWhere("start_date", "=", DateTime.local().toISODate())
+    .andWhere("status", "=", "open")
+    .first()
+  return reservation
+}
+
+async function getCurrentBookingForRoom(room) {
+  let booking = await Booking.query()
+    .where("room_id", "=", room.id)
+    .andWhere("status", "=", "open")
+    .first()
+  return booking
 }

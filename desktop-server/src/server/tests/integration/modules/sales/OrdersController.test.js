@@ -288,9 +288,7 @@ test("OrdersController.create returns the newly created order and its order item
   let req = {
     get: jest.fn(),
     body: {
-      delivered_by: {
-        name: "Rikon Waiter"
-      },
+      destination: "Bar",
       item_details: [
         { sales_item_id: salesItems[0].id, quantity: 3 },
         { sales_item_id: salesItems[1].id, quantity: 1 },
@@ -320,9 +318,7 @@ test("OrdersController.create returns error message when passed invalid data", a
   let req = {
     get: jest.fn(),
     body: {
-      delivered_by: {
-        name: "Rikon Waiter"
-      },
+      destination: "Bar",
       item_details: [
         { sales_item_id: 5, quantity: 3 },
         { sales_item_id: 3, quantity: 1 },
@@ -446,7 +442,9 @@ test("OrdersController.modifyOrder returns the modified order after adding the o
   await populateSalesItemsTable()
   let order = await Order.query().insert({
     amount: 2000,
-    created_at: DateTime.local().toISO(),
+    created_at: DateTime.local()
+      .minus({ days: 1 })
+      .toISO(),
     updated_at: DateTime.local().toISO(),
     status: "pending",
     departments: ["kitchen"],
@@ -459,7 +457,7 @@ test("OrdersController.modifyOrder returns the modified order after adding the o
     get: jest.fn(),
     params: { id: order.id },
     body: {
-      delivered_by: "Rikon Waiter",
+      destination: "Bar",
       item_details: [
         { sales_item_id: salesItems[0].id, quantity: 1 },
         { sales_item_id: salesItems[1].id, quantity: 1 }
@@ -477,4 +475,43 @@ test("OrdersController.modifyOrder returns the modified order after adding the o
   await OrdersController.modifyOrder(req, res)
   expect(response.amount).toEqual(8000)
   expect(response.placed_by).toEqual({ name: "authenticated user authenticated user" })
+  expect(response.created_at).toEqual(order.created_at)
+})
+
+test("OrdersController.modifyOrder returns error message when passed an order that isn't pending", async () => {
+  await populateSalesItemsTable()
+  let order = await Order.query().insert({
+    amount: 2000,
+    created_at: DateTime.local().toISO(),
+    updated_at: DateTime.local().toISO(),
+    status: "fulfilled",
+    departments: ["kitchen"],
+    placed_by: { name: "some name" },
+    destination: "Bar",
+    delivered_by: { name: "delivered_by" }
+  })
+
+  let req = {
+    get: jest.fn(),
+    params: { id: order.id },
+    body: {
+      destination: "Bar",
+      item_details: [
+        { sales_item_id: salesItems[0].id, quantity: 1 },
+        { sales_item_id: salesItems[1].id, quantity: 1 }
+      ]
+    }
+  }
+  req.get.mockReturnValue("authenticated user")
+  let response = null
+  let res = {
+    status: jest.fn(),
+    json: jest.fn((arg) => {
+      response = arg
+    })
+  }
+
+  res.status.mockReturnThis()
+  await OrdersController.modifyOrder(req, res)
+  expect(response.messages).toEqual(["you cannot modify an order that isn't pending"])
 })

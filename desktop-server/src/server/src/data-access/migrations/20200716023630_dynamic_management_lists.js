@@ -21,6 +21,8 @@ exports.up = function(knex) {
     .createTable("management_lists_transactions", (table) => {
       table.increments("id")
       table.integer("management_list_item_id")
+      table.enum("transaction_type", ["discount", "complementary", "debt"]).defaultTo("discount")
+      table.integer("department_id")
       table.integer("sales_id")
       table.string("created_at")
       table.string("active").defaultTo(true)

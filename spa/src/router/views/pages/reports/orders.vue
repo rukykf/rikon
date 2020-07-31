@@ -59,10 +59,10 @@
         sortDesc: false,
         loading: false,
         filterBtnState: "initialize",
-        fromDate: DateTime.local()
+        fromDateTime: DateTime.local()
           .minus({ days: 90 })
           .toISODate(),
-        toDate: DateTime.local().toISODate(),
+        toDateTime: DateTime.local().toISODate(),
         selectedStatus: null,
         success: [],
         errors: [],
@@ -108,17 +108,17 @@
         }
       },
 
-      updateFilteredOrdersWithFilteredList: function(filteredList, filteredListLength) {
+      updateFilteredOrdersWithFilteredList: function(filteredList) {
         this.filteredOrders = filteredList
       },
 
       isFilterByDateValid: function() {
-        if (this.toDate === null || this.fromDate === null) {
+        if (this.toDateTime === null || this.fromDateTime === null) {
           this.errors.push("Please select a FROM and TO date")
           return false
         }
 
-        if (DateTime.fromISO(this.fromDate) > DateTime.fromISO(this.toDate)) {
+        if (DateTime.fromISO(this.fromDateTime) > DateTime.fromISO(this.toDateTime)) {
           this.errors.push("The FROM date must be a day before or the same as the TO date")
           return false
         }
@@ -129,7 +129,7 @@
         try {
           this.loading = true
           this.filterBtnState = "loading"
-          let url = `api/orders?start_date=${this.fromDate}&end_date=${this.toDate}`
+          let url = `api/orders?start_date=${this.fromDateTime}&end_date=${this.toDateTime}`
 
           if (this.selectedStatus !== null && this.selectedStatus !== "") {
             url += `&status=${this.selectedStatus}`
@@ -170,12 +170,11 @@
   <Layout>
     <div class="mt-4">
       <SuccessFailureAlert :errors="errors" :success="success"></SuccessFailureAlert>
-      <div class="row mt-4"> </div>
       <div class="row mt-4">
-        <div class="form-group col-12 col-lg-4">
-          <DateTimeSelector></DateTimeSelector>
+        <div class="form-group col-12 col-lg-5">
+          <DateTimeSelector :fromDateTime.sync="fromDateTime" :toDateTime.sync="toDateTime"></DateTimeSelector>
         </div>
-        <div class="form-group col-12 col-lg-3">
+        <div class="form-group col-12 col-lg-2">
           <label class="font-weight-bold">
             Department:
           </label>
@@ -238,8 +237,8 @@
             </div>
             <div class="row mb-3">
               <h3 class="col-12 col-lg-7"
-                >Order History from <span class="text-info">{{ fromDate | humanDate }}</span> to
-                <span class="text-info">{{ toDate | humanDate }}</span></h3
+                >Order History from <span class="text-info">{{ fromDateTime | humanDateWithTime }}</span> to
+                <span class="text-info">{{ toDateTime | humanDateWithTime }}</span></h3
               >
 
               <div class="col-12 col-lg-5 text-right">

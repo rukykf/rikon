@@ -118,6 +118,12 @@ const pointOfSalesRoutes = [
         meta: { authRequired: true, permission: "can-view-point-of-sales-page" },
         component: () => lazyLoadView(import("@views/pages/pos/point-of-sales")),
       },
+      {
+        path: "reports",
+        name: "Sales Reports",
+        meta: { authRequired: true, permission: "can-view-point-of-sales-page" },
+        component: () => lazyLoadView(import("@views/pages/pos/reports")),
+      },
     ],
   },
 ]

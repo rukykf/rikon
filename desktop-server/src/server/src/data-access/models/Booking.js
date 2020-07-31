@@ -1,5 +1,6 @@
 const { DateTime, Interval } = require("luxon")
 const Objection = require("../objection-config")
+const GetUniqueIdentifierForObject = require("../../utils/GetUniqueIdentifierForObject")
 
 class Booking extends Objection {
   static get tableName() {
@@ -7,7 +8,12 @@ class Booking extends Objection {
   }
 
   static get virtualAttributes() {
-    return ["num_nights", "amount_due"]
+    return ["num_nights", "amount_due", "unique_id"]
+  }
+
+  // eslint-disable-next-line camelcase
+  unique_id() {
+    return GetUniqueIdentifierForObject("RB", this.id, this.created_at)
   }
 
   static getNumNights(startDateISO, endDateISO) {

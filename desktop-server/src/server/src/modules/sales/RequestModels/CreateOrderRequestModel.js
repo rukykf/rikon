@@ -13,8 +13,8 @@ class CreateOrderRequestModel {
       throw new ValidationException(["The item_details property is required for this endpoint"])
     }
 
-    if (!_.has(req, ["body", "delivered_by"])) {
-      throw new ValidationException(["The delivered_by property is required for this endpoint"])
+    if (!_.has(req, ["body", "destination"])) {
+      throw new ValidationException(["The destination property is required for this endpoint"])
     }
 
     /**
@@ -23,7 +23,6 @@ class CreateOrderRequestModel {
     this.itemDetails = req.body.item_details
 
     this.placedBy = { name: `${req.get("first_name")} ${req.get("last_name")}` }
-    this.deliveredBy = { name: _.get(req, ["body", "delivered_by"]) }
     this.destination = _.get(req, ["body", "destination"])
   }
 }

@@ -5,7 +5,7 @@
   import ErrorHandler from "../../../../../ErrorHandler"
 
   export default {
-    name: "waitress-details",
+    name: "waitress-serial-no-details",
     components: { ManagedStateButton, SuccessFailureAlert, FormBackground },
     props: {
       order: {
@@ -19,6 +19,7 @@
         success: [],
         waitressName: this.order.delivered_by ? this.order.delivered_by.name : null,
         waitressNameValidation: null,
+        docketSerialNo: this.order.docket_serial_no,
         disabled: false,
         submitBtnState: "initialize",
       }
@@ -30,11 +31,10 @@
             this.submitBtnState = "loading"
             let url = `api/orders/${this.order.id}`
             await this.$httpClient.patch(url, {
-              status: this.order.status,
-              cancellation_remarks: this.order.cancellation_remarks,
+              docket_serial_no: this.docketSerialNo,
               delivered_by: { name: this.waitressName },
             })
-            this.success.push("Successfully Updated Waiter/Waitress details")
+            this.success.push("Successfully Updated Order details")
             this.waitressNameValidation = null
             this.submitBtnState = "success-try-again"
           } catch (error) {
@@ -71,6 +71,22 @@
         v-model="waitressName"
         type="text"
         name="waitressName"
+        :disabled="disabled"
+        placeholder=""
+        class="form-control "
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="docketSerialNo">
+        <h6>Enter Serial No. for the corresponding docket <em>(optional)</em>: </h6>
+      </label>
+
+      <input
+        id="docketSerialNo"
+        v-model="docketSerialNo"
+        type="text"
+        name="docketSerialNo"
         :disabled="disabled"
         placeholder=""
         class="form-control "

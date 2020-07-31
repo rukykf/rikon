@@ -28,7 +28,7 @@
         roomTypes: [],
         roomFields: [
           { key: "SN", label: "S/N", sortable: false },
-          { key: "room_no", label: "Room Number", sortable: true, sortDirection: "desc" },
+          { key: "display_no", label: "Room Number", sortable: true, sortDirection: "desc" },
           { key: "room_type", label: "Room Type", sortable: true, sortDirection: "desc" },
           { key: "price_per_night", label: "Price per Night", sortable: true, sortDirection: "desc" },
           { key: "actions", label: "Actions", sortable: false, sortDirection: "desc" },

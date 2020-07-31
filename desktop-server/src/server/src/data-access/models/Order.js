@@ -1,8 +1,18 @@
 const Objection = require("../objection-config")
+const GetUniqueIdentifierForObject = require("../../utils/GetUniqueIdentifierForObject")
 
 class Order extends Objection {
   static get tableName() {
     return "orders"
+  }
+
+  static get virtualAttributes() {
+    return ["unique_id"]
+  }
+
+  // eslint-disable-next-line camelcase
+  unique_id() {
+    return GetUniqueIdentifierForObject("RO", this.id, this.created_at)
   }
 
   static get relationMappings() {

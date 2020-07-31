@@ -7,6 +7,23 @@ class Room extends Objection {
     return "rooms"
   }
 
+  static get virtualAttributes() {
+    return ["display_no"]
+  }
+
+  // eslint-disable-next-line camelcase
+  display_no() {
+    if (this.room_no > 100) {
+      return this.room_no
+    }
+
+    if (this.room_no > 9) {
+      return `0${this.room_no}`
+    }
+
+    return `00${this.room_no}`
+  }
+
   static get relationMappings() {
     const RoomType = require("./RoomType")
     const Booking = require("./Booking")

@@ -1,9 +1,19 @@
 const { DateTime } = require("luxon")
 const Objection = require("../objection-config")
+const GetUniqueIdentifierForObject = require("../../utils/GetUniqueIdentifierForObject")
 
 class Sale extends Objection {
   static get tableName() {
     return "sales"
+  }
+
+  static get virtualAttributes() {
+    return ["unique_id"]
+  }
+
+  // eslint-disable-next-line camelcase
+  unique_id() {
+    return GetUniqueIdentifierForObject("RB", this.id, this.created_at)
   }
 
   static get relationMappings() {
@@ -61,10 +71,10 @@ class Sale extends Objection {
 
   $beforeInsert(queryContext) {
     if (this.created_at == null) {
-      this.created_at = DateTime.local().toISO()
+      this.created_at = DateTime.local().toISODate()
     }
 
-    this.updated_at = DateTime.local().toISO()
+    this.updated_at = DateTime.local().toISODate()
     super.$beforeInsert(queryContext)
   }
 

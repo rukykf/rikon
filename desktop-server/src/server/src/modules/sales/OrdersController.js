@@ -22,6 +22,7 @@ module.exports = {
       let orders = await Order.query()
         .where("created_at", ">=", startDate)
         .andWhere("created_at", "<=", endDate)
+        .andWhere("active", "=", 1)
         .withGraphFetched("order_items")
         .withGraphFetched("sale")
         .orderBy("created_at", "desc")
@@ -52,7 +53,7 @@ module.exports = {
     } catch (error) {
       logger.logRequestError(req, error, "Error creating order... see below for error details")
       if (error instanceof ValidationException) {
-        return res.status(400).json(error.messages)
+        return res.status(400).json({ messages: error.messages })
       }
 
       return res.status(400).json({ messages: ["error: could not create order"] })
@@ -112,13 +113,17 @@ module.exports = {
   async modifyOrder(req, res) {
     try {
       let modifyOrderRequest = new ModifyOrderRequestModel(req)
+      let oldOrder = await Order.query().findById(modifyOrderRequest.oldOrderId)
+
+      if (oldOrder.status !== "pending") {
+        return res.status(400).json({ messages: ["you cannot modify an order that isn't pending"] })
+      }
+
       await Order.query().patchAndFetchById(modifyOrderRequest.oldOrderId, {
         active: false
       })
 
-      let oldOrder = await Order.query().findById(modifyOrderRequest.oldOrderId)
-
-      let newOrder = await createOrder(modifyOrderRequest.newOrderRequest)
+      let newOrder = await processModifyOrder(modifyOrderRequest.newOrderRequest, oldOrder)
       let oldOrderIds = oldOrder.old_order_ids != null ? oldOrder.old_order_ids : []
       oldOrderIds.push(oldOrder.id)
 
@@ -132,7 +137,7 @@ module.exports = {
     } catch (error) {
       logger.logRequestError(req, error, "Could not update the order, see error details below")
       if (error instanceof ValidationException) {
-        return res.status(400).json(error.messages)
+        return res.status(400).json({ messages: error.messages })
       }
 
       return res.status(400).json({ messages: ["error: could not modify order"] })
@@ -146,6 +151,43 @@ async function createOrder(createOrderRequest) {
   let orderAmount = 0
   let departments = []
 
+  orderAmount = await processOrderItems(createOrderRequest, orderAmount, orderItems, departments)
+
+  let order = await Order.query().insertGraphAndFetch({
+    amount: orderAmount,
+    created_at: DateTime.local().toISO(),
+    updated_at: DateTime.local().toISO(),
+    status: "pending",
+    departments: departments,
+    placed_by: createOrderRequest.placedBy,
+    destination: createOrderRequest.destination,
+    order_items: orderItems
+  })
+  return order
+}
+
+async function processModifyOrder(createOrderRequest, oldOrder) {
+  let orderItems = []
+  let orderAmount = 0
+  let departments = []
+
+  orderAmount = await processOrderItems(createOrderRequest, orderAmount, orderItems, departments)
+
+  let order = await Order.query().insertGraphAndFetch({
+    amount: orderAmount,
+    created_at: oldOrder.created_at,
+    updated_at: DateTime.local().toISO(),
+    status: "pending",
+    departments: departments,
+    placed_by: createOrderRequest.placedBy,
+    delivered_by: oldOrder.delivered_by,
+    destination: createOrderRequest.destination,
+    order_items: orderItems
+  })
+  return order
+}
+
+async function processOrderItems(createOrderRequest, orderAmount, orderItems, departments) {
   // eslint-disable-next-line no-restricted-syntax
   for (let item of createOrderRequest.itemDetails) {
     // eslint-disable-next-line no-await-in-loop
@@ -169,17 +211,5 @@ async function createOrder(createOrderRequest) {
       departments.push(salesItem.department.name)
     }
   }
-
-  let order = await Order.query().insertGraphAndFetch({
-    amount: orderAmount,
-    created_at: DateTime.local().toISO(),
-    updated_at: DateTime.local().toISO(),
-    status: "pending",
-    departments: departments,
-    placed_by: createOrderRequest.placedBy,
-    delivered_by: createOrderRequest.deliveredBy,
-    destination: createOrderRequest.destination,
-    order_items: orderItems
-  })
-  return order
+  return orderAmount
 }

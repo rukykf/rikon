@@ -12,6 +12,9 @@ module.exports = {
         let reservation = await getCurrentReservationForRoom(rooms[i])
         let booking = await getCurrentBookingForRoom(rooms[i])
 
+        // quick fix for the 001 to 099 problem
+        rooms[i].display_number = getDisplayNumberForRoom(rooms[i])
+
         if (reservation != null) {
           output.push({
             room: rooms[i],
@@ -115,4 +118,16 @@ async function getCurrentBookingForRoom(room) {
     .andWhere("status", "=", "open")
     .first()
   return booking
+}
+
+function getDisplayNumberForRoom(room) {
+  if (room.room_no > 100) {
+    return room.room_no
+  }
+
+  if (room.room_no > 9) {
+    return `0${room.room_no}`
+  }
+
+  return `00${room.room_no}`
 }

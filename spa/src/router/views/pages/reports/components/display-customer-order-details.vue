@@ -36,19 +36,19 @@
     </b-row>
     <b-row class="mb-2">
       <b-col sm="3" class="text-sm-right"><b>Order Placed By:</b></b-col>
-      <b-col>{{ JSON.stringify(details.placed_by) }}</b-col>
+      <b-col>{{ details.placed_by.name }}</b-col>
     </b-row>
 
     <b-row class="mb-2">
       <b-col sm="3" class="text-sm-right"><b>Order Delivered By:</b></b-col>
-      <b-col>{{ JSON.stringify(details.delivered_by) }}</b-col>
+      <b-col>{{ details.delivered_by.name }}</b-col>
     </b-row>
     <b-row class="mb-2">
       <b-col sm="3" class="text-sm-right"><b>Order Details:</b></b-col>
       <b-col>
         <b-row>
           <b-col cols="12" v-for="item in details.order_items"
-            >x{{ item.quantity }} {{ item.unit }}(s) of {{ item.name }} at {{ item.price_per_unit | money }} per unit
+            >{{ item.quantity }} {{ item.unit }}(s) of {{ item.name }} at {{ item.price_per_unit | money }} per unit
             with total of {{ item.amount | money }}
           </b-col>
         </b-row>

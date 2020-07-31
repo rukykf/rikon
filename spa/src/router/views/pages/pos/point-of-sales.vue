@@ -6,7 +6,8 @@
   import ManagedStateButton from "../../../../components/managed-state-button"
   import FulfillOrder from "./components/fulfill-order"
   import CancelOrder from "./components/cancel-order"
-  import WaitressDetails from "./components/waitress-details"
+  import AdditionalDetails from "./components/waitress-serial-no-details"
+  import ModifyOrder from "@views/pages/pos/components/modify-order"
 
   /**
    * Starter component
@@ -17,7 +18,8 @@
       meta: [{ name: "description", content: appConfig.description }],
     },
     components: {
-      WaitressDetails,
+      ModifyOrder,
+      AdditionalDetails,
       CancelOrder,
       FulfillOrder,
       ManagedStateButton,
@@ -64,13 +66,6 @@
           return this.pendingOrders.orders.length
         }
         return null
-      },
-      newOrderTotal: function() {
-        let total = 0
-        this.newOrder.orderItems.forEach((e) => {
-          total += e.subTotal
-        })
-        return total
       },
     },
 
@@ -121,7 +116,7 @@
           let rooms = response.data
           this.destinations = ["Dining Hall", "Garden", "Bar"]
           rooms.forEach((room) => {
-            this.destinations.push(`Room ${room.room_no}`)
+            this.destinations.push(`Room ${room.display_no}`)
           })
           this.loading = false
         } catch (error) {
@@ -164,9 +159,14 @@
         }
       },
 
-      showOrderFulfillmentModal: function(orderIndex) {
+      showFulfillOrderModal: function(orderIndex) {
         this.selectedOrder = this.pendingOrders.orders[orderIndex]
-        this.$bvModal.show("order-fulfilled-modal")
+        this.$bvModal.show("fulfill-order-modal")
+      },
+
+      showModifyOrderModal: function(orderIndex) {
+        this.selectedOrder = this.pendingOrders.orders[orderIndex]
+        this.$bvModal.show("modify-order-modal")
       },
 
       showCancelOrderModal: function(orderIndex) {
@@ -174,9 +174,9 @@
         this.$bvModal.show("cancel-order-modal")
       },
 
-      showAddWaitressDetails: function(orderIndex) {
+      showAdditionalDetailsModal: function(orderIndex) {
         this.selectedOrder = this.pendingOrders.orders[orderIndex]
-        this.$bvModal.show("waitress-details-modal")
+        this.$bvModal.show("additional-details-modal")
       },
 
       addItemToNewOrder: function(id) {
@@ -363,14 +363,17 @@
           <div class="table-responsive">
             <table class="table table-borderless">
               <thead>
-                <th>S/N</th>
-                <th>Date/Time</th>
-                <th>Items</th>
-                <th>Order Total</th>
-                <th>Destination</th>
-                <th>Waiter/Waitress</th>
-                <th>Placed By</th>
-                <th>Department(s)</th>
+                <tr>
+                  <th>S/N</th>
+                  <th>Date/Time</th>
+                  <th>Items</th>
+                  <th>Order Total</th>
+                  <th>Destination</th>
+                  <th>Waiter/Waitress</th>
+                  <th>Docket Serial No.</th>
+                  <th>Placed By</th>
+                  <th>Department(s)</th>
+                </tr>
               </thead>
               <tbody>
                 <tr>
@@ -405,6 +408,7 @@
                     }}</span>
                     <span v-else class="text-danger">NIL</span>
                   </td>
+                  <td>{{ order.docket_serial_no }}</td>
                   <td>{{ order.placed_by.name.toUpperCase() | capitalize }}</td>
                   <td>{{ order.departments }}</td>
                 </tr>
@@ -412,10 +416,13 @@
             </table>
           </div>
           <div class="float-right">
-            <b-button variant="secondary" class="mx-3 mb-1" @click.prevent.stop="showAddWaitressDetails(index)">
-              <span class="align-middle">Save Waiter/Waitress Details</span>
+            <b-button variant="dark" class="mx-3 mb-1" @click.prevent.stop="showModifyOrderModal(index)">
+              <span class="align-middle">Modify Order</span>
             </b-button>
-            <b-button variant="primary" class="mx-3 mb-1" @click.prevent.stop="showOrderFulfillmentModal(index)">
+            <b-button variant="secondary" class="mx-3 mb-1" @click.prevent.stop="showAdditionalDetailsModal(index)">
+              <span class="align-middle">Save Waiter / Waitress / Serial No. Details</span>
+            </b-button>
+            <b-button variant="primary" class="mx-3 mb-1" @click.prevent.stop="showFulfillOrderModal(index)">
               <feather type="check" class="align-middle"></feather>
               <span class="align-middle">Mark as Fulfilled</span>
             </b-button>
@@ -429,7 +436,7 @@
     </div>
 
     <b-modal
-      id="order-fulfilled-modal"
+      id="fulfill-order-modal"
       @hide="getPendingOrdersData"
       size="lg"
       hide-footer
@@ -437,6 +444,17 @@
       title="Record Order Payment and Fulfill Order"
     >
       <FulfillOrder :order="selectedOrder"></FulfillOrder>
+    </b-modal>
+
+    <b-modal
+      id="modify-order-modal"
+      @hide="getPendingOrdersData"
+      size="xl"
+      hide-footer
+      header-bg-variant="dark"
+      title="Modify Order"
+    >
+      <ModifyOrder :order="selectedOrder" :department-items-only="departmentItemsOnly"></ModifyOrder>
     </b-modal>
 
     <b-modal
@@ -451,14 +469,14 @@
     </b-modal>
 
     <b-modal
-      id="waitress-details-modal"
+      id="additional-details-modal"
       @hide="getPendingOrdersData"
       size="lg"
       hide-footer
       header-bg-variant="dark"
-      title="Add Waiter/Waitress Details"
+      title="Add Additional Details"
     >
-      <WaitressDetails :order="selectedOrder"></WaitressDetails>
+      <AdditionalDetails :order="selectedOrder"></AdditionalDetails>
     </b-modal>
   </Layout>
 </template>

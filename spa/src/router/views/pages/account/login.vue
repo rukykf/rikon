@@ -21,7 +21,7 @@
         username: null,
         password: null,
         department: null,
-        departments: [{ id: 1, name: "All Departments" }],
+        departments: [{ id: "x", name: "All Departments" }],
         loginBtnState: "initialize",
         authError: null,
         errors: [],

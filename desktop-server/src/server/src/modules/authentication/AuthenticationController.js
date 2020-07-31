@@ -1,3 +1,4 @@
+const { NotFoundError } = require("objection")
 const _ = require("lodash")
 const User = require("../../data-access/models/User")
 
@@ -12,7 +13,11 @@ module.exports = {
         .throwIfNotFound()
       return res.json(user)
     } catch (error) {
-      return res.status(400).json({ messages: ["invalid login credentials"] })
+      if (error instanceof NotFoundError) {
+        return res.status(400).json({ messages: ["invalid login credentials"] })
+      }
+
+      return res.status(500).json({ messages: ["something went wrong, please try again later"] })
     }
   }
 }

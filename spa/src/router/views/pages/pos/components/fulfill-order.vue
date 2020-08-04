@@ -40,8 +40,6 @@
             this.loading = true
             await this.$httpClient.patch(url, {
               status: "fulfilled",
-              cancellation_remarks: this.order.cancellation_remarks,
-              delivered_by: this.order.delivered_by,
             })
             this.success.push("Successfully Fulfilled Order")
             this.loading = false

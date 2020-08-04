@@ -36,12 +36,12 @@
     </b-row>
     <b-row class="mb-2">
       <b-col sm="3" class="text-sm-right"><b>Order Placed By:</b></b-col>
-      <b-col>{{ details.placed_by.name }}</b-col>
+      <b-col>{{ details.placed_by != null ? details.placed_by.name : "NIL" }}</b-col>
     </b-row>
 
     <b-row class="mb-2">
       <b-col sm="3" class="text-sm-right"><b>Order Delivered By:</b></b-col>
-      <b-col>{{ details.delivered_by.name }}</b-col>
+      <b-col>{{ details.delivered_by != null ? details.delivered_by.name : "NIL" }}</b-col>
     </b-row>
     <b-row class="mb-2">
       <b-col sm="3" class="text-sm-right"><b>Order Details:</b></b-col>

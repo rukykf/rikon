@@ -10,7 +10,7 @@ module.exports = {
   async index(req, res) {
     try {
       let requestModel = new ManagementListIndexRequestModel(req)
-      let managementListQueryBuilder = ManagementList.query()
+      let managementListQueryBuilder = ManagementList.query().where("active", "=", 1)
 
       if (requestModel.list_name !== null) {
         managementListQueryBuilder.where("list_name", "=", requestModel.list_name)

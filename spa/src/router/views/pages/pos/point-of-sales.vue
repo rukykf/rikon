@@ -144,6 +144,7 @@
 
       placeOrder: async function() {
         try {
+          this.placeOrderBtnState = "loading"
           await this.$httpClient.post("api/orders", {
             item_details: this.newOrder.orderItems,
             destination: this.newOrder.destination,
@@ -151,9 +152,11 @@
           this.success.push("Successfully placed new order")
           this.newOrder.orderItems = []
           this.newOrder.salesItems = []
-          this.newOrder.destination = "Dining Hall/Garden"
+          this.newOrder.destination = "Dining Hall"
+          this.placeOrderBtnState = "initialize"
           this.getPendingOrdersData()
         } catch (error) {
+          this.placeOrderBtnState = "fail-try-again"
           let errors = ErrorHandler(error)
           this.errors.push(...errors)
         }

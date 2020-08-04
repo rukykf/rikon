@@ -5,6 +5,8 @@ const DepartmentsController = require("../modules/configuration/DepartmentsContr
 const SalesItemsController = require("../modules/configuration/SalesItemsController")
 const RoomTypesController = require("../modules/configuration/RoomTypesController")
 const RoomsController = require("../modules/configuration/RoomsController")
+const DynamicManagementListsController = require("../modules/configuration/DynamicManagementListsController")
+const DynamicManagementListTransactionsController = require("../modules/configuration/DynamicManagementListTransactionsController")
 
 let router = Router()
 
@@ -44,5 +46,9 @@ router.post("/rooms", RoomsController.create)
 router.get("/rooms/:id", RoomsController.show)
 router.delete("/rooms/:id", RoomsController.delete)
 router.post("/rooms/:id", RoomsController.edit)
+
+router.get("/management-list", DynamicManagementListsController.index)
+
+router.post("/management-list-transactions", DynamicManagementListTransactionsController.create)
 
 module.exports = router

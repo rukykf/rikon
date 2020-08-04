@@ -13,7 +13,7 @@ class Sale extends Objection {
 
   // eslint-disable-next-line camelcase
   unique_id() {
-    return GetUniqueIdentifierForObject("RB", this.id, this.created_at)
+    return GetUniqueIdentifierForObject("RS", this.id, this.created_at)
   }
 
   static get relationMappings() {

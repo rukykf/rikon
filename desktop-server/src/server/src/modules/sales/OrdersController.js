@@ -17,7 +17,11 @@ module.exports = {
         : DateTime.local()
             .minus({ days: 90 })
             .toISODate()
-      let endDate = _.get(req, ["query", "end_date"]) ? req.query.end_date : DateTime.local().toISODate()
+      let endDate = _.get(req, ["query", "end_date"])
+        ? req.query.end_date
+        : DateTime.local()
+            .plus({ days: 1 })
+            .toISODate()
 
       let orders = await Order.query()
         .where("created_at", ">=", startDate)
@@ -161,7 +165,8 @@ async function createOrder(createOrderRequest) {
     departments: departments,
     placed_by: createOrderRequest.placedBy,
     destination: createOrderRequest.destination,
-    order_items: orderItems
+    order_items: orderItems,
+    active: 1
   })
   return order
 }
@@ -180,7 +185,7 @@ async function processModifyOrder(createOrderRequest, oldOrder) {
     status: "pending",
     departments: departments,
     placed_by: createOrderRequest.placedBy,
-    delivered_by: oldOrder.delivered_by,
+    delivered_by: oldOrder.delivered_by != null ? oldOrder.delivered_by : {},
     destination: createOrderRequest.destination,
     order_items: orderItems
   })

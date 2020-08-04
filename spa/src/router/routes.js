@@ -164,6 +164,47 @@ const storeRoutes = [
   },
 ]
 
+const complementaryTransactionRoutes = [
+  {
+    path: "/complementary",
+    name: "Complementary",
+    icon: "tag",
+    meta: { authRequired: true, permission: "can-view-reports" },
+    // create a container component
+    component: {
+      render(c) {
+        return c("router-view")
+      },
+    },
+    children: [
+      {
+        path: "approvers",
+        name: "Debt Approvers",
+        meta: { authRequired: true, permission: "can-view-reports" },
+        component: () => lazyLoadView(import("@views/pages/complementary-reports/debt-approvers")),
+      },
+      {
+        path: "discounts",
+        name: "Discount Transactions",
+        meta: { authRequired: true, permission: "can-view-reports" },
+        component: () => lazyLoadView(import("@views/pages/complementary-reports/approved-for-discounts")),
+      },
+      {
+        path: "complementary",
+        name: "Complementary Transactions",
+        meta: { authRequired: true, permission: "can-view-reports" },
+        component: () => lazyLoadView(import("@views/pages/complementary-reports/approved-for-complementary")),
+      },
+      {
+        path: "company",
+        name: "Company Transactions",
+        meta: { authRequired: true, permission: "can-view-reports" },
+        component: () => lazyLoadView(import("@views/pages/complementary-reports/company-transactions")),
+      },
+    ],
+  },
+]
+
 const configurationRoutes = [
   {
     path: "/configuration",
@@ -253,6 +294,7 @@ const authProtectedRoutes = [
   ...bookingsAndReservationsRoutes,
   ...pointOfSalesRoutes,
   ...reportsRoutes,
+  ...complementaryTransactionRoutes,
   ...configurationRoutes,
   ...logoutRoutes,
 ]

@@ -34,7 +34,6 @@
             await this.$httpClient.patch(url, {
               status: "cancelled",
               cancellation_remarks: this.reasonForCancellation,
-              delivered_by: this.order.delivered_by,
             })
             this.success.push("Successfully Cancelled Order")
             this.reasonForCancellationValidation = null

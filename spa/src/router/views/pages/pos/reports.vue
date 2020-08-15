@@ -2,7 +2,7 @@
   import Layout from "@layouts/main"
   import CashPosDebtSalesBreakdown from "@views/pages/pos/components/cash-pos-debt-sales-breakdown"
   import SalesItemsQuantityBreakdown from "@views/pages/pos/components/sales-items-quantity-breakdown"
-  import OrderHistory from "@views/pages/pos/components/order-history"
+  import OrderHistory from "@components/shared/order-history"
 
   export default {
     name: "reports",

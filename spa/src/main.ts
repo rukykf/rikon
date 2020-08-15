@@ -58,6 +58,18 @@ Vue.filter("capitalize", function(value) {
 	return value.charAt(0).toUpperCase() + value.slice(1)
 })
 
+Vue.filter("prettyList", function(value) {
+	let displayText = ""
+	value.forEach((item, index) => {
+		if(index === value.length - 1){
+			displayText += `${item}`
+		}else{
+			displayText += `${item}, `
+		}
+	})
+	return displayText
+})
+
 Vue.filter("capitalizeAll", function(value) {
 	if (!value) return ""
 	value = value.toString()

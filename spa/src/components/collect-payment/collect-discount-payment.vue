@@ -43,6 +43,7 @@
         authorizedByValidation: null,
         discountGrantedToValidation: null,
         paymentBtnState: "initialize",
+        department: this.$store.state.auth.currentDepartment,
       }
     },
 
@@ -126,11 +127,15 @@
         await this.$httpClient.post(`api/management-list-transactions`, {
           management_list_item_id: this.authorizedBy.id,
           sales_id: saleId,
+          transaction_type: "discount",
+          department_id: this.department.id === "x" ? 0 : this.department.id,
         })
 
         await this.$httpClient.post(`api/management-list-transactions`, {
           management_list_item_id: this.discountGrantedTo.id,
           sales_id: saleId,
+          transaction_type: "discount",
+          department_id: this.department.id === "x" ? 0 : this.department.id,
         })
       },
 
@@ -231,7 +236,7 @@
             <h6>Total Amount Due: </h6>
           </label>
 
-          <p class="bg-light pl-2 py-2 rounded" id="totalAmountDue">{{ requiredAmount }}</p>
+          <p class="bg-light pl-2 py-2 rounded" id="totalAmountDue">{{ requiredAmount | money }}</p>
         </div>
 
         <div class="form-group">

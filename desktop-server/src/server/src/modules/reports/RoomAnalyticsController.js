@@ -5,7 +5,9 @@ const HistoricalRoomBookingAnalytics = require("./RequestModels/HistoricalRoomBo
 module.exports = {
   async getRoomOccupationAnalyticsByRoomType(req, res) {
     try {
-      let roomTypes = await RoomType.query().withGraphFetched("rooms.currentBooking")
+      let roomTypes = await RoomType.query()
+        .withGraphFetched("rooms.currentBooking")
+        .orderBy("name")
       let roomTypesAnalytics = []
 
       roomTypes.forEach((roomType) => {

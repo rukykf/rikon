@@ -41,7 +41,7 @@ function generateManagementTransactions(managementListItemId, num, saleType = "c
     let managementListTransaction = {
       id: managementListTransactionsCount,
       sales_id: saleId,
-      management_list_item_id: 1, // Festus Washington has an ID of 1
+      management_list_item_id: 1, // MD Authorizer has an ID of 1
       created_at: DateTime.local().toISODate()
     }
 
@@ -72,6 +72,8 @@ function generateComplementarySale() {
     sellable_id: 1,
     sellable_type: "booking",
     status: "paid",
+    created_at: DateTime.local().toISODate(),
+    updated_at: DateTime.local().toISODate(),
     customer_details: JSON.stringify({ name: "some name" }),
     credit_authorized_by: JSON.stringify({ name: "Festus Washington" })
   }
@@ -90,6 +92,8 @@ function generateDiscountSale() {
     sellable_id: 1,
     sellable_type: "order",
     status: "paid",
+    created_at: DateTime.local().toISODate(),
+    updated_at: DateTime.local().toISODate(),
     customer_details: JSON.stringify({ name: "some name" }),
     credit_authorized_by: JSON.stringify({ name: "Festus Washington" })
   }
@@ -107,7 +111,9 @@ function generateOwingSale() {
     total_due: 10000,
     sellable_id: 1,
     sellable_type: "order",
-    status: "paid",
+    status: "owing",
+    created_at: DateTime.local().toISODate(),
+    updated_at: DateTime.local().toISODate(),
     customer_details: JSON.stringify({ name: "some name" }),
     credit_authorized_by: JSON.stringify({ name: "Festus Washington" })
   }

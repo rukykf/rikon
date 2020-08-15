@@ -120,4 +120,12 @@ async function setDefaultAuthHeaders(state) {
     ApiClient.defaults.headers.common["first_name"] = null
     ApiClient.defaults.headers.common["username"] = null
   }
+
+  if (state.currentDepartment !== null) {
+    ApiClient.defaults.headers.common["department_id"] = state.currentDepartment.id
+    ApiClient.defaults.headers.common["department_name"] = state.currentDepartment.name
+  } else {
+    ApiClient.defaults.headers.common["department_id"] = null
+    ApiClient.defaults.headers.common["department_name"] = null
+  }
 }

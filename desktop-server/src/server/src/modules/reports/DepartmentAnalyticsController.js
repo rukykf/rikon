@@ -1,3 +1,4 @@
+const db = require("../../data-access/db-config")
 const Sale = require("../../data-access/models/Sale")
 const Booking = require("../../data-access/models/Booking")
 const Order = require("../../data-access/models/Order")
@@ -7,7 +8,49 @@ const SalesBreakdownResponse = require("./ResponseModels/SalesBreakdownResponseM
 const DepartmentSalesBreakdownRequest = require("./RequestModels/DepartmentSalesBreakdownRequest")
 
 module.exports = {
-  async getDepartmentSalesBreakdown(req, res) {
+  async getDepartmentSalesBreakdownFromSalesTable(req, res) {
+    try {
+      let departmentSalesBreakdownRequest = new DepartmentSalesBreakdownRequest(req)
+
+      let filterByDateQuery = "and sales.item_created_at >= :startDate and sales.item_created_at <= :endDate"
+      let filterByDepartmentQuery = ""
+
+      if (departmentSalesBreakdownRequest.department_id !== null) {
+        filterByDepartmentQuery = "and sales.department_id = :departmentId"
+      }
+
+      // pos, cash and transfer breakdown
+      let queryParams = {
+        startDate: departmentSalesBreakdownRequest.start_date,
+        endDate: departmentSalesBreakdownRequest.end_date,
+        paymentMethod: "cash",
+        departmentId: departmentSalesBreakdownRequest.department_id
+      }
+
+      let paymentMethodAggregateQuery = `select sum(amount) as total_amount from sales join sales_transactions on sales.id = sales_transactions.sales_id where sales.active = 1 and sales_transactions.transaction_type = :paymentMethod ${filterByDepartmentQuery} ${filterByDateQuery}`
+      let { total_amount: totalCash } = await db.raw(paymentMethodAggregateQuery, queryParams)
+
+      queryParams.paymentMethod = "pos"
+      let { total_amount: totalPOS } = await db.raw(paymentMethodAggregateQuery, queryParams)
+
+      queryParams.paymentMethod = "transfer"
+      let { total_amount: totalTransfer } = await db.raw(paymentMethodAggregateQuery, queryParams)
+
+      // total sales and total debt
+      let totalSalesQuery = `select sum(total_amount) as total_sales from sales where sales.active = 1 ${filterByDepartmentQuery} ${filterByDateQuery}`
+      let { total_sales: totalSales } = await db.raw(totalSalesQuery, queryParams)
+
+      let totalDebtQuery = `select sum(total_due) as total_debt from sales where sales.active = 1 ${filterByDepartmentQuery} ${filterByDateQuery}`
+      let { total_debt: totalDebt } = await db.raw(totalDebtQuery, queryParams)
+
+      // discount, complementary and company
+      let totalDiscountQuery = `select sum(total_complementary) as total_discount from sales where sales.active = 1 ${filterByDepartmentQuery} ${filterByDateQuery}`
+    } catch (error) {
+      res.status(500).json({ messages: ["something went wrong, please try again later"] })
+    }
+  },
+
+  async getDepartmentSalesBreakdownFromOrdersTable(req, res) {
     try {
       let departmentSalesBreakdownRequest = new DepartmentSalesBreakdownRequest(req)
 

@@ -46,7 +46,7 @@ test("DepartmentAnalyticsController.getBookingsSalesBreakdown returns accurate r
   expect(response.totalPOSSales).toEqual(5000)
 })
 
-test("DepartmentAnalyticsController.getDepartmentSalesBreakdown returns accurate report of sales breakdown for fulfilled orders", async () => {
+test("DepartmentAnalyticsController.getDepartmentSalesBreakdownFromOrdersTable returns accurate report of sales breakdown for fulfilled orders", async () => {
   await populateDepartmentsBookingsAndOrders()
 
   let req = {
@@ -67,19 +67,19 @@ test("DepartmentAnalyticsController.getDepartmentSalesBreakdown returns accurate
     })
   }
   res.status.mockReturnThis()
-  await DepartmentAnalyticsController.getDepartmentSalesBreakdown(req, res)
+  await DepartmentAnalyticsController.getDepartmentSalesBreakdownFromOrdersTable(req, res)
   expect(response.totalCashSales).toEqual(8000)
   expect(response.totalTransferSales).toEqual(6000)
   expect(response.totalPOSSales).toEqual(10000)
 
-  req.query.department = "BAR"
-  await DepartmentAnalyticsController.getDepartmentSalesBreakdown(req, res)
+  req.query.department_name = "BAR"
+  await DepartmentAnalyticsController.getDepartmentSalesBreakdownFromOrdersTable(req, res)
   expect(response.totalCashSales).toEqual(4000)
   expect(response.totalTransferSales).toEqual(3000)
   expect(response.totalPOSSales).toEqual(5000)
 
-  req.query.department = "kitchen"
-  await DepartmentAnalyticsController.getDepartmentSalesBreakdown(req, res)
+  req.query.department_name = "kitchen"
+  await DepartmentAnalyticsController.getDepartmentSalesBreakdownFromOrdersTable(req, res)
   expect(response.totalCashSales).toEqual(4000)
   expect(response.totalTransferSales).toEqual(3000)
   expect(response.totalPOSSales).toEqual(5000)

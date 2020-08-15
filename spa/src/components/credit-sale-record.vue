@@ -231,7 +231,7 @@
           <b-col>{{ record.updated_at | humanDate }}</b-col>
         </b-row>
 
-        <div v-if="record.credit_authorized_by !== null">
+        <div v-if="record.customer_details != null">
           <b-row class="mb-2">
             <b-col sm="3" class="text-sm-right"><b>Customer Name:</b></b-col>
             <b-col>{{ record.customer_details.name }}</b-col>
@@ -241,7 +241,9 @@
             <b-col sm="3" class="text-sm-right"><b>Customer Phone:</b></b-col>
             <b-col>{{ record.customer_details.phone }}</b-col>
           </b-row>
+        </div>
 
+        <div v-if="record.credit_authorized_by != null">
           <b-row class="mb-2">
             <b-col sm="3" class="text-sm-right"><b>Credit Authorized By: </b></b-col>
             <b-col>{{ record.credit_authorized_by.name }}</b-col>
@@ -339,18 +341,20 @@
       </div>
     </div>
     <div v-else-if="currentTab === 'sales details'" class="mt-3">
-      <DisplayCustomerBookingDetails
-        :details="record.details.elements"
-        v-if="record.details.type === 'booking'"
-      ></DisplayCustomerBookingDetails>
-      <DisplayCustomerOrderDetails
-        :details="record.details.elements"
-        v-if="record.details.type === 'order'"
-      ></DisplayCustomerOrderDetails>
-      <DisplayMergedSaleDetails
-        :details="record.details"
-        v-if="record.details.type === 'merged'"
-      ></DisplayMergedSaleDetails>
+      <slot name="sales-details">
+        <DisplayCustomerBookingDetails
+          :details="record.booking"
+          v-if="record.sellable_type === 'booking'"
+        ></DisplayCustomerBookingDetails>
+        <DisplayCustomerOrderDetails
+          :details="record.order"
+          v-if="record.sellable_type === 'order'"
+        ></DisplayCustomerOrderDetails>
+        <!--        <DisplayMergedSaleDetails-->
+        <!--          :details="record.details"-->
+        <!--          v-if="record.details.type === 'merged'"-->
+        <!--        ></DisplayMergedSaleDetails>-->
+      </slot>
     </div>
     <div v-else-if="currentTab === 'transaction history'" class="mt-3">
       <div v-if="loading">

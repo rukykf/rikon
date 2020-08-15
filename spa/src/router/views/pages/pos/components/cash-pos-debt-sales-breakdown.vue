@@ -47,7 +47,7 @@
           let url = `api/department-analytics?start_date=${this.fromDate}&end_date=${this.toDate}`
 
           if (this.department.id !== "x") {
-            url += `&department=${this.department.name}`
+            url += `&department_name=${this.department.name}`
           }
 
           let response = await this.$httpClient.get(url)

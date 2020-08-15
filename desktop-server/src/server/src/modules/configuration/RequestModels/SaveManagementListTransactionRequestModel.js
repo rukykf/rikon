@@ -13,6 +13,14 @@ module.exports = class SaveManagementListTransactionRequestModel {
     if (_.has(req, ["body", "sales_id"])) {
       this.sales_id = req.body.sales_id
     }
+
+    if (_.has(req, ["body", "transaction_type"])) {
+      this.transaction_type = req.body.transaction_type
+    }
+
+    if (_.has(req, ["body", "department_id"])) {
+      this.department_id = req.body.department_id
+    }
   }
 
   async validateCreate() {

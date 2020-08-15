@@ -24,12 +24,12 @@ module.exports = {
             .toISODate()
 
       let orders = await Order.query()
-        .where("created_at", ">=", startDate)
-        .andWhere("created_at", "<=", endDate)
-        .andWhere("active", "=", 1)
-        .withGraphFetched("order_items")
-        .withGraphFetched("sale")
-        .orderBy("created_at", "desc")
+        .where("orders.created_at", ">=", startDate)
+        .andWhere("orders.created_at", "<=", endDate)
+        .andWhere("orders.active", "=", 1)
+        .withGraphJoined("order_items")
+        .withGraphJoined("sale")
+        .orderBy("orders.created_at", "desc")
 
       if (_.get(req, ["query", "status"]) != null) {
         orders = orders.filter((el) => {
@@ -45,6 +45,7 @@ module.exports = {
 
       res.json({ start_date: startDate, end_date: endDate, orders: orders })
     } catch (error) {
+      logger.logRequestError(req, error, "Could not list orders")
       res.status(500).json({ messages: ["something went wrong, try again later"] })
     }
   },

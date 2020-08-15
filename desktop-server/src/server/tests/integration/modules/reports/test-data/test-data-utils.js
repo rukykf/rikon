@@ -23,6 +23,8 @@ module.exports = {
         total_complementary: 0,
         total_due: 0,
         sellable_id: 1,
+        department_id: 1,
+        transaction_type: "cash",
         sellable_type: "booking",
         status: "owing"
       })
@@ -36,6 +38,8 @@ module.exports = {
         total_complementary: 0,
         total_due: 0,
         sellable_id: 2,
+        department_id: 1,
+        transaction_type: "cash",
         sellable_type: "booking",
         status: "owing"
       })
@@ -286,6 +290,8 @@ async function populateSaleAndSalesTransactions(sellableType, sellableId, amount
     total_complementary: 0,
     total_due: 0,
     sellable_id: sellableId,
+    department_id: 1,
+    transaction_type: "cash",
     sellable_type: sellableType,
     status: "paid"
   })
@@ -329,6 +335,8 @@ async function populateDebtSale(sellableType, sellableId, amount) {
     total_paid: 0,
     total_complementary: 0,
     total_due: amount,
+    department_id: 1,
+    transaction_type: "cash",
     sellable_id: sellableId,
     sellable_type: sellableType,
     status: "owing"

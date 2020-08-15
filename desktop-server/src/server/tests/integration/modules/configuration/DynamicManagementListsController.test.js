@@ -19,7 +19,7 @@ test("DynamicManagementListsController.index returns a list of all the people in
 
   await DynamicManagementListsController.index(req, res)
   expect(output.length).toEqual(16)
-  expect(output[1]).toMatchObject(managementListData[1])
+  expect(output[0]).toMatchObject(managementListData[0])
 })
 
 test("DynamicManagementListsController.index filters list of people by the list_name", async () => {

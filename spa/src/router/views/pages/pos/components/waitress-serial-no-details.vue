@@ -24,6 +24,7 @@
         submitBtnState: "initialize",
       }
     },
+
     methods: {
       async validateAndSubmit() {
         if (this.isWaitressFormValid()) {

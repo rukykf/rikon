@@ -94,6 +94,12 @@ const bookingsAndReservationsRoutes = [
         meta: { authRequired: true, permission: "can-view-hotel-reception-dashboard" },
         component: () => lazyLoadView(import("@views/pages/hotel-bookings/bookings")),
       },
+      {
+        path: "reports",
+        name: "Reception Sales Reports",
+        meta: { authRequired: true, permission: "can-view-hotel-reception-dashboard" },
+        component: () => lazyLoadView(import("@views/pages/hotel-bookings/hotel-rooms-reports")),
+      },
     ],
   },
 ]
@@ -128,42 +134,6 @@ const pointOfSalesRoutes = [
   },
 ]
 
-const storeRoutes = [
-  {
-    path: "/store",
-    name: "Store",
-    icon: "tag",
-    meta: { authRequired: false },
-    // create a container component
-    component: {
-      render(c) {
-        return c("router-view")
-      },
-    },
-    props: (route) => ({ user: store.state.auth.currentUser || {} }),
-    children: [
-      {
-        path: "inventory",
-        name: "Inventory",
-        meta: { authRequired: false },
-        component: () => lazyLoadView(import("@views/pages/store/inventory")),
-      },
-      {
-        path: "history",
-        name: "History",
-        meta: { authRequired: false },
-        component: () => lazyLoadView(import("@views/pages/store/history")),
-      },
-      {
-        path: "queries",
-        name: "Queries",
-        meta: { authRequired: false },
-        component: () => lazyLoadView(import("@views/pages/store/queries")),
-      },
-    ],
-  },
-]
-
 const complementaryTransactionRoutes = [
   {
     path: "/complementary",
@@ -179,7 +149,7 @@ const complementaryTransactionRoutes = [
     children: [
       {
         path: "approvers",
-        name: "Debt Approvers",
+        name: "Debt Authorizers",
         meta: { authRequired: true, permission: "can-view-reports" },
         component: () => lazyLoadView(import("@views/pages/complementary-reports/debt-approvers")),
       },
@@ -257,15 +227,15 @@ const reportsRoutes = [
     children: [
       {
         path: "sales-history",
-        name: "Sales History",
+        name: "Sales History & Analytics",
         meta: { authRequired: true, permission: "can-view-reports" },
         component: () => lazyLoadView(import("@views/pages/reports/sales")),
       },
       {
-        path: "credit-sales",
-        name: "Manage Credit Sales",
+        path: "cash-pos-complementary-breakdown",
+        name: "Cash, POS Breakdown",
         meta: { authRequired: true, permission: "can-view-reports" },
-        component: () => lazyLoadView(import("@views/pages/reports/credit-sales")),
+        component: () => lazyLoadView(import("@views/pages/reports/cash-pos-complementary-breakdown")),
       },
       {
         path: "bookings",
@@ -278,12 +248,6 @@ const reportsRoutes = [
         name: "Order History",
         meta: { authRequired: true, permission: "can-view-reports" },
         component: () => lazyLoadView(import("@views/pages/reports/orders")),
-      },
-      {
-        path: "rikon-letterhead",
-        name: "Generate Letterhead",
-        meta: { authRequired: true, permission: "can-view-reports" },
-        component: () => lazyLoadView(import("@views/pages/reports/rikon-letterhead-report")),
       },
     ],
   },

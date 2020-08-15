@@ -4,10 +4,11 @@
   import _ from "lodash"
   import BookingForm from "./booking-form"
   import ErrorHandler from "../../../../../ErrorHandler"
+  import CollectBookingPayment from "@components/collect-payment/collect-booking-payment"
 
   export default {
     name: "book-room",
-    components: { BookingForm, SuccessFailureAlert, CollectCashPayment },
+    components: { CollectBookingPayment, BookingForm, SuccessFailureAlert, CollectCashPayment },
     props: {
       room: {
         type: Object,
@@ -18,6 +19,7 @@
       return {
         bookRoomFormState: "initialize",
         editCustomerDetailsFormState: "initialize",
+        tabs: ["Booking Details", "Edit Booking Details", "Collect Payment"],
         booking: null,
         collectCashPaymentState: "initialize",
         success: [],
@@ -110,85 +112,86 @@
       <BookingForm :state="bookRoomFormState" @save-booking="bookRoom"></BookingForm>
     </div>
 
-    <div class="text-center">
-      <div v-if="booking !== null" class="row">
-        <div class="col-12 col-lg-4 mt-4">
-          <div class="text-left mt-1 mb-4">
-            <h5>Edit Booking Details</h5>
-            <BookingForm
-              :booking="booking"
-              :state="editCustomerDetailsFormState"
-              @save-booking="editCustomerDetails"
-            ></BookingForm>
-          </div>
-        </div>
-        <div class="col-12 col-lg-4 mt-4">
-          <b-card-header>
-            Booking Details
-          </b-card-header>
-          <b-card-body class="text-left">
-            <table class="table table-responsive table-hover">
-              <tbody>
-                <tr>
-                  <td class="font-weight-semibold">Booking Date:</td>
-                  <td> {{ booking.start_date | humanDate }}</td>
-                </tr>
-                <tr>
-                  <td class="font-weight-semibold">Booking Time:</td>
-                  <td> {{ booking.created_at | humanTime }}</td>
-                </tr>
-                <tr>
-                  <td class="font-weight-semibold">Price per Night:</td>
-                  <td> {{ booking.price_per_night | money }}</td>
-                </tr>
-                <tr>
-                  <td class="font-weight-semibold">Room Details:</td>
-                  <td> {{ room.room.room_type.name.toUpperCase() }} {{ room.room.room_no }}</td>
-                </tr>
-                <tr>
-                  <td class="font-weight-semibold">Guest Name:</td>
-                  <td>{{ booking.customer_details.name }}</td>
-                </tr>
-                <tr>
-                  <td class="font-weight-semibold">Guest Phone:</td>
-                  <td> {{ booking.customer_details.phone }}</td>
-                </tr>
-                <tr>
-                  <td class="font-weight-semibold">Guest Address:</td>
-                  <td> {{ booking.customer_details.address }}</td>
-                </tr>
-                <tr>
-                  <td class="font-weight-semibold">Guest Email Address:</td>
-                  <td> {{ booking.customer_details.emailAddress }}</td>
-                </tr>
-                <tr>
-                  <td class="font-weight-semibold">Guest Next of Kin:</td>
-                  <td> {{ booking.customer_details.nextOfKin }}</td>
-                </tr>
-                <tr>
-                  <td class="font-weight-semibold">Number of Guests:</td>
-                  <td> {{ booking.customer_details.numberOfGuests }}</td>
-                </tr>
-                <tr>
-                  <td class="font-weight-semibold">Intended Number of Nights:</td>
-                  <td> {{ booking.customer_details.intendedNumberOfNights }}</td>
-                </tr>
-                <tr>
-                  <td class="font-weight-semibold">Nationality:</td>
-                  <td> {{ booking.customer_details.nationality }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </b-card-body>
-        </div>
-        <CollectCashPayment
-          :state="collectCashPaymentState"
-          class="col-12 col-lg-4"
-          :required-amount="amountDue"
-          @success="collectPayment"
-          sellable-type="booking"
-          :sellableId="booking.id"
-        ></CollectCashPayment>
+    <div class="">
+      <div v-if="booking !== null">
+        <b-card no-body>
+          <b-tabs pills card vertical nav-class="col-12" nav-wrapper-class="col-5 col-lg-3 p-2">
+            <b-tab title-item-class="m-2" title-link-class="btn btn-dark" title="Collect Payment" active>
+              <CollectBookingPayment
+                :state="collectCashPaymentState"
+                :required-amount="amountDue"
+                :booking-id="booking.id"
+              ></CollectBookingPayment>
+            </b-tab>
+            <b-tab title-item-class="m-2" title-link-class="btn btn-dark" title="Show Booking Details">
+              <b-card-header>
+                Booking Details
+              </b-card-header>
+              <b-card-body class="text-left">
+                <table class="table table-responsive table-hover">
+                  <tbody>
+                    <tr>
+                      <td class="font-weight-semibold">Booking Date:</td>
+                      <td> {{ booking.start_date | humanDate }}</td>
+                    </tr>
+                    <tr>
+                      <td class="font-weight-semibold">Booking Time:</td>
+                      <td> {{ booking.created_at | humanTime }}</td>
+                    </tr>
+                    <tr>
+                      <td class="font-weight-semibold">Price per Night:</td>
+                      <td> {{ booking.price_per_night | money }}</td>
+                    </tr>
+                    <tr>
+                      <td class="font-weight-semibold">Room Details:</td>
+                      <td> {{ room.room.room_type.name.toUpperCase() }} {{ room.room.room_no }}</td>
+                    </tr>
+                    <tr>
+                      <td class="font-weight-semibold">Guest Name:</td>
+                      <td>{{ booking.customer_details.name }}</td>
+                    </tr>
+                    <tr>
+                      <td class="font-weight-semibold">Guest Phone:</td>
+                      <td> {{ booking.customer_details.phone }}</td>
+                    </tr>
+                    <tr>
+                      <td class="font-weight-semibold">Guest Address:</td>
+                      <td> {{ booking.customer_details.address }}</td>
+                    </tr>
+                    <tr>
+                      <td class="font-weight-semibold">Guest Email Address:</td>
+                      <td> {{ booking.customer_details.emailAddress }}</td>
+                    </tr>
+                    <tr>
+                      <td class="font-weight-semibold">Guest Next of Kin:</td>
+                      <td> {{ booking.customer_details.nextOfKin }}</td>
+                    </tr>
+                    <tr>
+                      <td class="font-weight-semibold">Number of Guests:</td>
+                      <td> {{ booking.customer_details.numberOfGuests }}</td>
+                    </tr>
+                    <tr>
+                      <td class="font-weight-semibold">Intended Number of Nights:</td>
+                      <td> {{ booking.customer_details.intendedNumberOfNights }}</td>
+                    </tr>
+                    <tr>
+                      <td class="font-weight-semibold">Nationality:</td>
+                      <td> {{ booking.customer_details.nationality }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </b-card-body>
+            </b-tab>
+            <b-tab title-item-class="m-2" title-link-class="btn btn-dark" title="Edit Booking / Guest Details">
+              <h5>Edit Booking Details</h5>
+              <BookingForm
+                :booking="booking"
+                :state="editCustomerDetailsFormState"
+                @save-booking="editCustomerDetails"
+              ></BookingForm>
+            </b-tab>
+          </b-tabs>
+        </b-card>
       </div>
     </div>
   </div>

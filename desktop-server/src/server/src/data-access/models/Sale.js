@@ -19,6 +19,9 @@ class Sale extends Objection {
   static get relationMappings() {
     const SalesTransaction = require("./SalesTransaction")
     const ManagementListTransaction = require("./ManagementListTransaction")
+    const Booking = require("./Booking")
+    const Order = require("./Order")
+    const Department = require("./Department")
 
     return {
       sales_transactions: {
@@ -30,12 +33,39 @@ class Sale extends Objection {
         }
       },
 
-      management_lists_transactions: {
+      department: {
+        relation: Objection.HasOneRelation,
+        modelClass: Department,
+        join: {
+          from: "sales.department_id",
+          to: "departments.id"
+        }
+      },
+
+      management_lists_transaction: {
         relation: Objection.HasOneRelation,
         modelClass: ManagementListTransaction,
         join: {
           from: "sales.id",
           to: "management_lists_transactions.sales_id"
+        }
+      },
+
+      booking: {
+        relation: Objection.HasOneRelation,
+        modelClass: Booking,
+        join: {
+          from: "sales.sellable_id",
+          to: "bookings.id"
+        }
+      },
+
+      order: {
+        relation: Objection.HasOneRelation,
+        modelClass: Order,
+        join: {
+          from: "sales.sellable_id",
+          to: "orders.id"
         }
       }
     }
@@ -51,7 +81,9 @@ class Sale extends Objection {
         "total_due",
         "sellable_id",
         "sellable_type",
-        "status"
+        "status",
+        "department_id",
+        "transaction_type"
       ],
       properties: {
         id: { type: "integer" },
@@ -61,10 +93,14 @@ class Sale extends Objection {
         total_due: { type: "number" },
         sellable_id: { type: "integer" },
         sellable_type: { type: "string", enum: ["booking", "order"] },
+        department_id: { type: "integer" },
+        transaction_type: { type: "string", enum: ["complementary", "discount", "cash", "company", "credit"] },
+        remarks: { type: "string" },
         customer_details: { type: "object" },
         credit_authorized_by: { type: "object" },
         merged_records: { type: "array" },
-        status: { type: "string", enum: ["paid", "owing", "overpaid"] }
+        status: { type: "string", enum: ["paid", "owing", "overpaid"] },
+        active: { type: "boolean" }
       }
     }
   }

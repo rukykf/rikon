@@ -2,7 +2,8 @@ exports.up = function(knex) {
   knex.schema
     .createTable("sales", (table) => {
       table.increments("id")
-      table.timestamps()
+      table.string("created_at")
+      table.string("updated_at")
       table.float("total_amount")
       table.float("total_paid")
       table.float("total_complementary")

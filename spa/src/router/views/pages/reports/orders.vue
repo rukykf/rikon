@@ -290,6 +290,10 @@
                   <span v-else>nil</span>
                 </template>
 
+                <template v-slot:cell(departments)="row">
+                  {{ row.item.departments | prettyList }}
+                </template>
+
                 <template v-slot:cell(amount)="row">
                   {{ row.item.amount | money }}
                 </template>

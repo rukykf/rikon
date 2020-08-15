@@ -6,7 +6,7 @@ const RoomAnalyticsController = require("../modules/reports/RoomAnalyticsControl
 let router = Router()
 
 router.get("/booking-analytics", DepartmentAnalyticsController.getBookingsSalesBreakdown)
-router.get("/department-analytics", DepartmentAnalyticsController.getDepartmentSalesBreakdown)
+router.get("/department-analytics", DepartmentAnalyticsController.getDepartmentSalesBreakdownFromOrdersTable)
 router.get("/sales-items-analytics", SalesItemsAnalyticsController.getQuantityBreakdownForSalesItems)
 router.get("/current-room-analytics", RoomAnalyticsController.getRoomOccupationAnalyticsByRoomType)
 router.get("/historical-room-analytics", RoomAnalyticsController.getHistoricalRoomBookingAnalyticsByRoomType)

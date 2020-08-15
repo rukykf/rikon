@@ -10,7 +10,7 @@ module.exports = function getUniqueIdentifierForObject(identifierPrefix, objectI
 
   let batchNo = Math.floor(objectId / 10000) + 1
   let recordId = objectId % 10000
-  let year = DateTime.fromISO(creationDate).year
+  let { year } = DateTime.fromISO(creationDate)
 
   let uniqueId = `${identifierPrefix.toUpperCase()}/${year}/B${getBatchNoDisplayString(
     batchNo

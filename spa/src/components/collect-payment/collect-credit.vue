@@ -52,6 +52,7 @@
         additionalDetailsValidation: null,
         debtAuthorizers: [],
         loading: false,
+        department: this.$store.state.auth.currentDepartment,
       }
     },
 
@@ -92,11 +93,21 @@
           this.errors.push(...errors)
         }
       },
+
+      async addManagementTransactions(saleId) {
+        await this.$httpClient.post(`api/management-list-transactions`, {
+          management_list_item_id: this.authorizedBy.id,
+          sales_id: saleId,
+          transaction_type: "debt",
+          department_id: this.department.id === "x" ? 0 : this.department.id,
+        })
+      },
+
       validateAndSubmit: async function() {
         if (this.isValid()) {
           try {
             this.submitBtnState = "loading"
-            let response = await this.$httpClient.post("api/sales", {
+            let { data: sale } = await this.$httpClient.post("api/sales", {
               sellable_type: this.sellableType,
               sellable_id: this.sellableId,
               transaction_type: "credit",
@@ -110,9 +121,10 @@
                 },
               },
             })
+            await this.addManagementTransactions(sale.id)
             this.success.push(`Successfully recorded debt for ${this.name}`)
             this.submitBtnState = "success-try-again"
-            this.$emit("success", response.data)
+            this.$emit("success", sale)
           } catch (error) {
             let errors = ErrorHandler(error)
             this.submitBtnState = "fail-try-again"

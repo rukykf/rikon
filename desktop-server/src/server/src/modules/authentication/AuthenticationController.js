@@ -8,6 +8,7 @@ module.exports = {
       let user = await User.query()
         .where("username", "=", _.get(req, ["body", "username"]).toLowerCase())
         .andWhere("password", "=", _.get(req, ["body", "password"]).toLowerCase())
+        .andWhere("active", "=", 1)
         .withGraphFetched("role")
         .first()
         .throwIfNotFound()

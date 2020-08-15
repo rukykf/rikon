@@ -27,8 +27,6 @@ router.post("/bookings/:id/cancel", BookingsController.cancelBooking)
 router.patch("/reservations/:id", ReservationsController.updateReservationStatus)
 
 router.get("/sales", SalesController.index)
-router.get("/credit-sales", SalesController.getCreditSales)
-router.put("/sales", SalesController.mergeSalesRecords)
 router.post("/sales", SalesController.updateSalesRecordWithTransactionForSellable)
 router.get("/sales/:id/sales-transactions", SalesController.getSalesTransactionsForSalesRecord)
 router.post("/sales/:id", SalesController.updateSalesRecordWithTransaction)

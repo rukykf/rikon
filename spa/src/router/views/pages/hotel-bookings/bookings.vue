@@ -68,16 +68,6 @@
           this.rooms.available = this.rooms.all.filter((room) => room.room_status === "available")
           this.rooms.booked = this.rooms.all.filter((room) => room.room_status === "booked")
           this.loading = false
-
-          if (DateTime.local().toLocaleString(DateTime.TIME_SIMPLE) >= "12:00 PM") {
-            this.numberOfExpiredReservations = this.rooms.reserved.length
-
-            if (this.numberOfExpiredReservations > 0) {
-              this.errors.push(
-                `${this.numberOfExpiredReservations} reservations are expiring today. Close these reservations when it's past 12:00 PM.`
-              )
-            }
-          }
         } catch (error) {
           if (_.get(error, ["response", "data", "messages"])) {
             this.errors = error.response.data.messages

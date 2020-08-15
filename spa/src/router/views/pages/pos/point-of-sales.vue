@@ -86,14 +86,21 @@
       },
     },
 
-    mounted: function() {
-      this.getSalesItemsData()
-      this.getPendingOrdersData()
-
-      // Refresh the pending orders every 6 minutes
-      this.pollPendingOrdersIntervalId = setInterval(() => {
-        this.getPendingOrdersData()
-      }, 360000)
+    mounted: async function() {
+      try {
+        this.loading = true
+        await this.getSalesItemsData()
+        await this.getPendingOrdersData()
+        // Refresh the pending orders every 6 minutes
+        this.pollPendingOrdersIntervalId = setInterval(() => {
+          this.getPendingOrdersData()
+        }, 360000)
+        this.loading = false
+      } catch (error) {
+        this.loading = false
+        let errors = ErrorHandler(error)
+        this.errors.push(...errors)
+      }
     },
 
     beforeDestroy() {
@@ -102,32 +109,25 @@
 
     methods: {
       getSalesItemsData: async function() {
-        try {
-          this.loading = true
-          let url = "api/point-of-sales"
+        let url = "api/point-of-sales"
 
-          if (this.departmentItemsOnly === true) {
-            url += `?department_id=${this.department.id}`
-          }
-          let response = await this.$httpClient.get(url)
-          this.itemsForSale = response.data
-
-          response = await this.$httpClient.get("api/rooms")
-          let rooms = response.data
-          this.destinations = ["Dining Hall", "Garden", "Bar"]
-          rooms.forEach((room) => {
-            this.destinations.push(`Room ${room.display_no}`)
-          })
-          this.loading = false
-        } catch (error) {
-          this.loading = false
-          let errors = ErrorHandler(error)
-          this.errors.push(...errors)
+        if (this.departmentItemsOnly === true) {
+          url += `?department_id=${this.department.id}`
         }
+        let response = await this.$httpClient.get(url)
+        this.itemsForSale = response.data
+
+        response = await this.$httpClient.get("api/rooms")
+        let rooms = response.data
+        this.destinations = ["Dining Hall", "Garden", "Bar"]
+        rooms.forEach((room) => {
+          this.destinations.push(`Room ${room.display_no}`)
+        })
       },
 
       getPendingOrdersData: async function() {
         try {
+          this.loading = true
           let url = "api/orders?status=pending"
 
           if (this.departmentItemsOnly === true) {
@@ -136,7 +136,9 @@
           let response = await this.$httpClient.get(url)
           this.pendingOrders = response.data
           this.selectedOrder = {}
+          this.loading = false
         } catch (error) {
+          this.loading = false
           let errors = ErrorHandler(error)
           this.errors.push(...errors)
         }
@@ -149,12 +151,12 @@
             item_details: this.newOrder.orderItems,
             destination: this.newOrder.destination,
           })
+          await this.getPendingOrdersData()
           this.success.push("Successfully placed new order")
           this.newOrder.orderItems = []
           this.newOrder.salesItems = []
           this.newOrder.destination = "Dining Hall"
           this.placeOrderBtnState = "initialize"
-          this.getPendingOrdersData()
         } catch (error) {
           this.placeOrderBtnState = "fail-try-again"
           let errors = ErrorHandler(error)
@@ -479,7 +481,7 @@
       header-bg-variant="dark"
       title="Add Additional Details"
     >
-      <AdditionalDetails :order="selectedOrder"></AdditionalDetails>
+      <AdditionalDetails :order.sync="selectedOrder"></AdditionalDetails>
     </b-modal>
   </Layout>
 </template>

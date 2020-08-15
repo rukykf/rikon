@@ -137,6 +137,7 @@
 
           let response = await this.$httpClient.get(url)
           this.sales = response.data
+          console.log(this.sales)
           this.loading = false
           this.filterBtnState = "initialize"
         } catch (error) {

@@ -45,6 +45,7 @@
         authorizedByValidation: null,
         complementaryGrantedToValidation: null,
         paymentBtnState: "initialize",
+        department: this.$store.state.auth.currentDepartment,
       }
     },
 
@@ -118,11 +119,15 @@
         await this.$httpClient.post(`api/management-list-transactions`, {
           management_list_item_id: this.authorizedBy.id,
           sales_id: saleId,
+          transaction_type: "complementary",
+          department_id: this.department.id === "x" ? 0 : this.department.id,
         })
 
         await this.$httpClient.post(`api/management-list-transactions`, {
           management_list_item_id: this.complementaryGrantedTo.id,
           sales_id: saleId,
+          transaction_type: "complementary",
+          department_id: this.department.id === "x" ? 0 : this.department.id,
         })
       },
 
@@ -133,10 +138,13 @@
             let sale = await this.addComplementary()
             await this.addManagementTransactions(sale.id)
             this.paymentBtnState = "success-try-again"
+            this.success.push("Successfully recorded complementary service")
+            this.$emit("success", sale)
           } catch (error) {
             this.paymentBtnState = "fail-try-again"
             let errors = ErrorHandler(error)
             this.errors.push(...errors)
+            this.$emit("error", errors)
           }
         }
       },
@@ -209,14 +217,14 @@
             <h6>Total Amount: </h6>
           </label>
 
-          <p class="bg-light pl-2 py-2 rounded" id="totalAmountDue">{{ requiredAmount }}</p>
+          <p class="bg-light pl-2 py-2 rounded" id="totalAmountDue">{{ requiredAmount | money }}</p>
         </div>
       </div>
 
       <p>
         <ManagedStateButton
           :state="computedPaymentBtnState"
-          main-title="Save Complementary"
+          main-title="Record Complementary"
           main-variant="primary"
           feather-icon="credit-card"
           @clicked="validateAndPay"

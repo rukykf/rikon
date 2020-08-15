@@ -5,7 +5,7 @@
   import ErrorHandler from "@src/ErrorHandler"
   import DateTimeSelector from "@components/date-time-selector"
   import ManagedStateButton from "@components/managed-state-button"
-  import DisplayOrderItems from "@components/display-order-items"
+  import DisplayOrderItems from "@components/shared/display-order-items"
   import DisplayCustomerOrderDetails from "@views/pages/reports/components/display-customer-order-details"
 
   export default {
@@ -52,7 +52,7 @@
         totalRows: 1,
         currentPage: 1,
         perPage: 25,
-        pageOptions: [10, 25, 50, 100],
+        pageOptions: [5, 10, 25, 50, 100],
         filter: null,
         filterOn: [],
         filteredOrders: [],
@@ -106,7 +106,7 @@
           this.filterBtnState = "initialize"
         } catch (error) {
           this.loading = false
-          this.filterBtnState = "initialize"
+          this.filterBtnState = "fail-try-again"
           let errors = ErrorHandler(error)
           this.errors.push(...errors)
         }
@@ -200,7 +200,7 @@
               </template>
 
               <template v-slot:cell(unique_id)="row">
-                <strong>{{ row.item.unique_id }}</strong>
+                <strong>{{ row.item.sale.unique_id }}</strong>
               </template>
 
               <template v-slot:head(amount)="row">
@@ -253,7 +253,13 @@
               <div class="dataTables_paginate paging_simple_numbers float-right">
                 <ul class="pagination pagination-rounded mb-0">
                   <!-- pagination -->
-                  <b-pagination v-model="currentPage" :total-rows="numRows" :per-page="perPage"></b-pagination>
+                  <b-pagination
+                    next-text="next"
+                    prev-text="previous"
+                    v-model="currentPage"
+                    :total-rows="numRows"
+                    :per-page="perPage"
+                  ></b-pagination>
                 </ul>
               </div>
             </div>

@@ -10,7 +10,10 @@ module.exports = {
   async index(req, res) {
     try {
       let requestModel = new ManagementListIndexRequestModel(req)
-      let managementListQueryBuilder = ManagementList.query().where("active", "=", 1)
+      let managementListQueryBuilder = ManagementList.query()
+        .where("active", "=", requestModel.active)
+        .andWhere("deleted_at", "=", 0)
+        .orderBy("full_name")
 
       if (requestModel.list_name !== null) {
         managementListQueryBuilder.where("list_name", "=", requestModel.list_name)
@@ -79,6 +82,40 @@ module.exports = {
         .patch({ active: false, deleted_at: DateTime.local().toSeconds() })
 
       return res.json({ messages: ["successfully deleted selected item"] })
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        return res.status(400).json({ messages: ["the selected item was not found"] })
+      }
+
+      return res.status(500).json({ messages: ["something went wrong, try again later"] })
+    }
+  },
+
+  async deactivate(req, res) {
+    try {
+      let numDeletedRows = await ManagementList.query()
+        .findById(_.toNumber(req.params.id))
+        .throwIfNotFound()
+        .patch({ active: false })
+
+      return res.json({ messages: ["successfully deleted selected item"] })
+    } catch (error) {
+      if (error instanceof NotFoundError) {
+        return res.status(400).json({ messages: ["the selected item was not found"] })
+      }
+
+      return res.status(500).json({ messages: ["something went wrong, try again later"] })
+    }
+  },
+
+  async reactivate(req, res) {
+    try {
+      let numRows = await ManagementList.query()
+        .findById(_.toNumber(req.params.id))
+        .throwIfNotFound()
+        .patch({ active: true })
+
+      return res.json({ messages: ["successfully reactivated selected item"] })
     } catch (error) {
       if (error instanceof NotFoundError) {
         return res.status(400).json({ messages: ["the selected item was not found"] })

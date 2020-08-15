@@ -6,6 +6,8 @@ const Sale = require("../../data-access/models/Sale")
 const Order = require("../../data-access/models/Order")
 const SalesTransaction = require("../../data-access/models/SalesTransaction")
 const logger = require("../../utils/Logger")
+const ValidationException = require("../Exceptions/ValidationException")
+const UpdateSalesRecordWithTransactionRequestModel = require("./RequestModels/UpdateSalesRecordWithTransactionRequestModel")
 
 module.exports = {
   async index(req, res) {
@@ -22,6 +24,8 @@ module.exports = {
         .andWhere("created_at", ">=", startDate)
         .andWhere("created_at", "<=", endDate)
         .withGraphFetched("sales_transactions")
+        .withGraphFetched("booking")
+        .withGraphFetched("order")
         .orderBy("created_at", "desc")
 
       if (_.get(req, ["query", "status"]) != null) {
@@ -33,108 +37,8 @@ module.exports = {
       }
 
       let sales = await salesQueryBuilder
-      let output = []
-      for (let i = 0; i < sales.length; i++) {
-        // eslint-disable-next-line no-await-in-loop
-        sales[i].details = await getSaleDetails(sales[i])
-        output.push(sales[i])
-      }
-      return res.json(output)
+      return res.json(sales)
     } catch (error) {
-      return res.status(500).json({ messages: ["something went wrong, try again later"] })
-    }
-  },
-
-  async getCreditSales(req, res) {
-    try {
-      let creditSalesQueryBuilder = Sale.query()
-        .where((builder) => {
-          builder.where("status", "=", "owing")
-        })
-        .andWhere("active", "=", 1)
-        .orderBy("created_at", "desc")
-
-      if (_.has(req, ["query", "start_date"])) {
-        creditSalesQueryBuilder.andWhere("created_at", ">=", req.query.start_date)
-      }
-
-      if (_.has(req, ["query", "end_date"])) {
-        creditSalesQueryBuilder.andWhere("created_at", "<=", req.query.end_date)
-      }
-
-      let sales = await creditSalesQueryBuilder.execute()
-      let output = []
-      for (let i = 0; i < sales.length; i++) {
-        // eslint-disable-next-line no-await-in-loop
-        sales[i].details = await getSaleDetails(sales[i])
-        output.push(sales[i])
-      }
-      return res.json(output)
-    } catch (error) {
-      return res.status(500).json({ messages: ["something went wrong, try again later"] })
-    }
-  },
-
-  async mergeSalesRecords(req, res) {
-    try {
-      let salesIDs = _.get(req, ["body", "ids_for_merge"])
-
-      if (salesIDs.length === 0) {
-        return res.json({ messages: ["merge completed successfully"] })
-      }
-
-      let newTotalAmount = 0
-      let newTotalPaid = 0
-      let newTotalComplementary = 0
-      let newTotalDue = 0
-
-      let records = await Sale.query()
-        .findByIds(salesIDs)
-        .throwIfNotFound()
-
-      let isCredit = true
-
-      records.forEach((record) => {
-        if (record.credit_authorized_by == null || record.customer_details == null) {
-          isCredit = false
-        }
-      })
-
-      if (isCredit === false) {
-        return res.status(400).json({ messages: ["you can only merge credit transactions"] })
-      }
-
-      await Sale.query()
-        .findByIds(salesIDs)
-        .patch({ active: false })
-
-      for (let i = 0; i < records.length; i++) {
-        newTotalAmount += records[i].total_amount
-        newTotalPaid += records[i].total_paid
-        newTotalComplementary += records[i].total_complementary
-        newTotalDue += records[i].total_due
-      }
-      let newSalesRecord = await Sale.query().insert({
-        total_amount: newTotalAmount,
-        total_paid: newTotalPaid,
-        total_complementary: newTotalComplementary,
-        total_due: newTotalDue,
-        sellable_id: records[0].sellable_id,
-        sellable_type: records[0].sellable_type,
-        status: newTotalDue <= 0 ? "paid" : "owing",
-        customer_details: records[0].customer_details,
-        credit_authorized_by: records[0].credit_authorized_by,
-        merged_records: salesIDs
-      })
-
-      return res.json(newSalesRecord)
-    } catch (error) {
-      logger.logRequestError(req, error, "could not merge sales")
-
-      if (error instanceof NotFoundError) {
-        return res.status(400).json({ messages: ["invalid record id"] })
-      }
-
       return res.status(500).json({ messages: ["something went wrong, try again later"] })
     }
   },
@@ -153,34 +57,38 @@ module.exports = {
   async updateSalesRecordWithTransactionForSellable(req, res) {
     try {
       // Ensure all required variables are present in the request
-      let validationErrorMessages = isValidTransactionRequest(req)
-      if (validationErrorMessages.length !== 0) {
-        return res.status(400).json({ messages: validationErrorMessages })
-      }
+      let updateSalesRecordRequestModel = new UpdateSalesRecordWithTransactionRequestModel(req)
+      updateSalesRecordRequestModel.validateSaleRecordUpdateRequest()
 
       let sale = await Sale.query()
-        .where("sellable_id", "=", req.body.sellable_id)
-        .andWhere("sellable_type", "=", req.body.sellable_type)
+        .where("sellable_id", "=", updateSalesRecordRequestModel.sellable_id)
+        .andWhere("sellable_type", "=", updateSalesRecordRequestModel.sellable_type)
         .first()
 
       if (sale == null) {
-        sale = await createSaleForSellable(req)
+        sale = await createSaleForSellable(updateSalesRecordRequestModel)
       }
 
-      if (req.body.transaction_type !== "credit") {
-        sale = await updateSaleRecordWithTransaction(req, sale)
+      if (updateSalesRecordRequestModel.transaction_type !== "credit") {
+        sale = await updateSaleRecordWithTransaction(updateSalesRecordRequestModel, sale)
       }
 
-      if (req.body.transaction_type === "credit") {
+      if (updateSalesRecordRequestModel.transaction_type === "credit") {
+        updateSalesRecordRequestModel.validateCreditTransaction()
         sale = await Sale.query().patchAndFetchById(sale.id, {
-          customer_details: req.body.transaction_details.customer_details,
-          credit_authorized_by: req.body.transaction_details.credit_authorized_by
+          customer_details: updateSalesRecordRequestModel.customer_details,
+          credit_authorized_by: updateSalesRecordRequestModel.credit_authorized_by
         })
       }
 
       return res.json(sale)
     } catch (error) {
       logger.logRequestError(req, error, "could not update sales record")
+
+      if (error instanceof ValidationException) {
+        return res.status(400).json({ messages: error.messages })
+      }
+
       if (error instanceof NotFoundError) {
         return res.status(400).json({ messages: ["invalid sellable_id"] })
       }
@@ -196,7 +104,8 @@ module.exports = {
   async updateSalesRecordWithTransaction(req, res) {
     try {
       let sale = await Sale.query().findById(_.toNumber(req.params.id))
-      sale = await updateSaleRecordWithTransaction(req, sale)
+      let updatedSalesRecordWithTransactionModel = new UpdateSalesRecordWithTransactionRequestModel(req)
+      sale = await updateSaleRecordWithTransaction(updatedSalesRecordWithTransactionModel, sale)
       return res.json(sale)
     } catch (error) {
       logger.logRequestError(req, error, "could not update sales record with transaction")
@@ -278,98 +187,6 @@ module.exports = {
 }
 
 // private methods
-async function getSaleDetails(sale) {
-  let details = { type: "order", elements: null }
-
-  if (sale.merged_records != null) {
-    details.type = "merged"
-    details.elements = []
-    let mergedRecords = await Sale.query().findByIds(sale.merged_records)
-
-    for (let i = 0; i < mergedRecords.length; i++) {
-      let record = mergedRecords[i]
-
-      // eslint-disable-next-line no-await-in-loop
-      let recordDetails = await getSaleDetails(record)
-      if (_.isArray(recordDetails.elements)) {
-        details.elements.push(...recordDetails.elements)
-      } else {
-        details.elements.push(recordDetails)
-      }
-    }
-    return details
-  }
-
-  if (sale.sellable_type === "booking") {
-    details.type = "booking"
-    let booking = await Booking.query()
-      .findById(sale.sellable_id)
-      .withGraphFetched({ room: { room_type: true } })
-    details.elements = booking
-    return details
-  }
-
-  let order = await Order.query()
-    .findById(sale.sellable_id)
-    .withGraphFetched("order_items")
-  details.elements = order
-  return details
-}
-
-function isValidTransactionRequest(req) {
-  let errorMessages = []
-
-  if (_.get(req, ["body", "sellable_type"]) == null) {
-    errorMessages.push("sellable_type is required")
-  }
-
-  if (!_.includes(["order", "booking"], _.get(req, ["body", "sellable_type"]))) {
-    errorMessages.push("sellable_type should be either order or booking")
-  }
-
-  if (_.get(req, ["body", "sellable_id"]) == null) {
-    errorMessages.push("sellable_id is required")
-  }
-
-  if (_.get(req, ["body", "transaction_type"]) == null) {
-    errorMessages.push("transaction_type is required")
-  }
-
-  if (!_.includes(["cash", "credit", "discount"], _.get(req, ["body", "transaction_type"]))) {
-    errorMessages.push("transaction_type is invalid")
-  }
-
-  if (_.get(req, ["body", "transaction_details"]) == null) {
-    errorMessages.push("transaction details are required")
-  }
-
-  if (
-    req.body.transaction_type !== "credit" &&
-    !_.includes(
-      ["cash", "pos", "transfer", "discount", "complementary"],
-      _.get(req, ["body", "transaction_details", "transaction_type"])
-    )
-  ) {
-    errorMessages.push("a valid transaction_type is required")
-  }
-
-  if (
-    req.body.transaction_type === "credit" &&
-    _.get(req, ["body", "transaction_details", "customer_details"]) == null
-  ) {
-    errorMessages.push("you must provide valid customer details")
-  }
-
-  if (
-    req.body.transaction_type === "credit" &&
-    _.get(req, ["body", "transaction_details", "credit_authorized_by"]) == null
-  ) {
-    errorMessages.push("you must provide the name of whoever authorized this transaction")
-  }
-
-  return errorMessages
-}
-
 function getStatus(totalDue) {
   if (totalDue === 0) {
     return "paid"
@@ -382,11 +199,11 @@ function getStatus(totalDue) {
   return "overpaid"
 }
 
-async function createSaleForSellable(req) {
+async function createSaleForSellable(createSaleForSellableModel) {
   let sale
-  if (req.body.sellable_type === "order") {
+  if (createSaleForSellableModel.sellable_type === "order") {
     let order = await Order.query()
-      .findById(req.body.sellable_id)
+      .findById(createSaleForSellableModel.sellable_id)
       .throwIfNotFound()
     sale = await Sale.query().insert({
       total_paid: 0,
@@ -396,14 +213,17 @@ async function createSaleForSellable(req) {
       sellable_type: "order",
       sellable_id: order.id,
       status: "owing",
-      customer_details: req.body.transaction_details.customer_details,
-      credit_authorized_by: req.body.transaction_details.credit_authorized_by
+      item_created_at: order.created_at,
+      department_id: createSaleForSellableModel.department_id,
+      transaction_type: createSaleForSellableModel.transaction_type,
+      customer_details: createSaleForSellableModel.customer_details,
+      credit_authorized_by: createSaleForSellableModel.credit_authorized_by
     })
   }
-  if (req.body.sellable_type === "booking") {
+  if (createSaleForSellableModel.sellable_type === "booking") {
     // Ensure the end date of the booking is at the most recent
     let booking = await Booking.query()
-      .patchAndFetchById(req.body.sellable_id, {
+      .patchAndFetchById(createSaleForSellableModel.sellable_id, {
         end_date: DateTime.local().toISODate()
       })
       .throwIfNotFound()
@@ -416,23 +236,30 @@ async function createSaleForSellable(req) {
       sellable_type: "booking",
       sellable_id: booking.id,
       status: "owing",
-      customer_details: req.body.customer_details,
-      credit_authorized_by: req.body.credit_authorized_by
+      item_created_at: booking.created_at,
+      department_id: createSaleForSellableModel.department_id,
+      transaction_type: createSaleForSellableModel.transaction_type,
+      customer_details: createSaleForSellableModel.customer_details,
+      credit_authorized_by: createSaleForSellableModel.credit_authorized_by
     })
   }
   return sale
 }
 
-async function updateSaleRecordWithTransaction(req, sale) {
-  let transaction = req.body.transaction_details
+async function updateSaleRecordWithTransaction(updateSaleRecordWithTransactionModel, sale) {
+  let transaction = {
+    sales_transaction_type: updateSaleRecordWithTransactionModel.sales_transaction_type,
+    amount: updateSaleRecordWithTransactionModel.amount
+  }
+
   let updatedSale
 
   transaction = await SalesTransaction.query().insert({
     sales_id: sale.id,
     date: DateTime.local().toISODate(),
-    transaction_type: transaction.transaction_type.toLowerCase(),
-    amount: transaction.amount,
-    registered_by: req.get("full_name")
+    transaction_type: updateSaleRecordWithTransactionModel.sales_transaction_type,
+    amount: updateSaleRecordWithTransactionModel.amount,
+    registered_by: updateSaleRecordWithTransactionModel.full_name
   })
 
   if (_.includes(["cash", "pos", "transfer"], transaction.transaction_type)) {

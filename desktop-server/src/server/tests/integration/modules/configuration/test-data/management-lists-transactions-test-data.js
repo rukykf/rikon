@@ -21,6 +21,8 @@ module.exports = {
       total_due: 0,
       sellable_id: 2,
       sellable_type: "booking",
+      department_id: 1,
+      transaction_type: "cash",
       status: salesStatus,
       customer_details: { name: "some name" }
     })

@@ -48,7 +48,13 @@ router.delete("/rooms/:id", RoomsController.delete)
 router.post("/rooms/:id", RoomsController.edit)
 
 router.get("/management-list", DynamicManagementListsController.index)
+router.post("/management-list", DynamicManagementListsController.create)
+router.post("/management-list/:id", DynamicManagementListsController.edit)
+router.delete("/management-list/:id", DynamicManagementListsController.delete)
+router.post("/management-list/:id/reactivate", DynamicManagementListsController.reactivate)
+router.post("/management-list/:id/deactivate", DynamicManagementListsController.deactivate)
 
+router.get("/management-list-transactions", DynamicManagementListTransactionsController.index)
 router.post("/management-list-transactions", DynamicManagementListTransactionsController.create)
 
 module.exports = router

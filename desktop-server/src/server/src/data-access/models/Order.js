@@ -68,7 +68,8 @@ class Order extends Objection {
         placed_by: { type: "object" },
         departments: { type: "array" },
         status: { type: "string", enum: ["pending", "fulfilled", "cancelled"] },
-        old_order_ids: { type: "array" }
+        old_order_ids: { type: "array" },
+        docket_serial_no: { type: "string" }
       }
     }
   }

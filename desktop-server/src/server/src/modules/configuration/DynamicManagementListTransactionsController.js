@@ -12,11 +12,13 @@ module.exports = {
       let requestModel = new ManagementListTransactionsIndexRequestModel(req)
 
       let managementListTransactionsQueryBuilder = ManagementListTransaction.query()
-        .where("created_at", ">=", requestModel.start_date)
-        .andWhere("created_at", "<=", requestModel.end_date)
-        .withGraphFetched("sale")
-        .withGraphFetched("management_list_item")
-        .orderBy("created_at", "desc")
+        .where("management_lists_transactions.created_at", ">=", requestModel.start_date)
+        .andWhere("management_lists_transactions.created_at", "<=", requestModel.end_date)
+        .withGraphJoined("sale.booking.room")
+        .withGraphJoined("sale.order.order_items")
+        .withGraphJoined("management_list_item")
+        .withGraphJoined("department")
+        .orderBy("management_lists_transactions.created_at", "desc")
 
       if (requestModel.management_list_item_id != null) {
         managementListTransactionsQueryBuilder.where(

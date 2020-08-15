@@ -20,17 +20,17 @@ test("RoomAnalyticsController.getRoomOccupationAnalyticsByRoomType returns accur
 
   await RoomAnalyticsController.getRoomOccupationAnalyticsByRoomType(req, res)
   expect(output.length).toEqual(3)
-  expect(output[0].name).toEqual("standard")
-  expect(output[0].num_occupied_rooms).toEqual(1)
-  expect(output[0].num_unoccupied_rooms).toEqual(2)
+  expect(output[2].name).toEqual("standard")
+  expect(output[2].num_occupied_rooms).toEqual(1)
+  expect(output[2].num_unoccupied_rooms).toEqual(2)
 
   expect(output[1].name).toEqual("deluxe")
   expect(output[1].num_occupied_rooms).toEqual(3)
   expect(output[1].num_unoccupied_rooms).toEqual(0)
 
-  expect(output[2].name).toEqual("classic")
-  expect(output[2].num_occupied_rooms).toEqual(0)
-  expect(output[2].num_unoccupied_rooms).toEqual(3)
+  expect(output[0].name).toEqual("classic")
+  expect(output[0].num_occupied_rooms).toEqual(0)
+  expect(output[0].num_unoccupied_rooms).toEqual(3)
 })
 
 test("RoomAnalyticsController.getHistoricalRoomBookingAnalyticsByRoomType returns quantity of closed bookings for each RoomType", async () => {

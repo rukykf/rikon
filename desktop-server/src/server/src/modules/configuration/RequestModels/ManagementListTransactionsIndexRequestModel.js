@@ -24,6 +24,10 @@ class ManagementListTransactionsIndexRequestModel {
       this.management_list_name = req.query.management_list_name
     }
 
+    if (_.has(req, ["query", "department_id"])) {
+      this.department_id = req.query.department_id
+    }
+
     if (_.has(req, ["query", "sales_status"])) {
       this.sales_status = req.query.sales_status
     }

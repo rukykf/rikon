@@ -62,7 +62,9 @@ async function populateSales() {
     status: "paid",
     total_amount: 10000,
     total_paid: 10000,
+    transaction_type: "cash",
     total_complementary: 0,
+    department_id: 1,
     total_due: 0
   })
   sales.push(sale)
@@ -81,6 +83,8 @@ async function populateSales() {
     total_amount: 10000,
     total_paid: 10000,
     total_complementary: 0,
+    department_id: 1,
+    transaction_type: "cash",
     total_due: 0
   })
   sales.push(sale)
@@ -100,6 +104,8 @@ async function populateSales() {
     total_paid: 0,
     total_complementary: 0,
     total_due: 10000,
+    department_id: 1,
+    transaction_type: "credit",
     credit_authorized_by: { name: "authorizing personnel" },
     customer_details: { name: "some name" }
   })
@@ -120,6 +126,8 @@ async function populateSales() {
     total_paid: 0,
     total_complementary: 5000,
     total_due: 5000,
+    department_id: 1,
+    transaction_type: "credit",
     credit_authorized_by: { name: "authorizing personnel" },
     customer_details: { name: "another name" }
   })
@@ -140,6 +148,8 @@ async function populateSales() {
     total_paid: 0,
     total_complementary: 5000,
     total_due: 5000,
+    department_id: 1,
+    transaction_type: "credit",
     credit_authorized_by: { name: "authorizing personnel" },
     customer_details: { name: "another name" },
     merged_records: [sales[2].id, sales[3].id]
@@ -206,59 +216,6 @@ test("SalesController.index successfully filters list of sales by status", async
   expect(output[0]).toMatchObject(sales[1])
 })
 
-test("SalesController.getCreditSales successfully returns list of credit sales", async () => {
-  let sales = await populateSales()
-  let req = {}
-  let output
-  let res = {
-    json: jest.fn((args) => {
-      output = args
-    })
-  }
-  await SalesController.getCreditSales(req, res)
-  expect(output.length).toEqual(3)
-  expect(output[0]).toMatchObject(sales[3])
-  expect(output[1]).toMatchObject(sales[4])
-  expect(output[2]).toMatchObject(sales[2])
-})
-
-test("SalesController.mergeSalesRecords returns newly merged sale when passed valid sales IDs", async () => {
-  let sales = await populateSales()
-  let salesIDs = [sales[2].id, sales[3].id]
-  let req = { body: { ids_for_merge: salesIDs } }
-  let output
-  let res = {
-    json: jest.fn((args) => {
-      output = args
-    })
-  }
-  await SalesController.mergeSalesRecords(req, res)
-  expect(output.total_amount).toEqual(20000)
-  expect(output.total_complementary).toEqual(5000)
-  expect(output.total_paid).toEqual(0)
-  expect(output.total_due).toEqual(15000)
-  expect(output.merged_records).toEqual(salesIDs)
-})
-
-test("SalesController.mergeSalesRecords returns error message when attempting to merge none-credit sales records", async () => {
-  let sales = await populateSales()
-  let salesIDs = []
-  sales.forEach((sale) => {
-    salesIDs.push(sale.id)
-  })
-  let req = { body: { ids_for_merge: salesIDs } }
-  let output
-  let res = {
-    json: jest.fn((args) => {
-      output = args
-    }),
-    status: jest.fn()
-  }
-  res.status.mockReturnThis()
-  await SalesController.mergeSalesRecords(req, res)
-  expect(res.json).toHaveBeenLastCalledWith({ messages: ["you can only merge credit transactions"] })
-})
-
 test("SalesController.updateSalesRecordWithTransactionForSellable succeeds with cash transaction", async () => {
   let req = {
     body: {
@@ -270,9 +227,13 @@ test("SalesController.updateSalesRecordWithTransactionForSellable succeeds with 
         transaction_type: "pos"
       }
     },
-    get: jest.fn()
+    get: jest.fn((args) => {
+      if (args === "full_name") {
+        return "some name"
+      }
+      return 1
+    })
   }
-  req.get.mockReturnValue("some name")
   let res = { json: jest.fn() }
   await SalesController.updateSalesRecordWithTransactionForSellable(req, res)
   let sale = await Sale.query().first()
@@ -328,9 +289,14 @@ test("SalesController.updateSalesRecordWithTransactionForSellable succeeds with 
         transaction_type: "discount"
       }
     },
-    get: jest.fn()
+    get: jest.fn((args) => {
+      if (args === "full_name") {
+        return "some name"
+      }
+      return 1
+    })
   }
-  req.get.mockReturnValue("some name")
+
   let res = { json: jest.fn() }
   await SalesController.updateSalesRecordWithTransactionForSellable(req, res)
   let sale = await Sale.query().first()
@@ -370,6 +336,8 @@ test("SalesController.updateSalesRecordWithTransactionForSellable succeeds with 
     total_due: 15000,
     sellable_type: "order",
     sellable_id: order.id,
+    transaction_type: "complementary",
+    department_id: 1,
     status: "owing"
   })
 
@@ -383,9 +351,14 @@ test("SalesController.updateSalesRecordWithTransactionForSellable succeeds with 
         transaction_type: "complementary"
       }
     },
-    get: jest.fn()
+    get: jest.fn((args) => {
+      if (args === "full_name") {
+        return "some name"
+      }
+      return 1
+    })
   }
-  req.get.mockReturnValue("some name")
+
   let res = { json: jest.fn() }
   await SalesController.updateSalesRecordWithTransactionForSellable(req, res)
   let sale = await Sale.query().first()
@@ -410,9 +383,17 @@ test("SalesController.updateSalesRecordWithTransactionForSellable succeeds with 
     total_due: 15000,
     sellable_type: "order",
     sellable_id: order.id,
+    transaction_type: "credit",
+    department_id: 1,
     status: "owing"
   })
   let req = {
+    get: jest.fn((args) => {
+      if (args === "full_name") {
+        return "some name"
+      }
+      return 1
+    }),
     body: {
       sellable_type: "order",
       sellable_id: order.id,
@@ -423,6 +404,7 @@ test("SalesController.updateSalesRecordWithTransactionForSellable succeeds with 
       }
     }
   }
+
   let res = { json: jest.fn() }
   await SalesController.updateSalesRecordWithTransactionForSellable(req, res)
   sale = await Sale.query().findById(sale.id)
@@ -430,15 +412,13 @@ test("SalesController.updateSalesRecordWithTransactionForSellable succeeds with 
   expect(sale.customer_details).toEqual({ name: "some customer" })
   expect(sale.total_amount).toEqual(20000)
 
-  req = {
-    body: {
-      sellable_type: "booking",
-      sellable_id: booking.id,
-      transaction_type: "credit",
-      transaction_details: {
-        credit_authorized_by: { name: "some name" },
-        customer_details: { name: "some customer" }
-      }
+  req.body = {
+    sellable_type: "booking",
+    sellable_id: booking.id,
+    transaction_type: "credit",
+    transaction_details: {
+      credit_authorized_by: { name: "some name" },
+      customer_details: { name: "some customer" }
     }
   }
   await SalesController.updateSalesRecordWithTransactionForSellable(req, res)
@@ -452,6 +432,12 @@ test("SalesController.updateSalesRecordWithTransactionForSellable succeeds with 
 
 test("SalesController.updateSalesRecordWithTransactionForSellable fails with invalid credit transaction", async () => {
   let req = {
+    get: jest.fn((args) => {
+      if (args === "full_name") {
+        return "some name"
+      }
+      return 1
+    }),
     body: {
       sellable_type: "order",
       sellable_id: order.id,
@@ -461,29 +447,25 @@ test("SalesController.updateSalesRecordWithTransactionForSellable fails with inv
       }
     }
   }
+
   let res = { json: jest.fn(), status: jest.fn() }
   res.status.mockReturnThis()
 
   await SalesController.updateSalesRecordWithTransactionForSellable(req, res)
   expect(res.status).toHaveBeenLastCalledWith(400)
-  expect(res.json).toHaveBeenLastCalledWith({ messages: ["you must provide valid customer details"] })
+  expect(res.json).toHaveBeenLastCalledWith({ messages: ["please provide valid customer details"] })
 
-  req = {
-    body: {
-      sellable_type: "order",
-      sellable_id: order.id,
-      transaction_type: "credit",
-      transaction_details: {}
-    }
+  req.body = {
+    sellable_type: "order",
+    sellable_id: order.id,
+    transaction_type: "credit",
+    transaction_details: {}
   }
 
   await SalesController.updateSalesRecordWithTransactionForSellable(req, res)
   expect(res.status).toHaveBeenLastCalledWith(400)
   expect(res.json).toHaveBeenLastCalledWith({
-    messages: [
-      "you must provide valid customer details",
-      "you must provide the name of whoever authorized this transaction"
-    ]
+    messages: ["please provide valid customer details"]
   })
 })
 
@@ -497,9 +479,14 @@ test("SalesController.updateSalesRecordWithTransactionForSellable returns error 
         transaction_type: "cash"
       }
     },
-    get: jest.fn()
+    get: jest.fn((args) => {
+      if (args === "full_name") {
+        return "some name"
+      }
+      return 1
+    })
   }
-  req.get.mockReturnValue("some name")
+
   let res = { json: jest.fn(), status: jest.fn() }
   res.status.mockReturnThis()
 
@@ -510,6 +497,12 @@ test("SalesController.updateSalesRecordWithTransactionForSellable returns error 
 
 test("SalesController.updateSalesRecordWithTransactionForSellable returns error messages when passed invalid sellable_id", async () => {
   let req = {
+    get: jest.fn((args) => {
+      if (args === "full_name") {
+        return "some name"
+      }
+      return 1
+    }),
     body: {
       sellable_type: "order",
       sellable_id: 29,
@@ -536,6 +529,8 @@ test("SalesController.revertSalesTransactionForSalesRecord successfully reverts 
     total_due: 15000,
     sellable_type: "order",
     sellable_id: order.id,
+    transaction_type: "discount",
+    department_id: 1,
     status: "owing"
   })
 
@@ -546,8 +541,16 @@ test("SalesController.revertSalesTransactionForSalesRecord successfully reverts 
     registered_by: "someone's name"
   })
 
-  let req = { params: { id: salesTransaction.id }, get: jest.fn() }
-  req.get.mockReturnValue("someone's name")
+  let req = {
+    params: { id: salesTransaction.id },
+    get: jest.fn((args) => {
+      if (args === "full_name") {
+        return "some name"
+      }
+      return 1
+    })
+  }
+
   let res = { json: jest.fn() }
   await SalesController.revertSalesTransactionForSalesRecord(req, res)
   sale = await Sale.query().findById(salesTransaction.sales_id)
@@ -567,6 +570,8 @@ test("SalesController.revertSalesTransactionForSalesRecord successfully reverts 
     total_due: 10000,
     sellable_type: "order",
     sellable_id: order.id,
+    transaction_type: "cash",
+    department_id: 1,
     status: "owing"
   })
 
@@ -577,8 +582,15 @@ test("SalesController.revertSalesTransactionForSalesRecord successfully reverts 
     registered_by: "someone's name"
   })
 
-  let req = { params: { id: salesTransaction.id }, get: jest.fn() }
-  req.get.mockReturnValue("someone's name")
+  let req = {
+    params: { id: salesTransaction.id },
+    get: jest.fn((args) => {
+      if (args === "full_name") {
+        return "some name"
+      }
+      return 1
+    })
+  }
   let res = { json: jest.fn() }
   await SalesController.revertSalesTransactionForSalesRecord(req, res)
   sale = await Sale.query().findById(salesTransaction.sales_id)
@@ -599,6 +611,8 @@ test("SalesController.revertSalesTransactionForSalesRecord returns error message
     total_due: 0,
     sellable_type: "order",
     sellable_id: order.id,
+    transaction_type: "complementary",
+    department_id: 1,
     status: "owing"
   })
 
@@ -609,8 +623,16 @@ test("SalesController.revertSalesTransactionForSalesRecord returns error message
     registered_by: "someone's name"
   })
 
-  let req = { params: { id: salesTransaction.id }, get: jest.fn() }
-  req.get.mockReturnValue("someone's name")
+  let req = {
+    params: { id: salesTransaction.id },
+    get: jest.fn((args) => {
+      if (args === "full_name") {
+        return "some name"
+      }
+      return 1
+    })
+  }
+
   let res = { json: jest.fn(), status: jest.fn() }
   res.status.mockReturnThis()
   await SalesController.revertSalesTransactionForSalesRecord(req, res)
@@ -619,7 +641,15 @@ test("SalesController.revertSalesTransactionForSalesRecord returns error message
 })
 
 test("SalesController.revertSalesTransactionForSalesRecord returns error message when passed invalid id", async () => {
-  let req = { params: { id: 48 }, get: jest.fn() }
+  let req = {
+    params: { id: 48 },
+    get: jest.fn((args) => {
+      if (args === "full_name") {
+        return "some name"
+      }
+      return 1
+    })
+  }
   let res = { json: jest.fn(), status: jest.fn() }
   res.status.mockReturnThis()
 

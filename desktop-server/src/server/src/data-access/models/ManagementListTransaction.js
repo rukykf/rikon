@@ -1,14 +1,25 @@
 const { DateTime } = require("luxon")
 const Objection = require("../objection-config")
+const GetUniqueIdentifierForObject = require("../../utils/GetUniqueIdentifierForObject")
 
 class ManagementListTransaction extends Objection {
   static get tableName() {
     return "management_lists_transactions"
   }
 
+  static get virtualAttributes() {
+    return ["unique_id"]
+  }
+
+  // eslint-disable-next-line camelcase
+  unique_id() {
+    return GetUniqueIdentifierForObject("RT", this.id, this.created_at)
+  }
+
   static get relationMappings() {
     const ManagementList = require("./ManagementList")
     const Sale = require("./Sale")
+    const Department = require("./Department")
 
     return {
       management_list_item: {
@@ -26,6 +37,15 @@ class ManagementListTransaction extends Objection {
           from: "management_lists_transactions.sales_id",
           to: "sales.id"
         }
+      },
+
+      department: {
+        relation: Objection.HasOneRelation,
+        modelClass: Department,
+        join: {
+          from: "management_lists_transactions.department_id",
+          to: "departments.id"
+        }
       }
     }
   }
@@ -38,7 +58,9 @@ class ManagementListTransaction extends Objection {
         id: { type: "integer" },
         management_lists_id: { type: "integer" },
         sales_id: { type: "integer" },
-        created_at: { type: "string" }
+        created_at: { type: "string" },
+        department_id: { type: "integer" },
+        transaction_type: { type: "string", enum: ["discount", "complementary", "debt"] }
       }
     }
   }

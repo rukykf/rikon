@@ -240,6 +240,8 @@ test("BookingsController.getCurrentBookingForRoom returns booking details for a 
     total_amount: 4000,
     total_paid: 4000,
     total_complementary: 0,
+    department_id: 1,
+    transaction_type: "cash",
     total_due: 0,
     status: "paid"
   })
@@ -282,6 +284,8 @@ test("BookingsController.closeBooking successfully closes booking when passed va
     total_amount: 4000,
     total_paid: 4000,
     total_complementary: 0,
+    department_id: 1,
+    transaction_type: "cash",
     total_due: 0,
     status: "paid"
   })
@@ -323,6 +327,8 @@ test("BookingsController.closeBooking returns error message when booking is not 
     total_amount: 4000,
     total_paid: 2000,
     total_complementary: 0,
+    department_id: 1,
+    transaction_type: "cash",
     total_due: 2000,
     status: "paid"
   })

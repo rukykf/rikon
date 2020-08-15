@@ -25,5 +25,10 @@ module.exports = {
     )
     PerfectLogger.crit("Error Details Below")
     PerfectLogger.crit(JSON.stringify(error))
+  },
+
+  logCriticalInfo(data) {
+    PerfectLogger.crit("Info========================================")
+    PerfectLogger.crit(JSON.stringify(data))
   }
 }

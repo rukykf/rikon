@@ -1,16 +1,16 @@
 {
   "name": "rikonserver",
   "productName": "rikonserver",
-  "version": "1.0.0",
+  "version": "1.9.0",
   "description": "Server application for Rikon HMS",
   "main": "src/main.js",
   "scripts": {
     "quickstart": "electron-forge start",
     "start": "cd ../spa && yarn install && yarn build && cd ../desktop-server && electron-forge start",
     "rebuild": "electron-rebuild -f -w sqlite3",
-    "package": "cd ../spa && yarn install && yarn build && cd ../desktop-server && tsc && electron-forge package",
-    "make": "cd ../spa && yarn install && yarn build && cd ../desktop-server && tsc && electron-forge make",
-    "publish": "cd ../spa && yarn install && yarn build && cd ../desktop-server && tsc && electron-forge publish",
+    "package": "cd ../spa && yarn install && yarn build && cd ../desktop-server && electron-forge package",
+    "make": "cd ../spa && yarn install && yarn build && cd ../desktop-server && electron-forge make",
+    "publish": "cd ../spa && yarn install && yarn build && cd ../desktop-server && electron-forge publish",
     "test": "jest src/server/tests",
     "test:all": "jest",
     "lint": "echo \"No linting configured\""

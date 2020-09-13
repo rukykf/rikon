@@ -76,6 +76,8 @@ test("OrderAndAnalyticsService.getOrderAndSalesAnalysisBySalesItem returns analy
   expect(salesItemsAnalyticsData[1].total_quantity_sold).toEqual(5)
 })
 
+// TODO: Add a test for getOrderAndSalesAnalysisBySalesItem filters by department and avoids deleted orders
+
 test("OrderAndAnalyticsService.getOrderAndSalesAnalysisBySalesItem filters by date", async () => {
   let salesItems = await populateSalesItemsAndOrders()
   let startDateISO = DateTime.local()

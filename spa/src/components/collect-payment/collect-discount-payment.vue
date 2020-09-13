@@ -34,6 +34,7 @@
         debtAuthorizers: [],
         authorizedForDiscountList: [],
         authorizedBy: null,
+        totalAmountDue: this.requiredAmount,
         discountGrantedTo: null,
         discountAmount: 0,
         paymentAmount: 0,
@@ -91,8 +92,10 @@
         let { data: sale } = await this.$httpClient.post("api/sales", {
           sellable_type: this.sellableType,
           sellable_id: this.sellableId,
-          transaction_type: "credit",
+          transaction_type: "discount",
           transaction_details: {
+            transaction_type: this.paymentMethod.toLowerCase(),
+            amount: this.paymentAmount,
             credit_authorized_by: { name: this.authorizedBy.full_name },
             customer_details: {
               name: this.discountGrantedTo.full_name,
@@ -103,14 +106,7 @@
           },
         })
 
-        let { data: updatedSale } = await this.$httpClient.post(`api/sales/${sale.id}`, {
-          transaction_details: {
-            transaction_type: this.paymentMethod.toLowerCase(),
-            amount: this.paymentAmount,
-          },
-        })
-
-        return updatedSale
+        return sale
       },
 
       async addDiscountTransaction(saleId) {
@@ -144,7 +140,7 @@
           try {
             this.paymentBtnState = "loading"
             let sale = await this.addCashPayment()
-            await this.addDiscountTransaction(sale.id)
+            sale = await this.addDiscountTransaction(sale.id)
             await this.addManagementTransactions(sale.id)
             this.paymentBtnState = "initialize"
             this.success.push(`Successfully paid ${this.paymentAmount}`)
@@ -177,8 +173,8 @@
         }
 
         let totalAmountPaid = this.discountAmount + this.paymentAmount
-        if (totalAmountPaid !== this.requiredAmount) {
-          this.amountValidation = `The discount + the amount paid should be equal to ${this.requiredAmount}`
+        if (totalAmountPaid !== this.totalAmountDue) {
+          this.amountValidation = `The discount + the amount paid should be equal to ${this.totalAmountDue}`
           isValid = false
         }
 
@@ -236,7 +232,15 @@
             <h6>Total Amount Due: </h6>
           </label>
 
-          <p class="bg-light pl-2 py-2 rounded" id="totalAmountDue">{{ requiredAmount | money }}</p>
+          <input
+            type="number"
+            id="totalAmountDue"
+            name="amount"
+            :disabled="computedDisabled"
+            v-model.number="totalAmountDue"
+            required
+            class="form-control "
+          />
         </div>
 
         <div class="form-group">

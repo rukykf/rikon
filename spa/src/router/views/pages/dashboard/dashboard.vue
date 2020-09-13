@@ -179,42 +179,6 @@
   <Layout>
     <div class="page-title align-items-center">
       <SuccessFailureAlert :errors="errors" :success="success"></SuccessFailureAlert>
-
-      <div class="row">
-        <div class="col-12 col-sm-4 col-lg-6">
-          <h3 class="mb-1 mt-0">
-            <span v-if="isToday">Today's Summary</span>
-            <span v-else
-              >Rikon Analytics from <span class="text-info">{{ fromDate | humanDate }}</span> to
-              <span class="text-info">{{ toDate | humanDate }}</span></span
-            >
-          </h3>
-        </div>
-      </div>
-
-      <div class="row mb-5 mt-2">
-        <div class="form-group col-12 col-lg-3">
-          <label class="font-weight-bold">
-            From:
-          </label>
-          <input type="date" class="form-control" v-model="fromDate" />
-        </div>
-
-        <div class="form-group col-12 col-lg-3">
-          <label class="font-weight-bold">
-            To:
-          </label>
-          <input type="date" class="form-control" v-model="toDate" />
-        </div>
-        <div class="col-12 col-lg-3 mt-1">
-          <ManagedStateButton
-            main-title="Filter"
-            :state="filterBtnState"
-            class="px-5 mt-4"
-            @clicked="filterAnalytics"
-          ></ManagedStateButton>
-        </div>
-      </div>
     </div>
 
     <div v-if="loading" class="text-center">
@@ -222,26 +186,6 @@
     </div>
 
     <div v-else>
-      <div class="row">
-        <div class="col-12">
-          <h3>Analytics Overview</h3>
-        </div>
-
-        <div
-          v-for="stat of analyticsData.statCards"
-          :key="stat.mainTitle"
-          :class="stat.mainTitle.toLowerCase() !== 'separator' ? 'col-12 col-md-6 col-xl-3' : 'col-12'"
-        >
-          <StatChart
-            v-if="stat.mainTitle.toLowerCase() !== 'separator'"
-            :main-title="stat.mainTitle"
-            :value="stat.value"
-            :isMoney="stat.isMoney"
-          />
-          <h4 v-else>{{ stat.value }}</h4>
-        </div>
-      </div>
-
       <div class="row mt-5">
         <div class="col-12">
           <h3>Trends</h3>
@@ -276,96 +220,6 @@
                 ></apexchart>
               </div>
               <!-- end target chart -->
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row mt-5">
-        <div class="col-12">
-          <h3>Department Analytics</h3>
-        </div>
-
-        <div class="col-12">
-          <div class="card">
-            <div class="card-body pb-0">
-              <h5 class="card-title header-title"
-                >Department Analytics from <span class="text-info">{{ fromDate | humanDate }}</span> to
-                <span class="text-info">{{ toDate | humanDate }}</span>
-              </h5>
-
-              <table class="table table-responsive table-hover">
-                <thead>
-                  <tr>
-                    <th>Department Name</th>
-                    <th>Pending Orders</th>
-                    <th>Fulfilled Orders</th>
-                    <th>Sales <br /><span class="text-secondary">(for fulfilled orders)</span></th>
-                    <th>Cancelled Orders</th>
-                    <th>Lost Sales <br /><span class="text-secondary">(for cancelled orders)</span></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="analytics in departmentAnalytics" :key="analytics.name">
-                    <td>{{ analytics.name | capitalize }}</td>
-                    <td>{{ analytics.total_pending_orders }}</td>
-                    <td>{{ analytics.total_fulfilled_orders }}</td>
-                    <td>{{ analytics.total_sales | money }}</td>
-                    <td>{{ analytics.total_cancelled_orders }}</td>
-                    <td>{{ analytics.total_lost_sales | money }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row mt-5">
-        <div class="col-12">
-          <h3>Sales Items Analytics</h3>
-        </div>
-
-        <div class="col-12">
-          <div class="card">
-            <div class="card-body pb-0">
-              <h5 class="card-title header-title"
-                >Sales Item Analytics from <span class="text-info">{{ fromDate | humanDate }}</span> to
-                <span class="text-info">{{ toDate | humanDate }}</span>
-              </h5>
-
-              <table class="table table-responsive table-hover">
-                <thead>
-                  <tr>
-                    <th>Item Name</th>
-                    <th>Total Quantity <br /><span class="text-secondary">(for all orders)</span></th>
-                    <th>Total Quantity <br /><span class="text-secondary">(for fulfilled orders)</span> </th>
-                    <th>Sales <br /><span class="text-secondary">(for fulfilled orders)</span></th>
-                    <th>Total Quantity <br /><span class="text-secondary">(for cancelled orders)</span> </th>
-                    <th>Lost Sales <br /><span class="text-secondary">(for cancelled orders)</span></th>
-                    <th
-                      >Total Quantity <br />
-                      for Currently Pending Orders
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="analytics in analyticsData.analytics_by_sales_item">
-                    <td>{{ analytics.name | capitalize }}</td>
-                    <td>{{ analytics.total_quantity_ordered }}</td>
-                    <td>{{ analytics.total_quantity_sold }}</td>
-                    <td>{{ analytics.total_sales | money }}</td>
-                    <td>{{ analytics.total_quantity_of_lost_sales }}</td>
-                    <td>{{ analytics.total_lost_sales | money }}</td>
-                    <td
-                      >{{
-                        analytics.total_quantity_ordered -
-                          (analytics.total_quantity_sold + analytics.total_quantity_of_lost_sales)
-                      }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
           </div>
         </div>

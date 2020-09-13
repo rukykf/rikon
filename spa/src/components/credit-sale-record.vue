@@ -1,7 +1,6 @@
 <script>
   import DisplayCustomerOrderDetails from "../router/views/pages/reports/components/display-customer-order-details"
   import DisplayCustomerBookingDetails from "../router/views/pages/reports/components/display-customer-booking-details"
-  import DisplayMergedSaleDetails from "../router/views/pages/reports/components/display-merged-sale-details"
   import ManagedStateButton from "./managed-state-button"
   import ErrorHandler from "@src/ErrorHandler"
   import SuccessFailureAlert from "./success-failure-alert"
@@ -11,7 +10,6 @@
     components: {
       SuccessFailureAlert,
       ManagedStateButton,
-      DisplayMergedSaleDetails,
       DisplayCustomerBookingDetails,
       DisplayCustomerOrderDetails,
     },
@@ -53,7 +51,6 @@
           let response = await this.$httpClient.get(`api/sales/${this.record.id}/sales-transactions`)
           this.salesTransactions = response.data
           this.loading = false
-          console.log(this.salesTransactions)
         } catch (error) {
           this.loading = false
           let errors = ErrorHandler(error)
@@ -164,7 +161,6 @@
               amount: this.newTransaction.amount,
             },
           })
-          console.log(newSalesRecord)
           this.success.push(`Successfully added discount of ${this.newTransaction.amount} to this record`)
           this.record.total_complementary = newSalesRecord.data.total_complementary
           this.record.total_due = newSalesRecord.data.total_due
@@ -222,19 +218,24 @@
     <div v-if="currentTab === 'record details'" class="mt-3">
       <div>
         <b-row class="mb-2">
+          <b-col sm="3" class="text-sm-right"><b>Sale ID:</b></b-col>
+          <b-col>{{ record.unique_id }}</b-col>
+        </b-row>
+
+        <b-row class="mb-2">
           <b-col sm="3" class="text-sm-right"><b>Date Created:</b></b-col>
-          <b-col>{{ record.created_at | humanDate }}</b-col>
+          <b-col>{{ record.created_at | humanDate }} at {{ record.updated_at | humanTime }}</b-col>
         </b-row>
 
         <b-row class="mb-2">
           <b-col sm="3" class="text-sm-right"><b>Date Modified:</b></b-col>
-          <b-col>{{ record.updated_at | humanDate }}</b-col>
+          <b-col>{{ record.updated_at | humanDate }} at {{ record.updated_at | humanTime }}</b-col>
         </b-row>
 
         <div v-if="record.customer_details != null">
           <b-row class="mb-2">
             <b-col sm="3" class="text-sm-right"><b>Customer Name:</b></b-col>
-            <b-col>{{ record.customer_details.name }}</b-col>
+            <b-col>{{ record.customer_details.name | capitalizeAll }}</b-col>
           </b-row>
 
           <b-row class="mb-2">
@@ -246,7 +247,7 @@
         <div v-if="record.credit_authorized_by != null">
           <b-row class="mb-2">
             <b-col sm="3" class="text-sm-right"><b>Credit Authorized By: </b></b-col>
-            <b-col>{{ record.credit_authorized_by.name }}</b-col>
+            <b-col>{{ record.credit_authorized_by.name | capitalizeAll }}</b-col>
           </b-row>
 
           <b-row class="mb-2">
@@ -277,7 +278,7 @@
 
         <b-row class="mb-2">
           <b-col sm="3" class="text-sm-right"><b>Status:</b></b-col>
-          <b-col>{{ record.status }}</b-col>
+          <b-col>{{ record.status | capitalizeAll }}</b-col>
         </b-row>
       </div>
 

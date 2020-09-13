@@ -7,10 +7,12 @@
   import BookingForm from "./booking-form"
   import CollectBookingPayment from "@components/collect-payment/collect-booking-payment"
   import FormBackground from "@components/form-background"
+  import DisplayBookingPaymentDetails from "@views/pages/hotel-bookings/components/display-booking-payment-details"
 
   export default {
     name: "close-room-booking",
     components: {
+      DisplayBookingPaymentDetails,
       FormBackground,
       CollectBookingPayment,
       BookingForm,
@@ -137,8 +139,8 @@
           this.editBookingFormState = "fail-try-again"
         }
       },
-      paymentSucceessful: function() {
-        this.collectPaymentFormState = "success"
+      updatedStateOnSuccessfulPayment: function(updatedPaymentDetails) {
+        this.booking.sale = updatedPaymentDetails
       },
 
       paymentFailed: function() {
@@ -161,15 +163,25 @@
                 class="mt-2"
                 :state="closeBookingBtnState"
                 mainTitle="Click to Close Booking"
+                fail-try-again-title="Click to Close Booking"
                 mainVariant="dark"
                 @clicked="closeBooking"
               ></ManagedStateButton>
             </div>
+            <DisplayBookingPaymentDetails
+              :booking="booking"
+              :total-charge="totalCharge"
+              :total-paid="totalPaid"
+              :total-balance="totalDue"
+              :total-discount="totalDiscount"
+              class="mt-3"
+            ></DisplayBookingPaymentDetails>
             <FormBackground class="text-center">
               <CollectBookingPayment
                 :booking-id="booking.id"
                 :required-amount="totalDue"
                 :state="collectPaymentFormState"
+                @success="updatedStateOnSuccessfulPayment"
               ></CollectBookingPayment>
             </FormBackground>
           </b-tab>

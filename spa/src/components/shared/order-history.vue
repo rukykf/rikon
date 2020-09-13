@@ -7,10 +7,16 @@
   import ManagedStateButton from "@components/managed-state-button"
   import DisplayOrderItems from "@components/shared/display-order-items"
   import DisplayCustomerOrderDetails from "@views/pages/reports/components/display-customer-order-details"
+  import DisplayRecordActionsBtn from "@components/shared/display-record-actions-btn"
+  import FormBackground from "@components/form-background"
+  import CollectOrderPayment from "@components/collect-payment/collect-order-payment"
 
   export default {
     name: "order-history",
     components: {
+      CollectOrderPayment,
+      FormBackground,
+      DisplayRecordActionsBtn,
       DisplayCustomerOrderDetails,
       DisplayOrderItems,
       ManagedStateButton,
@@ -21,14 +27,14 @@
       return {
         orders: [],
         orderFields: [
-          { key: "unique_id", label: "Computer Gen. ID", sortable: true, stickyColumn: true },
-          { key: "docket_serial_no", label: "Docket Serial No.", sortable: true },
+          { key: "unique_id", label: "Unique Salse ID", sortable: true, stickyColumn: true },
+          { key: "actions", label: "Actions", sortable: true },
           { key: "created_at", label: "Date", sortable: true },
           { key: "destination", label: "Destination", sortable: true },
           { key: "showDetails", label: "More Details", sortable: false },
           { key: "order_items", label: "Order Items", sortable: false },
           { key: "amount", label: "Amount (Naira)", sortable: true },
-          { key: "sale", label: "Total Debt", sortable: false },
+          { key: "sale.total_due", label: "Total Debt", sortable: true },
         ],
         errors: [],
         success: [],
@@ -47,6 +53,7 @@
           .set({ hour: 8, minute: 0 })
           .toISO(),
         department: this.$store.state.auth.currentDepartment,
+        selectedOrder: null,
         loading: false,
         filterBtnState: "initialize",
         totalRows: 1,
@@ -66,7 +73,7 @@
 
     computed: {
       numRows: function() {
-        return this.orders.length
+        return this.filteredOrders.length
       },
 
       totalAmount: function() {
@@ -93,6 +100,7 @@
           this.filterBtnState = "loading"
           this.fromDate = this.latestFromDate
           this.toDate = this.latestToDate
+          this.selectedOrder = null
           let url = `api/orders?status=fulfilled&start_date=${this.fromDate}&end_date=${this.toDate}`
 
           if (this.department.id !== "x") {
@@ -110,6 +118,11 @@
           let errors = ErrorHandler(error)
           this.errors.push(...errors)
         }
+      },
+
+      showCollectDebtForm(selectedOrder) {
+        this.selectedOrder = selectedOrder
+        this.$bvModal.show("collect-debt-form")
       },
     },
   }
@@ -195,6 +208,14 @@
               :filter="filter"
               :filter-included-fields="filterOn"
             >
+              <template v-slot:cell(actions)="row">
+                <DisplayRecordActionsBtn
+                  :record="row.item"
+                  type="order"
+                  @clicked="showCollectDebtForm(row.item)"
+                ></DisplayRecordActionsBtn>
+              </template>
+
               <template v-slot:cell(order_items)="row">
                 <display-order-items :order-items="row.item.order_items"></display-order-items>
               </template>
@@ -208,7 +229,7 @@
                 <span class="text-secondary">({{ totalAmount | money }})</span>
               </template>
 
-              <template v-slot:head(sale)="row">
+              <template v-slot:head(sale.total_due)="row">
                 Total Debt <br />
                 <span class="text-danger">({{ totalDebt | money }})</span>
               </template>
@@ -233,7 +254,8 @@
                 {{ row.item.amount | money }}
               </template>
 
-              <template v-slot:cell(sale)="row">
+              <template v-slot:cell(sale.total_due)="row">
+                <span v-if="row.item.sale.transaction_type === 'company'">COMPANY DEBT- </span>
                 {{ row.item.sale.total_due | money }}
               </template>
 
@@ -267,6 +289,22 @@
         </div>
       </div>
     </div>
+    <b-modal
+      @hide="getOrdersData"
+      id="collect-debt-form"
+      size="lg"
+      hide-footer
+      header-bg-variant="dark"
+      title="Order / Sales Record"
+    >
+      <FormBackground v-if="selectedOrder !== null">
+        <CollectOrderPayment
+          v-if="selectedOrder !== null"
+          :order-id="selectedOrder.id"
+          :required-amount="selectedOrder.sale.total_due"
+        ></CollectOrderPayment>
+      </FormBackground>
+    </b-modal>
   </div>
 </template>
 

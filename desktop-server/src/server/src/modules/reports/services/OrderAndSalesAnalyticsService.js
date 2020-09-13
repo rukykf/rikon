@@ -37,8 +37,8 @@ module.exports = {
     // process data for each of the last 12 months (plus the current one)
     for (let i = 0; i < 12; i++) {
       let sales = await Sale.query()
-        .where("created_at", ">=", startDate.toISODate())
-        .andWhere("created_at", "<=", endDate.toISODate())
+        .where("item_created_at", ">=", startDate.toISODate())
+        .andWhere("item_created_at", "<=", endDate.toISODate())
         .sum("total_amount as sales")
       monthlySalesChartData.push({ month: startDate.monthShort, sales: sales[0].sales })
       endDate = startDate
@@ -47,13 +47,20 @@ module.exports = {
     return monthlySalesChartData
   },
 
-  getOrderAndSalesAnalysisBySalesItem: async function(startDateISO, endDateISO) {
+  getOrderAndSalesAnalysisBySalesItem: async function(startDateISO, endDateISO, departmentId = null) {
     // retrieve only the sales items with at least 1 order within the specified period
 
-    let salesItems = await SalesItem.query()
-      .withGraphJoined("order_items")
-      .where("order_items.date", ">=", startDateISO)
-      .andWhere("order_items.date", "<=", endDateISO)
+    let salesItemsQueryBuilder = SalesItem.query()
+      .withGraphJoined("order_items.order")
+      .where("order_items:order:created_at", ">=", startDateISO)
+      .andWhere("order_items:order:created_at", "<=", endDateISO)
+      .andWhere("order_items:order:active", "=", 1)
+      .orderBy("sales_items.name")
+
+    if (departmentId !== null) {
+      salesItemsQueryBuilder.andWhere("sales_items.department_id", "=", departmentId)
+    }
+    let salesItems = await salesItemsQueryBuilder.execute()
 
     let salesItemsAnalyticsData = []
     for (let i = 0; i < salesItems.length; i++) {
@@ -62,9 +69,12 @@ module.exports = {
 
       // Get total quantity ordered
       let allOrderItemsForSalesItem = await OrderItem.query()
+        .withGraphJoined("order")
         .where("sales_item_id", "=", salesItem.id)
-        .andWhere("date", ">=", startDateISO)
-        .andWhere("date", "<=", endDateISO)
+        .andWhere("order.created_at", ">=", startDateISO)
+        .andWhere("order.created_at", "<=", endDateISO)
+        .andWhere("order.active", "=", 1)
+        .andWhere("order.status", "!=", "pending")
 
       let totalQuantityOrdered = 0
       allOrderItemsForSalesItem.forEach((orderItem) => {
@@ -75,8 +85,8 @@ module.exports = {
       let fulfilledOrderItemsForSalesItem = await OrderItem.query()
         .withGraphJoined("order")
         .where("order_items.sales_item_id", "=", salesItem.id)
-        .andWhere("order_items.date", ">=", startDateISO)
-        .andWhere("order_items.date", "<=", endDateISO)
+        .andWhere("order.created_at", ">=", startDateISO)
+        .andWhere("order.created_at", "<=", endDateISO)
         .andWhere("order.status", "=", "fulfilled")
 
       let totalSales = 0
@@ -90,8 +100,8 @@ module.exports = {
       let cancelledOrderItemsForSalesItem = await OrderItem.query()
         .withGraphJoined("order")
         .where("order_items.sales_item_id", "=", salesItem.id)
-        .andWhere("order_items.date", ">=", startDateISO)
-        .andWhere("order_items.date", "<=", endDateISO)
+        .andWhere("order.created_at", ">=", startDateISO)
+        .andWhere("order.created_at", "<=", endDateISO)
         .andWhere("order.status", "=", "cancelled")
 
       let totalLostSales = 0

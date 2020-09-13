@@ -53,7 +53,6 @@
 
     mounted: function() {
       this.getRoles()
-      console.log(this.$store.state.auth.currentUser)
     },
 
     methods: {
@@ -86,7 +85,6 @@
             if (this.user.id !== null) {
               url += this.user.id
             }
-            console.log(url)
             if (this.newUser.password === null) {
               this.newUser.password = this.user.password
             }

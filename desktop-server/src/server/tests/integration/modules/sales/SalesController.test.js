@@ -54,6 +54,9 @@ async function populateSales() {
     created_at: DateTime.local()
       .minus({ days: 100 })
       .toISODate(),
+    item_created_at: DateTime.local()
+      .minus({ days: 100 })
+      .toISODate(),
     updated_at: DateTime.local()
       .minus({ days: 100 })
       .toISODate(),
@@ -74,6 +77,9 @@ async function populateSales() {
     created_at: DateTime.local()
       .minus({ days: 12 })
       .toISODate(),
+    item_created_at: DateTime.local()
+      .minus({ days: 12 })
+      .toISODate(),
     updated_at: DateTime.local()
       .minus({ days: 12 })
       .toISODate(),
@@ -92,6 +98,9 @@ async function populateSales() {
   // one recent credit sale
   sale = await Sale.query().insert({
     created_at: DateTime.local()
+      .minus({ days: 4 })
+      .toISODate(),
+    item_created_at: DateTime.local()
       .minus({ days: 4 })
       .toISODate(),
     updated_at: DateTime.local()
@@ -116,6 +125,9 @@ async function populateSales() {
     created_at: DateTime.local()
       .minus({ days: 1 })
       .toISODate(),
+    item_created_at: DateTime.local()
+      .minus({ days: 1 })
+      .toISODate(),
     updated_at: DateTime.local()
       .minus({ days: 1 })
       .toISODate(),
@@ -136,6 +148,9 @@ async function populateSales() {
   // one merged sale
   sale = await Sale.query().insert({
     created_at: DateTime.local()
+      .minus({ days: 1 })
+      .toISODate(),
+    item_created_at: DateTime.local()
       .minus({ days: 1 })
       .toISODate(),
     updated_at: DateTime.local()

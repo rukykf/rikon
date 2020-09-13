@@ -4,10 +4,12 @@
   import CollectComplementaryPayment from "@components/collect-payment/collect-complementary-payment"
   import CollectCredit from "@components/collect-payment/collect-credit"
   import FormBackground from "@components/form-background"
+  import CollectCompanyPayment from "@components/collect-payment/collect-company-payment"
 
   export default {
     name: "collect-order-payment",
     components: {
+      CollectCompanyPayment,
       FormBackground,
       CollectComplementaryPayment,
       CollectDiscountPayment,
@@ -59,6 +61,11 @@
         this.paymentSelectionPane = false
       },
 
+      switchToCollectCompanyPane() {
+        this.selectedPane = "company"
+        this.paymentSelectionPane = false
+      },
+
       switchToCollectCreditPane() {
         this.selectedPane = "credit"
         this.paymentSelectionPane = false
@@ -89,7 +96,8 @@
           AND TRY AGAIN.
         </FormBackground>
       </div>
-      <div v-if="paymentSelectionPane">
+
+      <div v-else-if="paymentSelectionPane">
         <div class="row">
           <div class="offset-3 col-5 text-center font-weight-bold"><h5>Collect Payment</h5></div>
           <button
@@ -111,6 +119,13 @@
             :disabled="computedDisabled"
             class="offset-3 col-5 btn btn-dark mt-3"
             >Complementary</button
+          >
+
+          <button
+            @click.stop.prevent="switchToCollectCompanyPane"
+            :disabled="computedDisabled"
+            class="offset-3 col-5 btn btn-dark mt-3"
+            >Company</button
           >
 
           <button
@@ -165,6 +180,16 @@
           @success="handleSuccess"
           @error="handleError"
         ></CollectCredit>
+
+        <CollectCompanyPayment
+          v-else-if="selectedPane === 'company'"
+          :state="state"
+          :required-amount="requiredAmount"
+          :sellable-id="orderId"
+          sellable-type="order"
+          @success="handleSuccess"
+          @error="handleError"
+        ></CollectCompanyPayment>
       </div>
     </keep-alive>
   </div>

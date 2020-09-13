@@ -91,8 +91,10 @@
         let { data: sale } = await this.$httpClient.post("api/sales", {
           sellable_type: this.sellableType,
           sellable_id: this.sellableId,
-          transaction_type: "credit",
+          transaction_type: "discount",
           transaction_details: {
+            transaction_type: this.paymentMethod.toLowerCase(),
+            amount: this.paymentAmount,
             credit_authorized_by: { name: this.authorizedBy.full_name },
             customer_details: {
               name: this.discountGrantedTo.full_name,
@@ -103,14 +105,7 @@
           },
         })
 
-        let { data: updatedSale } = await this.$httpClient.post(`api/sales/${sale.id}`, {
-          transaction_details: {
-            transaction_type: this.paymentMethod.toLowerCase(),
-            amount: this.paymentAmount,
-          },
-        })
-
-        return updatedSale
+        return sale
       },
 
       async addDiscountTransaction(saleId) {
@@ -144,7 +139,7 @@
           try {
             this.paymentBtnState = "loading"
             let sale = await this.addCashPayment()
-            await this.addDiscountTransaction(sale.id)
+            sale = await this.addDiscountTransaction(sale.id)
             await this.addManagementTransactions(sale.id)
             this.paymentBtnState = "initialize"
             this.success.push(`Successfully paid ${this.paymentAmount}`)
@@ -173,6 +168,11 @@
 
         if (this.paymentMethod === null) {
           this.paymentMethodValidation = "Select a valid method of payment"
+          isValid = false
+        }
+
+        if (this.discountAmount < 1) {
+          this.amountValidation = "Discount should be greater than 0"
           isValid = false
         }
 

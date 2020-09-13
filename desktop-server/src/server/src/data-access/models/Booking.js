@@ -29,6 +29,7 @@ class Booking extends Objection {
 
   // eslint-disable-next-line camelcase
   num_nights() {
+    this.end_date = DateTime.local().toISODate()
     return Booking.getNumNights(this.start_date, this.end_date)
   }
 

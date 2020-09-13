@@ -13,15 +13,19 @@
 <template>
   <div>
     <b-row class="mb-2">
-      <b-col sm="3" class="text-sm-right"><b>Guest Name: </b></b-col>
-      <b-col>{{ details.customer_details.name }}</b-col>
+      <b-col sm="3" class="text-sm-right font-weight-bold"><b>Booking ID: </b></b-col>
+      <b-col>{{ details.unique_id }}</b-col>
     </b-row>
     <b-row class="mb-2">
-      <b-col sm="3" class="text-sm-right text-info"><b>Guest's Intended Number of Nights: </b></b-col>
+      <b-col sm="3" class="text-sm-right"><b>Guest Name: </b></b-col>
+      <b-col>{{ details.customer_details.name | capitalizeAll }}</b-col>
+    </b-row>
+    <b-row class="mb-2">
+      <b-col sm="3" class="text-sm-right font-weight-bolder"><b>Guest's Intended Number of Nights: </b></b-col>
       <b-col>{{ details.customer_details.intendedNumberOfNights }}</b-col>
     </b-row>
     <b-row class="mb-2">
-      <b-col sm="3" class="text-sm-right text-success"
+      <b-col sm="3" class="text-sm-right font-weight-bolder"
         ><b>Actual Number of Nights (calculated by the system): </b>
       </b-col>
       <b-col>{{ details.num_nights }}</b-col>
@@ -44,7 +48,7 @@
     </b-row>
     <b-row class="mb-2">
       <b-col sm="3" class="text-sm-right"><b>Status: </b></b-col>
-      <b-col>{{ details.status }}</b-col>
+      <b-col>{{ details.status | capitalizeAll }}</b-col>
     </b-row>
     <b-row class="mb-2">
       <b-col sm="3" class="text-sm-right"><b>Guest's Phone: </b></b-col>

@@ -11,9 +11,7 @@
         required: true,
       },
     },
-    mounted: function() {
-      console.log(this.details)
-    },
+    mounted: function() {},
   }
 </script>
 

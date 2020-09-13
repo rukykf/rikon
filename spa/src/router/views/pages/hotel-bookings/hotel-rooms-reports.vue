@@ -1,8 +1,8 @@
 <script>
   import Layout from "@layouts/main"
   import BookingHistory from "@views/pages/hotel-bookings/components/booking-history"
-  import RoomOccupationAnalytics from "@views/pages/hotel-bookings/components/room-occupation-analytics"
-  import CashSalesPosBreakdown from "@components/shared/cash-sales-pos-breakdown"
+  import RoomOccupationAnalytics from "@components/shared/room-occupation-analytics"
+  import CashSalesPosBreakdown from "@components/shared/cash-pos-debt-sales-breakdown"
 
   export default {
     name: "hotel-rooms-reports",

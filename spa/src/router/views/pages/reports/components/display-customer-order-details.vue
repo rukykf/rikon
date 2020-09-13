@@ -13,6 +13,33 @@
 <template>
   <div>
     <b-row class="mb-2">
+      <b-col sm="3" class="text-sm-right font-weight-bold"><b>Order ID:</b></b-col>
+      <b-col
+        >{{ details.unique_id }}</span>
+      </b-col>
+    </b-row>
+    <b-row class="mb-2">
+      <b-col sm="3" class="text-sm-right"><b>Docket Serial No:</b></b-col>
+      <b-col
+      >{{ details.docket_serial_no }}</span>
+      </b-col>
+    </b-row>
+
+    <b-row class="mb-2">
+      <b-col sm="3" class="text-sm-right"><b>Order Status:</b></b-col>
+      <b-col
+      >{{ details.status | capitalizeAll }}</span>
+      </b-col>
+    </b-row>
+
+    <b-row class="mb-2">
+      <b-col sm="3" class="text-sm-right"><b>Cancellation Notes:</b></b-col>
+      <b-col
+      >{{ details.cancellation_remarks }}</span>
+      </b-col>
+    </b-row>
+
+    <b-row class="mb-2">
       <b-col sm="3" class="text-sm-right"><b>Order Date:</b></b-col>
       <b-col
         >{{ details.created_at | humanDate }} <span class="font-italic">{{ details.created_at | humanTime }}</span>

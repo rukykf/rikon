@@ -7,6 +7,13 @@ const OrderItem = require("../../../../../src/data-access/models/OrderItem")
 const Booking = require("../../../../../src/data-access/models/Booking")
 const SalesTransaction = require("../../../../../src/data-access/models/SalesTransaction")
 
+let sales = []
+let salesTransactions = []
+let output = {
+  sales: sales,
+  salesTransactions: salesTransactions
+}
+
 module.exports = {
   async populateMonthlySales() {
     let date = DateTime.local()
@@ -17,6 +24,7 @@ module.exports = {
 
       let sale = await Sale.query().insert({
         created_at: date.toISODate(),
+        item_created_at: date.toISODate(),
         updated_at: date.toISODate(),
         total_amount: 5000,
         total_paid: 0,
@@ -31,6 +39,7 @@ module.exports = {
       sales.push(sale)
 
       sale = await Sale.query().insert({
+        item_created_at: date.toISODate(),
         created_at: date.toISODate(),
         updated_at: date.toISODate(),
         total_amount: 5000,
@@ -205,10 +214,53 @@ module.exports = {
 
     barPOSOrder = await populateOrderForDepartments(["bar"], "pending")
     await populateSaleAndSalesTransactions("order", barPOSOrder.id, 5000, "pos")
+  },
+
+  async populateSalesAndSalesTransactionsWithDepartmentAndTransactionType() {
+    resetData()
+
+    // populate data for the first department
+    await populateCashSale(1)
+    await populateCashSale(1, "pos")
+    await populateCashSale(1, "transfer")
+
+    await populateDebtSale(1)
+    await populateDebtSale(1, "company")
+
+    await populateDiscountSale(1, "cash")
+    await populateDiscountSale(1, "pos")
+    await populateDiscountSale(1, "transfer")
+
+    await populateComplementarySale(1)
+
+    // populate data for the second department
+    await populateCashSale(2)
+    await populateCashSale(2, "pos")
+    await populateCashSale(2, "transfer")
+
+    await populateDebtSale(2)
+    await populateDebtSale(2, "company")
+
+    await populateDiscountSale(2, "cash")
+    await populateDiscountSale(2, "pos")
+    await populateDiscountSale(2, "transfer")
+
+    await populateComplementarySale(2)
+
+    return output
   }
 }
 
 // private functions
+function resetData() {
+  sales = []
+  salesTransactions = []
+  output = {
+    sales: sales,
+    salesTransactions: salesTransactions
+  }
+}
+
 async function populateOrdersForSalesItem(salesItem, orderStatus) {
   let order = await Order.query().insert({
     amount: 9000,
@@ -329,16 +381,206 @@ async function populateBooking(amount) {
   return booking
 }
 
-async function populateDebtSale(sellableType, sellableId, amount) {
+async function populateDebtSale(departmentID, transactionType = "credit") {
   let sale = await Sale.query().insert({
-    total_amount: amount,
+    total_amount: 5000,
     total_paid: 0,
     total_complementary: 0,
-    total_due: amount,
-    department_id: 1,
-    transaction_type: "cash",
-    sellable_id: sellableId,
-    sellable_type: sellableType,
-    status: "owing"
+    total_due: 5000,
+    department_id: departmentID,
+    transaction_type: transactionType,
+    sellable_id: 1,
+    sellable_type: "booking",
+    status: "owing",
+    item_created_at: DateTime.local().toISODate(),
+    created_at: DateTime.local().toISODate()
   })
+  sales.push(sale)
+
+  sale = await Sale.query().insert({
+    total_amount: 5000,
+    total_paid: 0,
+    total_complementary: 0,
+    total_due: 5000,
+    department_id: departmentID,
+    transaction_type: transactionType,
+    sellable_id: 1,
+    sellable_type: "booking",
+    status: "owing",
+    item_created_at: DateTime.local()
+      .minus({ days: 12 })
+      .toISODate(),
+    created_at: DateTime.local()
+      .minus({ days: 12 })
+      .toISODate()
+  })
+  sales.push(sale)
+}
+
+async function populateComplementarySale(departmentID) {
+  let sale = await Sale.query().insert({
+    total_amount: 5000,
+    total_paid: 0,
+    total_complementary: 5000,
+    total_due: 0,
+    department_id: departmentID,
+    transaction_type: "complementary",
+    sellable_id: 1,
+    sellable_type: "booking",
+    status: "owing",
+    item_created_at: DateTime.local().toISODate(),
+    created_at: DateTime.local().toISODate()
+  })
+  sales.push(sale)
+
+  sale = await Sale.query().insert({
+    total_amount: 5000,
+    total_paid: 0,
+    total_complementary: 5000,
+    total_due: 0,
+    department_id: departmentID,
+    transaction_type: "complementary",
+    sellable_id: 1,
+    sellable_type: "booking",
+    status: "owing",
+    item_created_at: DateTime.local()
+      .minus({ days: 12 })
+      .toISODate(),
+    created_at: DateTime.local()
+      .minus({ days: 12 })
+      .toISODate()
+  })
+  sales.push(sale)
+}
+
+async function populateCashSale(departmentID, paymentMethod = "cash") {
+  // populate one recent sales record
+  let sale = await Sale.query().insert({
+    total_amount: 5000,
+    total_paid: 5000,
+    total_complementary: 0,
+    total_due: 0,
+    department_id: departmentID,
+    transaction_type: "cash",
+    sellable_id: 1,
+    sellable_type: "order",
+    status: "paid",
+    item_created_at: DateTime.local().toISODate(),
+    created_at: DateTime.local().toISODate()
+  })
+  sales.push(sale)
+  let saleTransaction = await SalesTransaction.query().insert({
+    sales_id: sale.id,
+    date: DateTime.local().toISODate(),
+    transaction_type: paymentMethod,
+    amount: 5000,
+    registered_by: "name"
+  })
+  salesTransactions.push(saleTransaction)
+
+  // populate one old sales record for filtering by date
+  sale = await Sale.query().insert({
+    total_amount: 5000,
+    total_paid: 5000,
+    total_complementary: 0,
+    total_due: 0,
+    department_id: departmentID,
+    transaction_type: "cash",
+    sellable_id: 1,
+    sellable_type: "order",
+    status: "paid",
+    item_created_at: DateTime.local()
+      .minus({ days: 12 })
+      .toISODate(),
+    created_at: DateTime.local()
+      .minus({ days: 12 })
+      .toISODate()
+  })
+  sales.push(sale)
+  saleTransaction = await SalesTransaction.query().insert({
+    sales_id: sale.id,
+    date: DateTime.local()
+      .minus({ days: 12 })
+      .toISODate(),
+    transaction_type: paymentMethod,
+    amount: 5000,
+    registered_by: "name"
+  })
+  salesTransactions.push(saleTransaction)
+}
+
+async function populateDiscountSale(departmentID, paymentMethod = "cash") {
+  // populate one recent sales record
+  let sale = await Sale.query().insert({
+    total_amount: 5000,
+    total_paid: 3000,
+    total_complementary: 2000,
+    total_due: 0,
+    department_id: departmentID,
+    transaction_type: "discount",
+    sellable_id: 1,
+    sellable_type: "order",
+    status: "paid",
+    item_created_at: DateTime.local().toISODate(),
+    created_at: DateTime.local().toISODate()
+  })
+  sales.push(sale)
+
+  let saleTransaction = await SalesTransaction.query().insert({
+    sales_id: sale.id,
+    date: DateTime.local().toISODate(),
+    transaction_type: paymentMethod,
+    amount: 3000,
+    registered_by: "name"
+  })
+  salesTransactions.push(saleTransaction)
+
+  saleTransaction = await SalesTransaction.query().insert({
+    sales_id: sale.id,
+    date: DateTime.local().toISODate(),
+    transaction_type: "discount",
+    amount: 2000,
+    registered_by: "name"
+  })
+  salesTransactions.push(saleTransaction)
+
+  // populate one old sales record for filtering by date
+  sale = await Sale.query().insert({
+    total_amount: 5000,
+    total_paid: 3000,
+    total_complementary: 2000,
+    total_due: 0,
+    department_id: departmentID,
+    transaction_type: "discount",
+    sellable_id: 1,
+    sellable_type: "order",
+    status: "paid",
+    item_created_at: DateTime.local()
+      .minus({ days: 12 })
+      .toISODate(),
+    created_at: DateTime.local()
+      .minus({ days: 12 })
+      .toISODate()
+  })
+  sales.push(sale)
+
+  saleTransaction = await SalesTransaction.query().insert({
+    sales_id: sale.id,
+    date: DateTime.local()
+      .minus({ days: 12 })
+      .toISODate(),
+    transaction_type: paymentMethod,
+    amount: 3000,
+    registered_by: "name"
+  })
+  salesTransactions.push(saleTransaction)
+
+  saleTransaction = await SalesTransaction.query().insert({
+    sales_id: sale.id,
+    date: DateTime.local().toISODate(),
+    transaction_type: "discount",
+    amount: 2000,
+    registered_by: "name"
+  })
+  salesTransactions.push(saleTransaction)
 }

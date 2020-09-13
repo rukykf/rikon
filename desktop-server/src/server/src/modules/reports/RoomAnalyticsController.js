@@ -6,6 +6,7 @@ module.exports = {
   async getRoomOccupationAnalyticsByRoomType(req, res) {
     try {
       let roomTypes = await RoomType.query()
+        .where("active", "=", 1)
         .withGraphFetched("rooms.currentBooking")
         .orderBy("name")
       let roomTypesAnalytics = []
@@ -37,7 +38,7 @@ module.exports = {
       let requestModel = new HistoricalRoomBookingAnalytics(req)
 
       let roomBookingAnalyticsQueryString =
-        "select name, count(bookings.id) as quantity from room_types join rooms on room_types.id = rooms.room_type_id join bookings on rooms.id = bookings.room_id where bookings.status = 'closed' and bookings.created_at >= :startDate and bookings.created_at <= :endDate group by room_types.name order by room_types.name"
+        "select name, count(bookings.id) as quantity from room_types join rooms on room_types.id = rooms.room_type_id join bookings on rooms.id = bookings.room_id where room_types.active = 1 and bookings.status = 'closed' and bookings.created_at >= :startDate and bookings.created_at <= :endDate group by room_types.name order by room_types.name"
 
       let queryParams = {
         startDate: requestModel.start_date,

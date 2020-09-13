@@ -21,15 +21,19 @@ module.exports = {
 
       let salesQueryBuilder = Sale.query()
         .where("active", "=", 1)
-        .andWhere("created_at", ">=", startDate)
-        .andWhere("created_at", "<=", endDate)
+        .andWhere("item_created_at", ">=", startDate)
+        .andWhere("item_created_at", "<=", endDate)
         .withGraphFetched("sales_transactions")
-        .withGraphFetched("booking")
-        .withGraphFetched("order")
+        .withGraphFetched("booking.room")
+        .withGraphFetched("order.order_items")
         .orderBy("created_at", "desc")
 
+      if (_.get(req, ["query", "department_id"]) != null) {
+        salesQueryBuilder.andWhere("department_id", "=", req.query.department_id)
+      }
+
       if (_.get(req, ["query", "status"]) != null) {
-        salesQueryBuilder.where("status", "=", req.query.status)
+        salesQueryBuilder.andWhere("status", "=", req.query.status)
       }
 
       if (_.get(req, ["query", "sellable_type"]) != null) {
@@ -69,17 +73,21 @@ module.exports = {
         sale = await createSaleForSellable(updateSalesRecordRequestModel)
       }
 
-      if (updateSalesRecordRequestModel.transaction_type !== "credit") {
+      if (
+        updateSalesRecordRequestModel.transaction_type !== "credit" &&
+        updateSalesRecordRequestModel.transaction_type !== "company"
+      ) {
         sale = await updateSaleRecordWithTransaction(updateSalesRecordRequestModel, sale)
       }
 
       if (updateSalesRecordRequestModel.transaction_type === "credit") {
         updateSalesRecordRequestModel.validateCreditTransaction()
-        sale = await Sale.query().patchAndFetchById(sale.id, {
-          customer_details: updateSalesRecordRequestModel.customer_details,
-          credit_authorized_by: updateSalesRecordRequestModel.credit_authorized_by
-        })
       }
+
+      sale = await Sale.query().patchAndFetchById(sale.id, {
+        customer_details: updateSalesRecordRequestModel.customer_details,
+        credit_authorized_by: updateSalesRecordRequestModel.credit_authorized_by
+      })
 
       return res.json(sale)
     } catch (error) {

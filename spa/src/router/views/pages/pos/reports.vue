@@ -1,7 +1,7 @@
 <script>
   import Layout from "@layouts/main"
-  import CashPosDebtSalesBreakdown from "@views/pages/pos/components/cash-pos-debt-sales-breakdown"
-  import SalesItemsQuantityBreakdown from "@views/pages/pos/components/sales-items-quantity-breakdown"
+  import CashPosDebtSalesBreakdown from "@components/shared/cash-pos-debt-sales-breakdown"
+  import SalesItemsQuantityBreakdown from "@components/shared/sales-items-quantity-breakdown"
   import OrderHistory from "@components/shared/order-history"
 
   export default {

@@ -55,7 +55,7 @@
         transactions: [],
         departments: [],
         transactionFields: [
-          { key: "unique_id", label: "Computer Gen. ID", sortable: true, stickyColumn: true },
+          { key: "unique_id", label: "Unique Sales ID", sortable: true, stickyColumn: true },
           { key: "name", label: "Name", sortable: true },
           { key: "details", label: "Details", sortable: true },
           { key: "showActions", label: "More Details", sortable: false },
@@ -184,7 +184,6 @@
         let response = await this.$httpClient.get(url)
         this.transactions = response.data
         this.filteredTransactions = _.cloneDeep(this.transactions)
-        console.log(response)
       },
 
       async getDepartmentData() {

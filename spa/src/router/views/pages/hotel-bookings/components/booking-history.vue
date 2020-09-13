@@ -8,10 +8,16 @@
   import DisplayBookingDetails from "@components/shared/display-booking-details"
   import DisplayCustomerBookingDetails from "@views/pages/reports/components/display-customer-booking-details"
   import DisplayRecordActionsBtn from "@components/shared/display-record-actions-btn"
+  import FormBackground from "@components/form-background"
+  import DisplayBookingPaymentDetails from "@views/pages/hotel-bookings/components/display-booking-payment-details"
+  import CollectBookingPayment from "@components/collect-payment/collect-booking-payment"
 
   export default {
     name: "booking-history",
     components: {
+      CollectBookingPayment,
+      DisplayBookingPaymentDetails,
+      FormBackground,
       DisplayRecordActionsBtn,
       DisplayCustomerBookingDetails,
       DisplayBookingDetails,
@@ -26,15 +32,15 @@
         loading: false,
         bookings: [],
         bookingFields: [
-          { key: "unique_id", label: "Computer Gen. ID", sortable: true, stickyColumn: true },
+          { key: "unique_id", label: "Unique Sales ID", sortable: true, stickyColumn: true },
           { key: "date", label: "Booking Started On", sortable: true },
           { key: "summary", label: "Booking Summary", sortable: true },
           { key: "showDetails", label: "More Details", sortable: false },
           { key: "showActions", label: "Actions", sortable: false },
-          { key: "total_amount", label: "Total Amount", sortable: true },
-          { key: "total_paid", label: "Total Paid", sortable: true },
-          { key: "total_discount", label: "Total Discount", sortable: true },
-          { key: "total_debt", label: "Debt", sortable: true },
+          { key: "sale.total_amount", label: "Total Amount", sortable: true },
+          { key: "sale.total_paid", label: "Total Paid", sortable: true },
+          { key: "sale.total_complementary", label: "Total Discount", sortable: true },
+          { key: "sale.total_due", label: "Debt", sortable: true },
         ],
         filteredBookings: [],
         fromDate: DateTime.local()
@@ -51,6 +57,7 @@
           .plus({ days: 1 })
           .set({ hour: 8, minute: 0 })
           .toISO(),
+        selectedBooking: null,
         filterBtnState: "initialize",
         totalRows: 1,
         currentPage: 1,
@@ -125,6 +132,15 @@
           let errors = ErrorHandler(error)
           this.errors.push(...errors)
         }
+      },
+
+      showCollectDebtForm(selectedBooking) {
+        this.selectedBooking = selectedBooking
+        this.$bvModal.show("collect-debt-form")
+      },
+
+      hideCollectDebtForm() {
+        this.$bvModal.hide("collect-debt-form")
       },
     },
   }
@@ -230,7 +246,11 @@
               </template>
 
               <template v-slot:cell(showActions)="row">
-                <DisplayRecordActionsBtn :record="row.item" type="booking"></DisplayRecordActionsBtn>
+                <DisplayRecordActionsBtn
+                  @clicked="showCollectDebtForm(row.item)"
+                  :record="row.item"
+                  type="booking"
+                ></DisplayRecordActionsBtn>
               </template>
 
               <template v-slot:head(total_amount)="row">
@@ -238,35 +258,36 @@
                 <span class="text-secondary">({{ totalAmount | money }})</span>
               </template>
 
-              <template v-slot:cell(total_amount)="row">
+              <template v-slot:cell(sale.total_amount)="row">
                 {{ row.item.sale.total_amount | money }}
               </template>
 
-              <template v-slot:head(total_paid)="row">
+              <template v-slot:head(sale.total_paid)="row">
                 Total Paid <br />
                 <span class="text-secondary">({{ totalPaid | money }})</span>
               </template>
 
-              <template v-slot:cell(total_paid)="row">
+              <template v-slot:cell(sale.total_paid)="row">
                 {{ row.item.sale.total_paid | money }}
               </template>
 
-              <template v-slot:head(total_discount)="row">
-                Total Discount <br />
+              <template v-slot:head(sale.total_complementary)="row">
+                Total Discount / Complementary <br />
                 <span class="text-secondary">({{ totalDiscount | money }})</span>
               </template>
 
-              <template v-slot:cell(total_discount)="row">
+              <template v-slot:cell(sale.total_complementary)="row">
                 {{ row.item.sale.total_complementary | money }}
               </template>
 
-              <template v-slot:head(total_debt)="row">
+              <template v-slot:head(sale.total_due)="row">
                 Total Debt <br />
                 <span class="text-danger">({{ totalDebt | money }})</span>
               </template>
 
-              <template v-slot:cell(total_debt)="row">
-                {{ row.item.sale.total_due | money }}
+              <template v-slot:cell(sale.total_due)="row">
+                <span v-if="row.item.sale.transaction_type === 'company'">COMPANY DEBT-</span
+                >{{ row.item.sale.total_due | money }}
               </template>
             </b-table>
           </div>
@@ -289,6 +310,36 @@
         </div>
       </div>
     </div>
+
+    <
+    <b-modal
+      @hide="getBookingsData"
+      id="collect-debt-form"
+      size="lg"
+      hide-footer
+      header-bg-variant="dark"
+      title="Order / Sales Record"
+    >
+      <FormBackground v-if="selectedOrder !== null">
+        <DisplayBookingPaymentDetails
+          v-if="selectedBooking != null"
+          :booking="selectedBooking"
+          :total-balance="selectedBooking.sale.total_due"
+          :total-charge="selectedBooking.sale.total_amount"
+          :total-discount="selectedBooking.sale.total_complementary"
+          :total-paid="selectedBooking.sale.total_paid"
+        ></DisplayBookingPaymentDetails>
+        <FormBackground>
+          <CollectBookingPayment
+            v-if="selectedBooking != null"
+            :required-amount="selectedBooking.sale.total_due"
+            :booking-id="selectedBooking.id"
+            :state="collectPaymentFormState"
+            @success="hideCollectDebtForm"
+          ></CollectBookingPayment>
+        </FormBackground>
+      </FormBackground>
+    </b-modal>
   </div>
 </template>
 

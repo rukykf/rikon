@@ -138,7 +138,6 @@
         this.entries = history.data
         this.disbursedEntries = this.entries.filter((entry) => entry.supplier === null)
         this.receivedEntries = this.entries.filter((entry) => entry.department === null)
-        console.log(this.entries)
         this.loading = false
       },
     },

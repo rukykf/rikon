@@ -11,6 +11,8 @@ beforeEach(async () => {
   await ManagementListTransactionTestDataFactory.deleteAllDataFromDB()
 })
 
+// TODO add test for filtering by department_id
+
 test("DynamicManagementListTransactionsController.index returns list of all management list transactions", async () => {
   let {
     managementListTransactionItems
@@ -85,6 +87,8 @@ test("DynamicManagementListTransactionsController.index filters transactions by 
       .toISODate()
   )
 })
+
+// TODO: Add test for validating create with multiple duplicate entries
 
 test("DynamicManagementListTransactionsController.create returns new managementListTransaction when passed valid data", async () => {
   let { managementListItems } = await ManagementListTransactionTestDataFactory.populateManagementListTransactionsData()

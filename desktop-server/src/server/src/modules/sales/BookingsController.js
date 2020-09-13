@@ -62,6 +62,7 @@ module.exports = {
         price_per_night: room.room_type.price_per_night,
         status: "open"
       })
+      booking.room = await booking.$relatedQuery("room")
       return res.json(booking)
     } catch (error) {
       logger.logRequestError(req, error, "Failed to create booking for this room, error details below")
@@ -90,6 +91,7 @@ module.exports = {
         .where("room_id", "=", _.toNumber(req.params.id))
         .andWhere("status", "=", "open")
         .withGraphFetched("sale")
+        .withGraphFetched("room")
         .first()
       return res.json(currentBooking)
     } catch (error) {
@@ -120,9 +122,11 @@ module.exports = {
       }
 
       if (booking.sale == null) {
-        return res
-          .status(400)
-          .json({ messages: ["you cannot close the booking without making full payment or recording a debt"] })
+        return res.status(400).json({
+          messages: [
+            "you cannot close the booking without making full payment or recording a debt or complementary transaction"
+          ]
+        })
       }
 
       // update the amount due for this booking in its sale record

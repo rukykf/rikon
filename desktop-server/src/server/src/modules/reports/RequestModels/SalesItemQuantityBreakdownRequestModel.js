@@ -7,6 +7,7 @@ module.exports = class SalesItemQuantityBreakdownRequestModel {
       .minus({ days: 90 })
       .toISODate()
     this.end_date = DateTime.local().toISODate()
+    this.department_id = null
 
     if (_.has(req, ["query", "start_date"])) {
       this.start_date = req.query.start_date

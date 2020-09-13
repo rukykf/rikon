@@ -3,6 +3,7 @@ const { NotFoundError } = require("objection")
 const Sale = require("../../../data-access/models/Sale")
 const ValidationException = require("../../Exceptions/ValidationException")
 const ManagementList = require("../../../data-access/models/ManagementList")
+const ManagementListTransaction = require("../../../data-access/models/ManagementListTransaction")
 
 module.exports = class SaveManagementListTransactionRequestModel {
   constructor(req) {
@@ -21,6 +22,21 @@ module.exports = class SaveManagementListTransactionRequestModel {
     if (_.has(req, ["body", "department_id"])) {
       this.department_id = req.body.department_id
     }
+  }
+
+  async validateNoDuplicates() {
+    if (this.management_list_item_id != null && this.sales_id != null) {
+      let existingTransaction = await ManagementListTransaction.query()
+        .where("sales_id", this.sales_id)
+        .andWhere("management_list_item_id", this.management_list_item_id)
+        .first()
+
+      if (existingTransaction == null) {
+        return true
+      }
+    }
+
+    return false
   }
 
   async validateCreate() {

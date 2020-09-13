@@ -1,12 +1,12 @@
 <script>
   import FormBackground from "@components/form-background"
   import SuccessFailureAlert from "../../../../../components/success-failure-alert"
-  import CollectPayment from "../../../../../components/collect-payment"
   import ErrorHandler from "../../../../../ErrorHandler"
+  import CollectOrderPayment from "@components/collect-payment/collect-order-payment"
 
   export default {
     name: "fulfill-order",
-    components: { FormBackground, SuccessFailureAlert, CollectPayment },
+    components: { CollectOrderPayment, FormBackground, SuccessFailureAlert },
     props: {
       order: {
         type: Object,
@@ -33,33 +33,19 @@
     },
 
     methods: {
-      async validateAndFulfill(updatedSaleRecord) {
-        if (this.isOrderFulfillmentValid(updatedSaleRecord)) {
-          try {
-            let url = `api/orders/${this.order.id}`
-            this.loading = true
-            await this.$httpClient.patch(url, {
-              status: "fulfilled",
-            })
-            this.success.push("Successfully Fulfilled Order")
-            this.loading = false
-            this.disabled = true
-            this.collectPaymentFormState = "success"
-          } catch (error) {
-            this.loading = false
-            let errors = ErrorHandler(error)
-            this.errors.push(...errors)
-          }
+      async validateAndFulfill() {
+        try {
+          let url = `api/orders/${this.order.id}`
+          await this.$httpClient.patch(url, {
+            status: "fulfilled",
+          })
+          this.success.push("Successfully Fulfilled Order")
+          this.disabled = true
+          this.collectPaymentFormState = "success"
+        } catch (error) {
+          let errors = ErrorHandler(error)
+          this.errors.push(...errors)
         }
-      },
-
-      isOrderFulfillmentValid(saleRecord) {
-        if (saleRecord.total_due === 0 || saleRecord.customer_details.name != null) {
-          return true
-        }
-
-        this.errors.push("You cannot fulfill this order without making full payment or recording a debt")
-        return false
       },
     },
   }
@@ -71,16 +57,12 @@
     <div class="text-center" v-if="loading">
       <b-spinner size="lg" class="p-5"></b-spinner>
     </div>
-    <CollectPayment
+    <CollectOrderPayment
       v-else
-      :state="collectPaymentFormState"
-      sellable-type="order"
-      :sellable-id="order.id"
-      :sellable="order"
       :required-amount="requiredAmount"
-      take-credit
+      :order-id="order.id"
       @success="validateAndFulfill"
-    ></CollectPayment>
+    ></CollectOrderPayment>
   </FormBackground>
 </template>
 

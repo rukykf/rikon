@@ -3,7 +3,6 @@
   import Layout from "@layouts/main"
   import { DateTime } from "luxon"
   import SuccessFailureAlert from "../../../../components/success-failure-alert"
-  import JsonExcel from "vue-json-excel"
   import ManagedStateButton from "../../../../components/managed-state-button"
   import DisplayCustomerOrderDetails from "./components/display-customer-order-details"
   import ErrorHandler from "@src/ErrorHandler"
@@ -22,7 +21,6 @@
       ManagedStateButton,
       SuccessFailureAlert,
       Layout,
-      JsonExcel,
       Multiselect,
     },
     data() {
@@ -30,15 +28,13 @@
         orders: [],
         filteredOrders: [],
         departments: [],
-        selectedDepartment: null,
         orderFields: [
-          { key: "SN", label: "S/N", sortable: false, sortDirection: "desc" },
+          { key: "unique_id", label: "Order ID", sortable: false, sortDirection: "desc", stickyColumn: true },
           { key: "created_at", label: "Order Placed On", sortable: true, sortDirection: "desc" },
-          { key: "sale", label: "Total Sales", sortable: true, sortDirection: "desc" },
           { key: "amount", label: "Total Amount", sortable: true, sortDirection: "desc" },
           { key: "departments", label: "Departments", sortable: true, sortDirection: "desc" },
           { key: "status", label: "Order Status", sortable: true, sortDirection: "desc" },
-          { key: "cancellation_remarks", label: "Cancellation Notes", sortable: true, sortDirection: "desc" },
+          { key: "cancellation_remarks", label: "Notes", sortable: true, sortDirection: "desc" },
           { key: "destination", label: "Destination", sortable: true, sortDirection: "desc" },
           { key: "showDetails", label: "Show Order Details", sortable: true, sortDirection: "desc" },
         ],
@@ -59,11 +55,24 @@
         sortDesc: false,
         loading: false,
         filterBtnState: "initialize",
-        fromDateTime: DateTime.local()
-          .minus({ days: 90 })
-          .toISODate(),
-        toDateTime: DateTime.local().toISODate(),
-        selectedStatus: null,
+        selectedDepartment: this.$store.state.auth.currentDepartment,
+        latestSelectedDepartment: this.$store.state.auth.currentDepartment,
+        fromDate: DateTime.local()
+          .set({ hour: 8, minute: 0 })
+          .toISO(),
+        toDate: DateTime.local()
+          .plus({ days: 1 })
+          .set({ hour: 8, minute: 0 })
+          .toISO(),
+        latestFromDate: DateTime.local()
+          .set({ hour: 8, minute: 0 })
+          .toISO(),
+        latestToDate: DateTime.local()
+          .plus({ days: 1 })
+          .set({ hour: 8, minute: 0 })
+          .toISO(),
+        selectedStatus: "all",
+        latestSelectedStatus: "all",
         success: [],
         errors: [],
       }
@@ -75,16 +84,6 @@
 
       today: function() {
         return DateTime.local().toLocaleString(DateTime.DATE_HUGE)
-      },
-
-      totalPaid: function() {
-        let sum = 0
-        this.filteredOrders.forEach((order) => {
-          if (_.has(order, ["sale", "total_paid"])) {
-            sum += order.sale.total_paid
-          }
-        })
-        return sum
       },
 
       totalAmount: function() {
@@ -112,30 +111,23 @@
         this.filteredOrders = filteredList
       },
 
-      isFilterByDateValid: function() {
-        if (this.toDateTime === null || this.fromDateTime === null) {
-          this.errors.push("Please select a FROM and TO date")
-          return false
-        }
-
-        if (DateTime.fromISO(this.fromDateTime) > DateTime.fromISO(this.toDateTime)) {
-          this.errors.push("The FROM date must be a day before or the same as the TO date")
-          return false
-        }
-        return true
-      },
-
       getOrdersData: async function() {
         try {
           this.loading = true
           this.filterBtnState = "loading"
-          let url = `api/orders?start_date=${this.fromDateTime}&end_date=${this.toDateTime}`
 
-          if (this.selectedStatus !== null && this.selectedStatus !== "") {
+          this.fromDate = this.latestFromDate
+          this.toDate = this.latestToDate
+          this.selectedDepartment = this.latestSelectedDepartment
+          this.selectedStatus = this.latestSelectedStatus
+
+          let url = `api/orders?start_date=${this.fromDate}&end_date=${this.toDate}`
+
+          if (this.selectedStatus !== null && this.selectedStatus !== "all") {
             url += `&status=${this.selectedStatus}`
           }
 
-          if (this.selectedDepartment !== null && this.selectedDepartment.id !== "xxx") {
+          if (this.selectedDepartment !== null && this.selectedDepartment.id !== "x") {
             url += `&department=${this.selectedDepartment.name}`
           }
 
@@ -155,7 +147,7 @@
       getDepartmentsData: async function() {
         try {
           let response = await this.$httpClient.get("api/departments")
-          this.departments = [{ id: "xxx", name: "all" }]
+          this.departments = [{ id: "x", name: "all" }]
           this.departments.push(...response.data)
         } catch (error) {
           let errors = ErrorHandler(error)
@@ -172,21 +164,29 @@
       <SuccessFailureAlert :errors="errors" :success="success"></SuccessFailureAlert>
       <div class="row mt-4">
         <div class="form-group col-12 col-lg-5">
-          <DateTimeSelector :fromDateTime.sync="fromDateTime" :toDateTime.sync="toDateTime"></DateTimeSelector>
+          <DateTimeSelector :from-date-time.sync="latestFromDate" :to-date-time.sync="latestToDate"></DateTimeSelector>
         </div>
         <div class="form-group col-12 col-lg-2">
           <label class="font-weight-bold">
             Department:
           </label>
-          <Multiselect id="department" :options="departments" track-by="id" label="name" v-model="selectedDepartment">
+          <Multiselect
+            id="department"
+            :options="departments"
+            track-by="id"
+            label="name"
+            v-model="latestSelectedDepartment"
+            select-label="click to select"
+            deselect-label="click to remove"
+          >
           </Multiselect>
         </div>
         <div class="form-group col-12 col-lg-2">
           <label class="font-weight-bold">
             Status:
           </label>
-          <select class="form-control" v-model="selectedStatus">
-            <option value="">All</option>
+          <select class="form-control" v-model="latestSelectedStatus">
+            <option value="all">All</option>
             <option value="pending">Pending</option>
             <option value="fulfilled">Fulfilled</option>
             <option value="cancelled">Cancelled</option>
@@ -194,10 +194,11 @@
         </div>
         <div class="col-12 col-lg-3 mt-1">
           <ManagedStateButton
-            main-title="Filter"
+            main-title="Filter / Refresh"
+            fail-try-again-title="Filter / Refresh"
             :state="filterBtnState"
-            class="px-5 mt-4"
-            @clicked="filterOrders"
+            class="px-3 mt-4"
+            @clicked="getOrdersData"
           ></ManagedStateButton>
         </div>
       </div>
@@ -237,21 +238,11 @@
             </div>
             <div class="row mb-3">
               <h3 class="col-12 col-lg-7"
-                >Order History from <span class="text-info">{{ fromDateTime | humanDateWithTime }}</span> to
-                <span class="text-info">{{ toDateTime | humanDateWithTime }}</span></h3
+                >Showing <span class="text-info">{{ selectedStatus | capitalizeAll }}</span> Orders from
+                <span class="text-info">{{ selectedDepartment.name | capitalizeAll }}</span> by
+                <span class="text-info">{{ fromDate | humanDateWithTime }}</span> to
+                <span class="text-info">{{ toDate | humanDateWithTime }}</span></h3
               >
-
-              <div class="col-12 col-lg-5 text-right">
-                <JsonExcel
-                  class="btn btn-dark mb-1"
-                  :data="orders"
-                  :fields="orderExcelFields"
-                  worksheet="Rikon Orders"
-                  name="rikon-order-history.xls"
-                >
-                  <i class="uil uil-chart-line mr-3"></i> Export to Excel
-                </JsonExcel>
-              </div>
             </div>
             <div v-show="true" class="table-responsive  table-hover mb-0">
               <b-table
@@ -264,10 +255,11 @@
                 :sort-desc.sync="sortDesc"
                 :filter="filter"
                 :filter-included-fields="filterOn"
+                sticky-header="800px"
                 @filtered="updateFilteredOrdersWithFilteredList"
               >
-                <template v-slot:cell(SN)="row">
-                  {{ row.index + 1 }}
+                <template v-slot:cell(unique_id)="row">
+                  <strong>{{ row.item.unique_id }}</strong>
                 </template>
 
                 <template v-slot:cell(created_at)="row">
@@ -275,19 +267,9 @@
                   <span class="font-italic">{{ row.item.created_at | humanTime }}</span>
                 </template>
 
-                <template v-slot:head(sale)>
-                  Total Paid Amount<br />
-                  <span class="text-info">({{ totalPaid | money }})</span>
-                </template>
-
                 <template v-slot:head(amount)>
                   Total Amount <br />
                   <span class="text-secondary">({{ totalAmount | money }})</span>
-                </template>
-
-                <template v-slot:cell(sale)="row">
-                  <span v-if="row.item.sale != null">{{ row.item.sale.total_paid | money }}</span>
-                  <span v-else>nil</span>
                 </template>
 
                 <template v-slot:cell(departments)="row">
@@ -316,7 +298,13 @@
                 <div class="dataTables_paginate paging_simple_numbers float-right">
                   <ul class="pagination pagination-rounded mb-0">
                     <!-- pagination -->
-                    <b-pagination v-model="currentPage" :total-rows="rows" :per-page="perPage"></b-pagination>
+                    <b-pagination
+                      next-text="next"
+                      prev-text="previous"
+                      v-model="currentPage"
+                      :total-rows="rows"
+                      :per-page="perPage"
+                    ></b-pagination>
                   </ul>
                 </div>
               </div>

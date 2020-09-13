@@ -93,7 +93,7 @@
         let { data: sale } = await this.$httpClient.post("api/sales", {
           sellable_type: this.sellableType,
           sellable_id: this.sellableId,
-          transaction_type: "credit",
+          transaction_type: "company",
           transaction_details: {
             credit_authorized_by: { name: this.authorizedBy.full_name },
             customer_details: {
@@ -131,7 +131,7 @@
             let sale = await this.addCompanyDebt()
             await this.addManagementTransactions(sale.id)
             this.paymentBtnState = "initialize"
-            this.$emit("success")
+            this.$emit("success", sale)
             this.success.push("Successfully recorded company transaction")
           } catch (error) {
             this.paymentBtnState = "fail-try-again"

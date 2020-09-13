@@ -1,13 +1,15 @@
 <script>
   import CollectCashPayment from "@components/collect-payment/collect-cash-payment"
-  import CollectDiscountPayment from "@components/collect-payment/collect-exact-discount-payment"
+  import CollectDiscountPayment from "@components/collect-payment/collect-discount-payment"
   import CollectComplementaryPayment from "@components/collect-payment/collect-complementary-payment"
   import CollectCredit from "@components/collect-payment/collect-credit"
   import FormBackground from "@components/form-background"
+  import CollectCompanyPayment from "@components/collect-payment/collect-company-payment"
 
   export default {
     name: "collect-booking-payment",
     components: {
+      CollectCompanyPayment,
       FormBackground,
       CollectComplementaryPayment,
       CollectDiscountPayment,
@@ -73,6 +75,11 @@
         this.paymentSelectionPane = false
       },
 
+      switchToCollectCompanyPane() {
+        this.selectedPane = "company"
+        this.paymentSelectionPane = false
+      },
+
       switchToCollectCreditPane() {
         this.selectedPane = "credit"
         this.paymentSelectionPane = false
@@ -82,8 +89,8 @@
         this.$emit("error")
       },
 
-      handleSuccess() {
-        this.$emit("success")
+      handleSuccess(updatedSaleRecord) {
+        this.$emit("success", updatedSaleRecord)
       },
     },
   }
@@ -122,6 +129,13 @@
             :disabled="computedDisabled"
             class="offset-3 col-5 btn btn-dark mt-3"
             >Complementary</button
+          >
+
+          <button
+            @click.stop.prevent="switchToCollectCompanyPane"
+            :disabled="computedDisabled"
+            class="offset-3 col-5 btn btn-dark mt-3"
+            >Company</button
           >
 
           <button
@@ -177,6 +191,16 @@
           @success="handleSuccess"
           @error="handleError"
         ></CollectCredit>
+
+        <CollectCompanyPayment
+          v-else-if="selectedPane === 'company'"
+          :state="state"
+          :required-amount="requiredAmount"
+          :sellable-id="bookingId"
+          sellable-type="booking"
+          @success="handleSuccess"
+          @error="handleError"
+        ></CollectCompanyPayment>
       </div>
     </keep-alive>
   </div>

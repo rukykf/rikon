@@ -28,25 +28,52 @@ module.exports = {
       }
 
       let paymentMethodAggregateQuery = `select sum(amount) as total_amount from sales join sales_transactions on sales.id = sales_transactions.sales_id where sales.active = 1 and sales_transactions.transaction_type = :paymentMethod ${filterByDepartmentQuery} ${filterByDateQuery}`
-      let { total_amount: totalCash } = await db.raw(paymentMethodAggregateQuery, queryParams)
+      let aggregateRecord = await db.raw(paymentMethodAggregateQuery, queryParams)
+      let { total_amount: totalCash } = aggregateRecord[0]
 
       queryParams.paymentMethod = "pos"
-      let { total_amount: totalPOS } = await db.raw(paymentMethodAggregateQuery, queryParams)
+      aggregateRecord = await db.raw(paymentMethodAggregateQuery, queryParams)
+      let { total_amount: totalPOS } = aggregateRecord[0]
 
       queryParams.paymentMethod = "transfer"
-      let { total_amount: totalTransfer } = await db.raw(paymentMethodAggregateQuery, queryParams)
+      aggregateRecord = await db.raw(paymentMethodAggregateQuery, queryParams)
+      let { total_amount: totalTransfer } = aggregateRecord[0]
 
       // total sales and total debt
       let totalSalesQuery = `select sum(total_amount) as total_sales from sales where sales.active = 1 ${filterByDepartmentQuery} ${filterByDateQuery}`
-      let { total_sales: totalSales } = await db.raw(totalSalesQuery, queryParams)
+      aggregateRecord = await db.raw(totalSalesQuery, queryParams)
+      let { total_sales: totalSales } = aggregateRecord[0]
 
-      let totalDebtQuery = `select sum(total_due) as total_debt from sales where sales.active = 1 ${filterByDepartmentQuery} ${filterByDateQuery}`
-      let { total_debt: totalDebt } = await db.raw(totalDebtQuery, queryParams)
+      let totalDebtQuery = `select sum(total_due) as total_debt from sales where sales.active = 1 and sales.transaction_type = 'credit' ${filterByDepartmentQuery} ${filterByDateQuery}`
+      aggregateRecord = await db.raw(totalDebtQuery, queryParams)
+      let { total_debt: totalDebt } = aggregateRecord[0]
 
       // discount, complementary and company
-      let totalDiscountQuery = `select sum(total_complementary) as total_discount from sales where sales.active = 1 ${filterByDepartmentQuery} ${filterByDateQuery}`
+      let totalDiscountQuery = `select sum(total_complementary) as total_discount from sales where sales.active = 1 and sales.transaction_type = 'discount' ${filterByDepartmentQuery} ${filterByDateQuery}`
+      aggregateRecord = await db.raw(totalDiscountQuery, queryParams)
+      let { total_discount: totalDiscount } = aggregateRecord[0]
+
+      let totalComplementaryQuery = `select sum(total_complementary) as total_complementary from sales where sales.active = 1 and sales.transaction_type = 'complementary' ${filterByDepartmentQuery} ${filterByDateQuery}`
+      aggregateRecord = await db.raw(totalComplementaryQuery, queryParams)
+      let { total_complementary: totalComplementary } = aggregateRecord[0]
+
+      let totalCompanyQuery = `select sum(total_due) as total_company from sales where sales.active = 1 and sales.transaction_type = 'company' ${filterByDepartmentQuery} ${filterByDateQuery}`
+      aggregateRecord = await db.raw(totalCompanyQuery, queryParams)
+      let { total_company: totalCompany } = aggregateRecord[0]
+
+      let response = new SalesBreakdownResponse(
+        totalCash,
+        totalTransfer,
+        totalPOS,
+        totalDebt,
+        totalDiscount,
+        totalComplementary,
+        totalCompany,
+        totalSales
+      )
+      return res.json(response)
     } catch (error) {
-      res.status(500).json({ messages: ["something went wrong, please try again later"] })
+      return res.status(500).json({ messages: ["something went wrong, please try again later"] })
     }
   },
 
@@ -105,9 +132,9 @@ module.exports = {
 
       response.totalDebt = debtSales[0] != null ? debtSales[0].totalDebt : 0
 
-      res.status(200).json(response)
+      return res.status(200).json(response)
     } catch (error) {
-      res.status(500).json({ messages: ["something went wrong, please try again later"] })
+      return res.status(500).json({ messages: ["something went wrong, please try again later"] })
     }
   },
 

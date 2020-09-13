@@ -233,9 +233,21 @@ const reportsRoutes = [
       },
       {
         path: "cash-pos-complementary-breakdown",
-        name: "Cash, POS Breakdown",
+        name: "Cash, POS, Discount...etc. Breakdown",
         meta: { authRequired: true, permission: "can-view-reports" },
         component: () => lazyLoadView(import("@views/pages/reports/cash-pos-complementary-breakdown")),
+      },
+      {
+        path: "room-analytics",
+        name: "Room / Booking Analytics",
+        meta: { authRequired: true, permission: "can-view-reports" },
+        component: () => lazyLoadView(import("@views/pages/reports/room-analytics")),
+      },
+      {
+        path: "sales-quantity-breakdown",
+        name: "Quantity Sold per Item Breakdown",
+        meta: { authRequired: true, permission: "can-view-reports" },
+        component: () => lazyLoadView(import("@views/pages/reports/sales-item-analytics")),
       },
       {
         path: "bookings",

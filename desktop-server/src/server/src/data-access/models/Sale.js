@@ -34,7 +34,7 @@ class Sale extends Objection {
       },
 
       department: {
-        relation: Objection.HasOneRelation,
+        relation: Objection.BelongsToOneRelation,
         modelClass: Department,
         join: {
           from: "sales.department_id",
@@ -52,7 +52,7 @@ class Sale extends Objection {
       },
 
       booking: {
-        relation: Objection.HasOneRelation,
+        relation: Objection.BelongsToOneRelation,
         modelClass: Booking,
         join: {
           from: "sales.sellable_id",
@@ -61,7 +61,7 @@ class Sale extends Objection {
       },
 
       order: {
-        relation: Objection.HasOneRelation,
+        relation: Objection.BelongsToOneRelation,
         modelClass: Order,
         join: {
           from: "sales.sellable_id",
@@ -96,6 +96,7 @@ class Sale extends Objection {
         department_id: { type: "integer" },
         transaction_type: { type: "string", enum: ["complementary", "discount", "cash", "company", "credit"] },
         remarks: { type: "string" },
+        item_created_at: { type: "string" },
         customer_details: { type: "object" },
         credit_authorized_by: { type: "object" },
         merged_records: { type: "array" },
@@ -107,15 +108,15 @@ class Sale extends Objection {
 
   $beforeInsert(queryContext) {
     if (this.created_at == null) {
-      this.created_at = DateTime.local().toISODate()
+      this.created_at = DateTime.local().toISO()
     }
 
-    this.updated_at = DateTime.local().toISODate()
+    this.updated_at = DateTime.local().toISO()
     super.$beforeInsert(queryContext)
   }
 
   $beforeUpdate(opt, queryContext) {
-    this.updated_at = DateTime.local().toISODate()
+    this.updated_at = DateTime.local().toISO()
     super.$beforeUpdate(opt, queryContext)
   }
 }

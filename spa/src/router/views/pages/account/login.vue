@@ -64,7 +64,6 @@
               this.$router.push(this.$route.query.redirectFrom || { name: home })
             })
             .catch((error) => {
-              console.log(error)
               this.loginBtnState = "fail-try-again"
               let errors = ErrorHandler(error)
               this.errors.push(...errors)

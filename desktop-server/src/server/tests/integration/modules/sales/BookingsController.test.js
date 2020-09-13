@@ -317,7 +317,9 @@ test("BookingsController.closeBooking returns error message when booking is not 
   res.status.mockReturnThis()
   await BookingsController.closeBooking(req, res)
   expect(res.json).toHaveBeenLastCalledWith({
-    messages: ["you cannot close the booking without making full payment or recording a debt"]
+    messages: [
+      "you cannot close the booking without making full payment or recording a debt or complementary transaction"
+    ]
   })
   expect(res.status).toHaveBeenLastCalledWith(400)
 

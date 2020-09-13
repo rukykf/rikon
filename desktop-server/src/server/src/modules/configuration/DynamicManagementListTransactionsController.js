@@ -21,13 +21,16 @@ module.exports = {
         .orderBy("management_lists_transactions.created_at", "desc")
 
       if (requestModel.management_list_item_id != null) {
-        managementListTransactionsQueryBuilder.where(
+        managementListTransactionsQueryBuilder.andWhere(
           "management_list_item_id",
           "=",
           requestModel.management_list_item_id
         )
       }
 
+      if (requestModel.department_id != null) {
+        managementListTransactionsQueryBuilder.andWhere("sale:department_id", "=", requestModel.department_id)
+      }
       let managementListTransactions = await managementListTransactionsQueryBuilder.execute()
 
       if (requestModel.management_list_name != null) {
@@ -54,7 +57,13 @@ module.exports = {
 
       await createManagementListTransaction.validateCreate()
 
-      let managementListTransaction = await ManagementListTransaction.query().insert(createManagementListTransaction)
+      let managementListTransaction
+
+      let isTransactionValid = await createManagementListTransaction.validateNoDuplicates()
+
+      if (isTransactionValid) {
+        managementListTransaction = await ManagementListTransaction.query().insert(createManagementListTransaction)
+      }
 
       return res.json(managementListTransaction)
     } catch (error) {

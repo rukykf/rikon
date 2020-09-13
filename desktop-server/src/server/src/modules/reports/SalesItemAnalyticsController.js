@@ -1,5 +1,6 @@
 const SalesItemsOrderQuantityBreakdownRequestModel = require("./RequestModels/SalesItemQuantityBreakdownRequestModel")
 const db = require("../../data-access/db-config")
+const OrderAndSalesAnalyticsService = require("./services/OrderAndSalesAnalyticsService")
 
 module.exports = {
   async getQuantityBreakdownForSalesItems(req, res) {
@@ -22,6 +23,20 @@ module.exports = {
       let salesItemsBreakdownQueryString = `select order_items.name as name, sum(order_items.quantity) as quantity from order_items join orders on order_items.order_id = orders.id ${joinSalesItemsString} where orders.status = 'fulfilled' and orders.created_at >= :startDate and orders.created_at <= :endDate ${filterByDepartmentString} group by order_items.name order by order_items.name`
       let salesItemsQuantityBreakdown = await db.raw(salesItemsBreakdownQueryString, queryParams)
       return res.json(salesItemsQuantityBreakdown)
+    } catch (error) {
+      return res.status(500).json({ messages: ["something went wrong, please try again later"] })
+    }
+  },
+
+  async getDetailedOrderBreakdownForSalesItems(req, res) {
+    try {
+      let requestModel = new SalesItemsOrderQuantityBreakdownRequestModel(req)
+      let response = await OrderAndSalesAnalyticsService.getOrderAndSalesAnalysisBySalesItem(
+        requestModel.start_date,
+        requestModel.end_date,
+        requestModel.department_id
+      )
+      return res.json(response)
     } catch (error) {
       return res.status(500).json({ messages: ["something went wrong, please try again later"] })
     }

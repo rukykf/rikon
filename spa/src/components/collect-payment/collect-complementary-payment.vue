@@ -93,8 +93,10 @@
         let { data: sale } = await this.$httpClient.post("api/sales", {
           sellable_type: this.sellableType,
           sellable_id: this.sellableId,
-          transaction_type: "credit",
+          transaction_type: "complementary",
           transaction_details: {
+            transaction_type: "complementary",
+            amount: this.requiredAmount,
             credit_authorized_by: { name: this.authorizedBy.full_name },
             customer_details: {
               name: this.complementaryGrantedTo.full_name,
@@ -105,14 +107,7 @@
           },
         })
 
-        let { data: updatedSale } = await this.$httpClient.post(`api/sales/${sale.id}`, {
-          transaction_details: {
-            transaction_type: "complementary",
-            amount: this.requiredAmount,
-          },
-        })
-
-        return updatedSale
+        return sale
       },
 
       async addManagementTransactions(saleId) {

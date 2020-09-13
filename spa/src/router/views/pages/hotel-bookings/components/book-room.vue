@@ -1,14 +1,21 @@
 <script>
-  import CollectCashPayment from "@src/components/collect-cash-payment"
   import SuccessFailureAlert from "../../../../../components/success-failure-alert"
   import _ from "lodash"
   import BookingForm from "./booking-form"
   import ErrorHandler from "../../../../../ErrorHandler"
   import CollectBookingPayment from "@components/collect-payment/collect-booking-payment"
+  import FormBackground from "@components/form-background"
+  import DisplayBookingPaymentDetails from "@views/pages/hotel-bookings/components/display-booking-payment-details"
 
   export default {
     name: "book-room",
-    components: { CollectBookingPayment, BookingForm, SuccessFailureAlert, CollectCashPayment },
+    components: {
+      DisplayBookingPaymentDetails,
+      FormBackground,
+      CollectBookingPayment,
+      BookingForm,
+      SuccessFailureAlert,
+    },
     props: {
       room: {
         type: Object,
@@ -18,6 +25,7 @@
     data: function() {
       return {
         bookRoomFormState: "initialize",
+        bookingSale: null,
         editCustomerDetailsFormState: "initialize",
         tabs: ["Booking Details", "Edit Booking Details", "Collect Payment"],
         booking: null,
@@ -34,6 +42,10 @@
         let response = await this.$httpClient.get(url)
         if (response.data.customer_details != null) {
           this.booking = response.data
+
+          if (_.get(this.booking, ["sale"]) != null) {
+            this.bookingSale = this.booking.sale
+          }
         }
         this.bookRoomFormState = "initialize"
       } catch (error) {
@@ -48,6 +60,30 @@
         if (this.booking != null && this.booking.customer_details != null) {
           return this.booking.price_per_night * this.booking.customer_details.intendedNumberOfNights
         }
+        return 0
+      },
+
+      totalPaid() {
+        if (this.bookingSale != null) {
+          return this.bookingSale.total_paid
+        }
+
+        return 0
+      },
+
+      totalBalance() {
+        if (this.bookingSale != null) {
+          return this.bookingSale.total_due
+        }
+
+        return this.amountDue
+      },
+
+      totalDiscount() {
+        if (this.bookingSale != null) {
+          return this.bookingSale.total_complementary
+        }
+
         return 0
       },
     },
@@ -65,7 +101,6 @@
           this.success.push("Successfully Booked Room ".concat(this.room.room.room_no))
           this.$emit("room-is-booked")
         } catch (error) {
-          console.log(error)
           if (_.get(error, ["response", "data", "messages"])) {
             this.errors = error.response.data.messages
           } else {
@@ -96,8 +131,10 @@
         }
       },
 
-      collectPayment: function(paymentDetails) {
-        this.collectCashPaymentState = "success-try-again"
+      updatedStateAfterSuccessfulPayment: function(paymentDetails) {
+        this.bookingSale = paymentDetails
+        console.log(paymentDetails)
+        this.$root.$emit("bv::hide::modal", "room-modal")
       },
       isBookingFormValid() {},
     },
@@ -117,11 +154,22 @@
         <b-card no-body>
           <b-tabs pills card vertical nav-class="col-12" nav-wrapper-class="col-5 col-lg-3 p-2">
             <b-tab title-item-class="m-2" title-link-class="btn btn-dark" title="Collect Payment" active>
-              <CollectBookingPayment
-                :state="collectCashPaymentState"
-                :required-amount="amountDue"
-                :booking-id="booking.id"
-              ></CollectBookingPayment>
+              <DisplayBookingPaymentDetails
+                :booking="booking"
+                :total-charge="amountDue"
+                :total-paid="totalPaid"
+                :total-balance="totalBalance"
+                :total-discount="totalDiscount"
+                class="mt-3"
+              ></DisplayBookingPaymentDetails>
+              <FormBackground class="text-center">
+                <CollectBookingPayment
+                  :state="collectCashPaymentState"
+                  :required-amount="amountDue"
+                  :booking-id="booking.id"
+                  @success="updatedStateAfterSuccessfulPayment"
+                ></CollectBookingPayment>
+              </FormBackground>
             </b-tab>
             <b-tab title-item-class="m-2" title-link-class="btn btn-dark" title="Show Booking Details">
               <b-card-header>

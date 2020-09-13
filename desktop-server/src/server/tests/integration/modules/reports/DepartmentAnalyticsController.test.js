@@ -1,6 +1,9 @@
 const { DateTime } = require("luxon")
 const db = require("../../../../src/data-access/db-config")
-const { populateDepartmentsBookingsAndOrders } = require("./test-data/test-data-utils")
+const {
+  populateDepartmentsBookingsAndOrders,
+  populateSalesAndSalesTransactionsWithDepartmentAndTransactionType
+} = require("./test-data/test-data-utils")
 const Sale = require("../../../../src/data-access/models/Sale")
 const Order = require("../../../../src/data-access/models/Order")
 const SalesTransaction = require("../../../../src/data-access/models/SalesTransaction")
@@ -16,6 +19,85 @@ beforeEach(async () => {
   await Order.query().delete()
   await SalesTransaction.query().delete()
   await Booking.query().delete()
+})
+
+test("DepartmentAnalyticsController.getDepartmentSalesBreakdownFromSalesTable returns accurate report of sales breakdown by department", async () => {
+  await populateSalesAndSalesTransactionsWithDepartmentAndTransactionType()
+
+  let req = {}
+  let output = null
+  let res = {
+    json: jest.fn((args) => {
+      output = args
+    })
+  }
+
+  await DepartmentAnalyticsController.getDepartmentSalesBreakdownFromSalesTable(req, res)
+  expect(output.totalCashSales).toEqual(16000)
+  expect(output.totalPOSSales).toEqual(16000)
+  expect(output.totalTransferSales).toEqual(16000)
+  expect(output.totalDebt).toEqual(10000)
+  expect(output.totalDiscount).toEqual(12000)
+  expect(output.totalCompany).toEqual(10000)
+  expect(output.totalComplementary).toEqual(10000)
+  expect(output.totalSales).toEqual(90000)
+})
+
+test("DepartmentAnalyticsController.getDepartmentSalesBreakdownFromSalesTable successfully filters reports by date", async () => {
+  await populateSalesAndSalesTransactionsWithDepartmentAndTransactionType()
+
+  let req = {
+    query: {
+      start_date: DateTime.local()
+        .minus({ days: 15 })
+        .toISODate()
+    }
+  }
+  let output = null
+  let res = {
+    json: jest.fn((args) => {
+      output = args
+    })
+  }
+
+  await DepartmentAnalyticsController.getDepartmentSalesBreakdownFromSalesTable(req, res)
+  expect(output.totalCashSales).toEqual(32000)
+  expect(output.totalPOSSales).toEqual(32000)
+  expect(output.totalTransferSales).toEqual(32000)
+  expect(output.totalDebt).toEqual(20000)
+  expect(output.totalDiscount).toEqual(24000)
+  expect(output.totalCompany).toEqual(20000)
+  expect(output.totalComplementary).toEqual(20000)
+  expect(output.totalSales).toEqual(180000)
+})
+
+test("DepartmentAnalyticsController.getDepartmentSalesBreakdownFromSalesTable successfully filters reports by department", async () => {
+  await populateSalesAndSalesTransactionsWithDepartmentAndTransactionType()
+
+  let req = {
+    query: {
+      start_date: DateTime.local()
+        .minus({ days: 15 })
+        .toISODate(),
+      department_id: 1
+    }
+  }
+  let output = null
+  let res = {
+    json: jest.fn((args) => {
+      output = args
+    })
+  }
+
+  await DepartmentAnalyticsController.getDepartmentSalesBreakdownFromSalesTable(req, res)
+  expect(output.totalCashSales).toEqual(16000)
+  expect(output.totalPOSSales).toEqual(16000)
+  expect(output.totalTransferSales).toEqual(16000)
+  expect(output.totalDebt).toEqual(10000)
+  expect(output.totalDiscount).toEqual(12000)
+  expect(output.totalCompany).toEqual(10000)
+  expect(output.totalComplementary).toEqual(10000)
+  expect(output.totalSales).toEqual(90000)
 })
 
 test("DepartmentAnalyticsController.getBookingsSalesBreakdown returns accurate report of sales breakdown from hotel bookings", async () => {

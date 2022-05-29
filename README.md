@@ -6,6 +6,16 @@ Follow these instructions to run the application.
 
 After cloning the repository, you should have a folder named `rikon` somewhere in your file system.
 
+## Pre-requisites
+The instructions that follow assume that you are on a UNIX based operating system like MacOs or Linux and that you have Nodejs installed. 
+
+If you're on Windows, you have a few options
+- Option 1: Use Vagrant for development. There are detailed instructions for setting up this project on a Vagrant machine on Windows below
+- Option 2: Use Windows Subsystem for Linux version 2
+- Option 3: Use [Git Bash for Windows](https://gitforwindows.org/) instead of the Windows Command Prompt / Powershell terminal. Git Bash this should give you most of the commands you'll need for development of this application.
+
+You can look up instructions for installing NodeJS on your machine: 
+
 ## Development Environment
 Advisable to use WebStorm or any other Intellij based IDE (Integrated development environment) for development because it makes it much more convenient to run and debug / step through the tests. If you can't get Webstorm (since it isn't free, VSCode is also okay). To learn more about using a debugger see these links:
 
@@ -13,6 +23,15 @@ Advisable to use WebStorm or any other Intellij based IDE (Integrated developmen
 - [How to use a Debugger](https://www.youtube.com/watch?v=7qZBwhSlfOo)
 
 In addition to the IDE you use for the code, you can download and use [DB Browser for SQLite](https://sqlitebrowser.org/) in order to open up and browse through the data in the database. After running the migrations, you should be able to find the SQLite database at `rikon/desktop-server/rikon.db`
+
+## Using Vagrant to develop on Windows OS
+If you're on a Windows machine and you intend to use Vagrant to do the development, you can do the following: 
+
+1. Create a folder anywhere on your machine called `rikon-vagrant`
+2. Clone this repository - which contains a simple `Vagrantfile` [https://github.com/rukykf/vagrant-setup.git](https://github.com/rukykf/vagrant-setup.git)
+3. `cd` into the `vagrant-setup` folder and then clone this rikon repository into it [https://github.com/rukykf/rikon.git](https://github.com/rukykf/rikon.git)
+4. Read through the README at `vagrant-setup/README.md` to know a bit about using Vagrant. You can then `vagrant up` and `vagrant ssh` into the new vagrant machine. From there, you can proceed with the instructions for starting the application.
+5. At this point, if you're running the application within the Vagrant machine created by the `Vagrantfile` I linked to, you can expect to find the application hosted at [http://192.168.33.10:3990](http://192.168.33.10:3990) and / or [http://192.168.33.10:8080](http://192.168.33.10:8080) instead of on [http://localhost:3990](http://localhost:3990). So you'll be using the IP address 192.168.33.10 instead of localhost to access the application after running it.
 
 ## Start the Application
 
@@ -116,3 +135,4 @@ yarn install
 ```
 yarn test
 ```
+

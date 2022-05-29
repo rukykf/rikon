@@ -11,6 +11,10 @@ exports.up = function(knex) {
     .then(() => {
       console.log("created room_types")
     })
+    .catch((error) => {
+      console.log("Something went wrong")
+      console.log(JSON.stringify(error))
+    })
 
   knex.schema
     .createTable("rooms", (table) => {
@@ -23,6 +27,10 @@ exports.up = function(knex) {
     })
     .then(() => {
       console.log("created rooms")
+    })
+    .catch((error) => {
+      console.log("Something went wrong")
+      console.log(JSON.stringify(error))
     })
 
   knex.schema
@@ -40,6 +48,10 @@ exports.up = function(knex) {
     .then(() => {
       console.log("created bookings")
     })
+    .catch((error) => {
+      console.log("Something went wrong")
+      console.log(JSON.stringify(error))
+    })
 
   knex.schema
     .createTable("reservations", (table) => {
@@ -55,19 +67,46 @@ exports.up = function(knex) {
     .then(() => {
       console.log("created reservations")
     })
+    .catch((error) => {
+      console.log("Something went wrong")
+      console.log(JSON.stringify(error))
+    })
 }
 
 exports.down = function(knex) {
-  knex.schema.dropTable("rooms").then(() => {
-    console.log("dropped rooms")
-  })
-  knex.schema.dropTable("room_types").then(() => {
-    console.log("dropped room_types")
-  })
-  knex.schema.dropTable("bookings", () => {
-    console.log("dropped bookings")
-  })
-  knex.schema.dropTable("reservations").then(() => {
-    console.log("dropped reservations")
-  })
+  knex.schema
+    .dropTable("rooms")
+    .then(() => {
+      console.log("dropped rooms")
+    })
+    .catch((error) => {
+      console.log("Something went wrong")
+      console.log(JSON.stringify(error))
+    })
+  knex.schema
+    .dropTable("room_types")
+    .then(() => {
+      console.log("dropped room_types")
+    })
+    .catch((error) => {
+      console.log("Something went wrong")
+      console.log(JSON.stringify(error))
+    })
+  knex.schema
+    .dropTable("bookings", () => {
+      console.log("dropped bookings")
+    })
+    .catch((error) => {
+      console.log("Something went wrong")
+      console.log(JSON.stringify(error))
+    })
+  knex.schema
+    .dropTable("reservations")
+    .then(() => {
+      console.log("dropped reservations")
+    })
+    .catch((error) => {
+      console.log("Something went wrong")
+      console.log(JSON.stringify(error))
+    })
 }

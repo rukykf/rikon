@@ -31,10 +31,10 @@ module.exports = {
     }
   },
 
-  live: {
+  development: {
     client: "sqlite3",
     connection: {
-      filename: "C:\\rikon\\live.db"
+      filename: path.join(__dirname, "rikon.db")
     },
     useNullAsDefault: true,
     migrations: {

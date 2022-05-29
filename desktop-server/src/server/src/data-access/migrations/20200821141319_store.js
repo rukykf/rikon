@@ -133,8 +133,9 @@ exports.up = function(knex) {
     .then(() => {
       console.log("created direct_issue_notes table")
     })
-    .catch(() => {
+    .catch((error) => {
       console.log("could not create direct_issue_notes table")
+      console.log(JSON.stringify(error))
     })
 
   knex.schema

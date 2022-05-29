@@ -19,6 +19,10 @@ exports.up = function(knex) {
     .then(() => {
       console.log("created sales")
     })
+    .catch((error) => {
+      console.log("Something went wrong")
+      console.log(JSON.stringify(error))
+    })
 
   knex.schema
     .createTable("sales_transactions", (table) => {
@@ -43,14 +47,30 @@ exports.up = function(knex) {
     .then(() => {
       console.log("created sales_transactions")
     })
+    .catch((error) => {
+      console.log("Something went wrong")
+      console.log(JSON.stringify(error))
+    })
 }
 
 exports.down = function(knex) {
-  knex.schema.dropTable("sales_transactions").then(() => {
-    console.log("dropped sales_transactions")
-  })
+  knex.schema
+    .dropTable("sales_transactions")
+    .then(() => {
+      console.log("dropped sales_transactions")
+    })
+    .catch((error) => {
+      console.log("Something went wrong")
+      console.log(JSON.stringify(error))
+    })
 
-  knex.schema.dropTable("sales").then(() => {
-    console.log("dropped sales")
-  })
+  knex.schema
+    .dropTable("sales")
+    .then(() => {
+      console.log("dropped sales")
+    })
+    .catch((error) => {
+      console.log("Something went wrong")
+      console.log(JSON.stringify(error))
+    })
 }

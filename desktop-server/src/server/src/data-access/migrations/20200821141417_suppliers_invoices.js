@@ -12,8 +12,9 @@ exports.up = function(knex) {
     .then(() => {
       console.log("created suppliers table")
     })
-    .catch(() => {
+    .catch((error) => {
       console.log("could not create suppliers table")
+      console.log(JSON.stringify(error))
     })
 }
 
@@ -23,7 +24,8 @@ exports.down = function(knex) {
     .then(() => {
       console.log("dropped suppliers table")
     })
-    .catch(() => {
+    .catch((error) => {
       console.log("could not create suppliers table")
+      console.log(JSON.stringify(error))
     })
 }

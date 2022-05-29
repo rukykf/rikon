@@ -7,7 +7,8 @@ exports.up = function(knex) {
       console.log("modified orders table with docket_serial_no")
     })
     .catch((error) => {
-      console.log("mysql doesn't work well with the duplicate")
+      console.log("something went wrong")
+      console.log(JSON.stringify(error))
     })
 }
 
@@ -21,5 +22,6 @@ exports.down = function(knex) {
     })
     .catch(() => {
       console.log("failed to drop table")
+      console.log(JSON.stringify(error))
     })
 }

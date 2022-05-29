@@ -70,6 +70,7 @@ node src/server/server.js
 - Username: `sales-person` Password: `password`
 - Username: `supervisor` Password: `password`
 - Username: `receptionist` Password: `receptionist`
+- See `desktop-server/src/server/src/data-access/seed-factories/users-roles.js` for more test user login info
 
 The administrator has the most permissions so, you will be able to see all the available interfaces in the application if you login as `administrator`. If you login as `receptionist` for example, you will only be able to see the interfaces for booking and reserving hotel rooms because that's what the receptionist does.
 

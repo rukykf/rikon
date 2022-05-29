@@ -1,6 +1,10 @@
 # Installation Instructions
 
-This app was originally built as an Electron application but you can ignore the electron aspects of the application for now. This app is a NodeJS application with ExpressJS in the backend and Vuejs in the frontend.
+This app is essentially a web server wrapped in an Electron desktop application but you can ignore the electron aspects of the application for now. It's an application for data entry at a hotel named Rikon Hotel.
+
+The instructions in this README will guide you through running the server application itself and viewing it on a browser.
+
+The web application is a NodeJS application with ExpressJS in the backend and Vuejs in the frontend.
 
 Follow these instructions to run the application. 
 

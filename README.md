@@ -110,7 +110,7 @@ yarn build
 This build command will build the Vue SPA assets and place them in the assets directory of the server folder at `rikon/desktop-server/src/server/assets`
 
 ## Run the Frontend in development mode
-If you're making changes to the front-end and you don't want to re-build the frontend to see your changes after making a change, you can run the frontend by following these commands (note that you still need the server running for the application to work. So in order to avoid killing the server process you created earlier, you should run these commands in a new terminal):
+If you're making changes to the front-end and you don't want to re-build the frontend to see your changes after making a change, you can run the frontend by following these commands (note that you still need the server running for the application to work. So in order to avoid killing the server process you created earlier, you should run these commands in a new terminal window):
 
 Go to the `rikon/spa` directory and then run these commands:
 ```

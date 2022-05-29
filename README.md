@@ -75,7 +75,7 @@ The administrator has the most permissions so, you will be able to see all the a
 
 ## Build the Frontend
 
-To build the frontend go the `rikon/spa` directory. **Note that SPA stands for single page application which you can learn more about here: [https://developer.mozilla.org/en-US/docs/Glossary/SPA](https://developer.mozilla.org/en-US/docs/Glossary/SPA)**
+To build the frontend go the `rikon/spa` directory. **Note that SPA stands for Single Page Application which you can learn more about here: [https://developer.mozilla.org/en-US/docs/Glossary/SPA](https://developer.mozilla.org/en-US/docs/Glossary/SPA)**
 
 Go to the `rikon/spa` directory then run these commands:
 

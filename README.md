@@ -61,6 +61,16 @@ node src/server/server.js
 
 9. If you choose to run the frontend in development mode, then the application should be available at [localhost:8080](http://localhost:8080)
 
+10. After running the application, you can login to the app with any of these credentials:
+
+- Username: `administrator` Password: `password`
+- Username: `accountant` Password: `password`
+- Username: `sales-person` Password: `password`
+- Username: `supervisor` Password: `password`
+- Username: `receptionist` Password: `receptionist`
+
+The administrator has the most permissions so, you will be able to see all the available interfaces in the application if you login as `administrator`. If you login as `receptionist` for example, you will only be able to see the interfaces for booking and reserving hotel rooms because that's what the receptionist does.
+
 ## Build the Frontend
 
 To build the frontend go the `rikon/spa` directory. **Note that SPA stands for single page application which you can learn more about here: [https://developer.mozilla.org/en-US/docs/Glossary/SPA](https://developer.mozilla.org/en-US/docs/Glossary/SPA)**

@@ -11,7 +11,6 @@ Advisable to use WebStorm or any other Intellij based IDE for development becaus
 
 - [Running and debugging Jest tests in Webstorm](https://www.youtube.com/watch?v=rwfW412t6ag)
 - [How to use a Debugger](https://www.youtube.com/watch?v=7qZBwhSlfOo)
-- 
 
 ## Start the Application
 

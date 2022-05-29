@@ -7,10 +7,12 @@ Follow these instructions to run the application.
 After cloning the repository, you should have a folder named `rikon` somewhere in your file system.
 
 ## Development Environment
-Advisable to use WebStorm or any other Intellij based IDE for development because it makes it much more convenient to run and debug / step through the tests. If you can't get Webstorm (since it isn't free, VSCode is also okay). To learn more about using a debugger see these links:
+Advisable to use WebStorm or any other Intellij based IDE (Integrated development environment) for development because it makes it much more convenient to run and debug / step through the tests. If you can't get Webstorm (since it isn't free, VSCode is also okay). To learn more about using a debugger see these links:
 
 - [Running and debugging Jest tests in Webstorm](https://www.youtube.com/watch?v=rwfW412t6ag)
 - [How to use a Debugger](https://www.youtube.com/watch?v=7qZBwhSlfOo)
+
+In addition to the IDE you use for the code, you can download and use [DB Browser for SQLite](https://sqlitebrowser.org/) in order to open up and browse through the data in the database. After running the migrations, you should be able to find the SQLite database at `rikon/desktop-server/rikon.db`
 
 ## Start the Application
 
